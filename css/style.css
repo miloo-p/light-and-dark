@@ -1,0 +1,177 @@
+@font-face {
+  font-family: "Roboto Local";
+  src: url("./fonts/Roboto-VariableFont_wdth,wght.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  /* //----- FONT VARIABLES -----// */
+  --ff-headline: "Roboto Local", "Segoe UI", sans-serif;
+  --ff-base: "Roboto Local", "Segoe UI", sans-serif;
+
+  --fs-sm: 0.875rem;
+  --fs-base: 1.2rem;
+  --fs-md: 1.5rem;
+  --fs-lg: 2rem;
+  --fs-xl: 3rem;
+  --fs-xxl: 4.5rem;
+
+  --fw-normal: 400;
+  --fw-bold: 700;
+
+  /* //----- COLOR VARIABLES -----// */
+
+  /* Hintergründe */
+  --clr-bg-main: hsla(0, 0%, 12%, 1);
+  --clr-bg-surface: hsla(0, 0%, 16%, 1);
+  --clr-bg-shadow: hsla(0, 0%, 5%, 1);
+  --clr-transparent-shadow: hsla(0, 0%, 5%, 0.95);
+
+  /* Texte */
+  --clr-text-main: hsla(0, 0%, 88%, 1);
+  --clr-text-muted: hsla(0, 0%, 65%, 1);
+  --clr-text-light: hsla(82, 39%, 74%, 1);
+
+  /* Akzente (Header & Buttons) */
+  --clr-accent: hsla(359, 82%, 63%, 1);
+  --clr-accent-hover: hsla(359, 82%, 70%, 1);
+  --clr-accent-shadow: hsla(359, 82%, 40%, 1);
+
+  /* //----- GLOW VARIABLES -----// */
+  --clr-glow-subtle: hsla(359, 82%, 63%, 0.1);
+  --clr-glow-intense: hsla(359, 82%, 63%, 0.4);
+
+  /* //----- POKEMON TYPE COLORS -----// */
+  --type-normal: #a8a77a;
+  --type-fire: #ee8130;
+  --type-water: #6390f0;
+  --type-electric: #f7d02c;
+  --type-grass: #7ac74c;
+  --type-ice: #96d9d6;
+  --type-fighting: #c22e28;
+  --type-poison: #a33ea1;
+  --type-ground: #e2bf65;
+  --type-flying: #a98ff3;
+  --type-psychic: #f95587;
+  --type-bug: #a6b91a;
+  --type-rock: #b6a136;
+  --type-ghost: #735797;
+  --type-dragon: #6f35fc;
+  --type-dark: #705848;
+  --type-steel: #b7b7ce;
+  --type-fairy: #d685ad;
+
+  /* //----- SPACING VARIABLES -----// */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-base: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 4rem;
+
+  /* //----- MAX-WIDTH VARIABLE -----// */
+  --content-max-width: 90rem;
+
+  /* //----- UI SYSTEM TOKENS -----// */
+  --ui-radius-sm: 10px;
+  --ui-radius-md: 14px;
+  --ui-radius-lg: 20px;
+  --ui-panel-bg: rgba(255, 255, 255, 0.04);
+  --ui-panel-border: rgba(255, 255, 255, 0.12);
+  --ui-panel-border-strong: rgba(255, 255, 255, 0.2);
+  --ui-hover-bg: rgba(255, 255, 255, 0.12);
+  --ui-shadow-soft: 0 14px 28px rgba(0, 0, 0, 0.3);
+}
+
+/* //----- Utility Classes -----// */
+
+.d_none {
+  display: none !important;
+}
+
+.no-scroll {
+  overflow: hidden;
+  margin-right: 15px;
+}
+
+/* -- Flexbox Setup -- */
+.utc_flex-dir-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.utc_flex-dir-row {
+  display: flex;
+}
+
+/* -- Flexbox: Gap -- */
+
+.utc_flex-gap-sm {
+  gap: var(--spacing-sm);
+}
+.utc_flex-gap-md {
+  gap: var(--spacing-md);
+}
+
+/* -- Flexbox: Justify Content (Main Axis) -- */
+.utc_flex-jc-start {
+  justify-content: start;
+}
+
+.utc_flex-jc-end {
+  justify-content: flex-end;
+}
+.utc_flex-jc-center {
+  justify-content: center;
+}
+.utc_flex-jc-sbetween {
+  justify-content: space-between;
+}
+
+.utc_flex-jc-around {
+  justify-content: space-around;
+}
+
+.utc_flex-jc-evenly {
+  justify-content: space-evenly;
+}
+
+/* -- Flexbox: Align Items (Cross Axis) -- */
+.utc_flex-ai-start {
+  align-items: flex-start;
+}
+.utc_flex-ai-center {
+  align-items: center;
+}
+.utc_flex-ai-end {
+  align-items: end;
+}
+
+.utc_flex-ai-sbetween {
+  align-items: space-between;
+}
+
+/* ///////////////////////////////////////////////////////////////////// */
+
+body {
+  min-height: 100vh;
+  margin: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: var(--ff-base);
+
+  background:
+    radial-gradient(circle at 15% 20%, rgba(231, 223, 178, 0.219), transparent 26%),
+    radial-gradient(circle at 82% 12%, rgba(188, 99, 240, 0.14), transparent 28%),
+    radial-gradient(circle at top, #252525 0%, #131313 58%, #090909 100%);
+  color: var(--clr-text-main);
+}
+
+canvas {
+  background-color: #090909;
+}
