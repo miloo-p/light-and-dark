@@ -1,6 +1,68 @@
 class ShadowCharacter extends MovableObject {
   particles = [];
 
+  imagesIdle = [
+    `img/characters/shadow/01_idle/i1-1.png`,
+    `img/characters/shadow/01_idle/i1-2.png`,
+    `img/characters/shadow/01_idle/i1-3.png`,
+    `img/characters/shadow/01_idle/i1-4.png`,
+    `img/characters/shadow/01_idle/i1-5.png`,
+    `img/characters/shadow/01_idle/i1-6.png`,
+    `img/characters/shadow/01_idle/i1-7.png`,
+    `img/characters/shadow/01_idle/i1-8.png`,
+    `img/characters/shadow/01_idle/i1-9.png`,
+    `img/characters/shadow/01_idle/i1-10.png`,
+    `img/characters/shadow/01_idle/i1-11.png`,
+  ];
+
+  imagesWalk = [
+    `img/characters/shadow/02_walk/w1-1.png`,
+    `img/characters/shadow/02_walk/w1-2.png`,
+    `img/characters/shadow/02_walk/w1-3.png`,
+    `img/characters/shadow/02_walk/w1-4.png`,
+    `img/characters/shadow/02_walk/w1-5.png`,
+    `img/characters/shadow/02_walk/w1-6.png`,
+    `img/characters/shadow/02_walk/w1-7.png`,
+    `img/characters/shadow/02_walk/w1-8.png`,
+    `img/characters/shadow/02_walk/w1-9.png`,
+    `img/characters/shadow/02_walk/w1-10.png`,
+    `img/characters/shadow/02_walk/w1-11.png`,
+    `img/characters/shadow/02_walk/w1-12.png`,
+  ];
+
+  imagesJump = [
+    `img/characters/shadow/03_jump/j1-1.png`,
+    `img/characters/shadow/03_jump/j1-2.png`,
+    `img/characters/shadow/03_jump/j1-3.png`,
+    `img/characters/shadow/03_jump/j1-4.png`,
+    `img/characters/shadow/03_jump/j1-5.png`,
+    `img/characters/shadow/03_jump/j1-6.png`,
+    `img/characters/shadow/03_jump/j1-7.png`,
+    `img/characters/shadow/03_jump/j1-8.png`,
+    `img/characters/shadow/03_jump/j1-9.png`,
+    `img/characters/shadow/03_jump/j1-10.png`,
+    `img/characters/shadow/03_jump/j1-11.png`,
+  ];
+
+  imagesHurt = [
+    `img/characters/shadow/04_hurt/h1-1.png`,
+    `img/characters/shadow/04_hurt/h1-2.png`,
+    `img/characters/shadow/04_hurt/h1-3.png`,
+    `img/characters/shadow/04_hurt/h1-4.png`,
+    `img/characters/shadow/04_hurt/h1-5.png`,
+  ];
+
+  imagesDead = [
+    `img/characters/shadow/05_dead/d1-1.png`,
+    `img/characters/shadow/05_dead/d1-2.png`,
+    `img/characters/shadow/05_dead/d1-3.png`,
+    `img/characters/shadow/05_dead/d1-4.png`,
+    `img/characters/shadow/05_dead/d1-5.png`,
+    `img/characters/shadow/05_dead/d1-6.png`,
+  ];
+
+  currentImage = 0;
+
   constructor() {
     super().loadimage(`img/characters/shadow/01_idle/i1-1.png`);
 
@@ -8,6 +70,20 @@ class ShadowCharacter extends MovableObject {
     this.y = 240;
     this.width = 138;
     this.height = 150;
+
+    this.loadAimationImages(this.imagesIdle);
+    this.animate();
+  }
+
+  animate() {
+    setInterval(() => {
+      let path = this.imagesIdle[this.currentImage];
+      this.img = this.imageChache[path];
+      this.currentImage++;
+      if (this.currentImage >= this.imagesIdle.length) {
+        this.currentImage = 0;
+      }
+    }, 150);
   }
 
   handleParticles(ctx) {
@@ -24,7 +100,6 @@ class ShadowCharacter extends MovableObject {
       if (p.life <= 0) {
         this.particles.splice(i, 1);
       } else {
-        // Sonst auf das Canvas zeichnen
         p.draw(ctx);
       }
     }

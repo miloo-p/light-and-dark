@@ -166,4 +166,5 @@ body {
 
 canvas {
   background-color: #090909;
+  image-rendering: pixelated;
 }
