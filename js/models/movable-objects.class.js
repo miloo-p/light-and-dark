@@ -5,6 +5,8 @@ class MovableObject {
   width;
   height;
   imageChache = {};
+  speed;
+  changeDirection = false;
 
   loadimage(src) {
     this.img = new Image();
@@ -20,7 +22,11 @@ class MovableObject {
   }
 
   moveRight() {}
-  moveLeft() {}
+  moveLeft() {
+    setInterval(() => {
+      this.x -= this.speed;
+    }, 1000 / 60);
+  }
   moveJump() {}
 
   idleState() {}

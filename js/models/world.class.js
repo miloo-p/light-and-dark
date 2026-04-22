@@ -16,12 +16,19 @@ class World {
 
   canvas;
   ctx;
+  keyboard;
+  world;
 
-  constructor(canvas) {
+  constructor(canvas, keyboard) {
     this.canvas = canvas;
     this.ctx = canvas.getContext("2d");
-
+    this.keyboard = keyboard;
     this.draw();
+    this.setWorld();
+  }
+
+  setWorld() {
+    this.shadowCharacter.world = this;
   }
 
   draw() {
@@ -47,6 +54,12 @@ class World {
     });
   }
   addToMap(MovableObject) {
+    if (MovableObject.changeDirection) {
+      this.ctx.save();
+      this.ctx.translate(MovableObject.width, 0);
+      this.ctx.scale(-1, 1);
+      MovableObject.x = MovableObject.x * -1;
+    }
     this.ctx.drawImage(
       MovableObject.img,
       MovableObject.x,
@@ -54,5 +67,9 @@ class World {
       MovableObject.width,
       MovableObject.height,
     );
+    if (MovableObject.changeDirection) {
+      this.ctx.restore();
+      MovableObject.x = MovableObject.x * -1;
+    }
   }
 }

@@ -1,4 +1,5 @@
 class ShadowCharacter extends MovableObject {
+  speed = 20;
   particles = [];
 
   imagesIdle = [
@@ -77,11 +78,17 @@ class ShadowCharacter extends MovableObject {
 
   animate() {
     setInterval(() => {
-      let path = this.imagesIdle[this.currentImage];
+      let i = this.currentImage % this.imagesIdle.length;
+      let path = this.imagesIdle[i];
       this.img = this.imageChache[path];
       this.currentImage++;
-      if (this.currentImage >= this.imagesIdle.length) {
-        this.currentImage = 0;
+      if (this.world.keyboard.keyRight) {
+        this.x += this.speed;
+        this.changeDirection = false;
+      }
+      if (this.world.keyboard.keyLeft) {
+        this.x -= this.speed;
+        this.changeDirection = true;
       }
     }, 150);
   }
