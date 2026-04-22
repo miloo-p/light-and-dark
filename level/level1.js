@@ -36,4 +36,5 @@ const level1 = new Level(
     new BackgroundObject("img/background/dead/bg_d_5.png", 1140 * 2, 0),
     new BackgroundObject("img/background/dead/bg_d_6.png", 1140 * 2, 0),
   ],
+  [new EnemyEndboss()],
 );

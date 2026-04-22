@@ -83,16 +83,31 @@ class ShadowCharacter extends MovableObject {
       this.img = this.imageChache[path];
       this.currentImage++;
     }, 150);
+
+    /*     setInterval(() => {
+      if (this.world.keyboard.keyRight || this.world.keyboard.keyLeft) {
+        let i = this.currentImage % this.imagesWalk.length;
+        let path = this.imagesWalk[i];
+        this.img = this.imageChache[path];
+        this.currentImage++;
+      }
+    }, 150); */
+
     setInterval(() => {
-      if (this.world.keyboard.keyRight) {
+      if (this.world.keyboard.keyRight && this.x < this.world.level.level_end_x) {
         this.x += this.speed;
         this.changeDirection = false;
       }
-      if (this.world.keyboard.keyLeft) {
+      if (this.world.keyboard.keyLeft && this.x > 0) {
         this.x -= this.speed;
         this.changeDirection = true;
       }
+
+      //Smooth Camera + Max Distance set
       let targetCameraX = -this.x + 25;
+      targetCameraX = Math.min(targetCameraX, 0);
+      let maxScrollRight = -(2800 - 700);
+      targetCameraX = Math.max(targetCameraX, maxScrollRight);
       this.world.camera_x += (targetCameraX - this.world.camera_x) * 0.05;
     }, 1000 / 60);
   }

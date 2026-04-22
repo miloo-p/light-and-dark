@@ -47,15 +47,15 @@ class EnemyStomp extends MovableObject {
     this.width = 71;
     this.height = 70;
 
-    this.loadAimationImages(this.imagesIdle);
+    this.loadAimationImages(this.imagesWalk);
     this.animate();
     this.moveLeft();
   }
 
   animate() {
     setInterval(() => {
-      let i = this.currentImage % this.imagesIdle.length;
-      let path = this.imagesIdle[i];
+      let i = this.currentImage % this.imagesWalk.length;
+      let path = this.imagesWalk[i];
       this.img = this.imageChache[path];
       this.currentImage++;
     }, 250);

@@ -2,9 +2,7 @@ class World {
   shadowCharacter = new ShadowCharacter();
   lightCharacter = new LightCharacter();
 
-  enemyStomps = level1.enemyStomps;
-  backgroudObjectsRear = level1.backgroudObjectsRear;
-  backgroudObjectsFront = level1.backgroudObjectsFront;
+  level = level1;
 
   canvas;
   ctx;
@@ -28,14 +26,15 @@ class World {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     this.ctx.translate(this.camera_x, 0);
-    this.addObjectsToMap(this.backgroudObjectsRear);
+    this.addObjectsToMap(this.level.backgroudObjectsRear);
 
     this.shadowCharacter.handleParticles(this.ctx);
     this.addToMap(this.shadowCharacter);
 
-    this.addObjectsToMap(this.enemyStomps);
+    this.addObjectsToMap(this.level.enemyStomps);
+    this.addObjectsToMap(this.level.enemyEndboss);
 
-    this.addObjectsToMap(this.backgroudObjectsFront);
+    this.addObjectsToMap(this.level.backgroudObjectsFront);
     this.ctx.translate(-this.camera_x, 0);
 
     let self = this;
