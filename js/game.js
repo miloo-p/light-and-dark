@@ -24,7 +24,6 @@ window.addEventListener("keydown", (event) => {
   if (event.key == "e") {
     keyboard.keyAttack = true;
   }
-  console.log(keyboard);
 });
 
 window.addEventListener("keyup", (event) => {
@@ -43,5 +42,4 @@ window.addEventListener("keyup", (event) => {
   if (event.key == "e") {
     keyboard.keyAttack = false;
   }
-  console.log(keyboard);
 });

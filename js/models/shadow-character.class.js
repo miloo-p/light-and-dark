@@ -9,6 +9,8 @@ class ShadowCharacter extends MovableObject {
     right: 40,
   };
 
+  healthPoints = 25;
+
   imagesIdle = [
     `img/characters/shadow/01_idle/i1-1.png`,
     `img/characters/shadow/01_idle/i1-2.png`,
@@ -71,9 +73,13 @@ class ShadowCharacter extends MovableObject {
     `img/characters/shadow/05_dead/d1-4.png`,
     `img/characters/shadow/05_dead/d1-5.png`,
     `img/characters/shadow/05_dead/d1-6.png`,
+    `img/characters/shadow/05_dead/d1-7.png`,
+    `img/characters/shadow/05_dead/d1-8.png`,
+    `img/characters/shadow/05_dead/d1-9.png`,
+    `img/characters/shadow/05_dead/d1-10.png`,
+    `img/characters/shadow/05_dead/d1-11.png`,
+    `img/characters/shadow/05_dead/d1-12.png`,
   ];
-
-  currentImage = 0;
 
   constructor() {
     super().loadimage(`img/characters/shadow/01_idle/i1-1.png`);
@@ -87,6 +93,7 @@ class ShadowCharacter extends MovableObject {
     this.loadAimationImages(this.imagesIdle);
     this.loadAimationImages(this.imagesJump);
     this.loadAimationImages(this.imagesHurt);
+    this.loadAimationImages(this.imagesDead);
     this.cameraBehavior();
     this.applyGravity();
     this.animate();
@@ -94,14 +101,18 @@ class ShadowCharacter extends MovableObject {
 
   animate() {
     setInterval(() => {
-      if (this.isAboveGround()) {
+      if (this.isDead()) {
+        this.displayAnimation(this.imagesDead);
+      } else if (this.isHurt()) {
+        this.displayAnimation(this.imagesHurt);
+      } else if (this.isAboveGround()) {
         this.displayAnimation(this.imagesJump);
       } else {
         if (this.world.keyboard.keyRight || this.world.keyboard.keyLeft) {
           this.displayAnimation(this.imagesWalk);
         }
       }
-      if (this.world.keyboard.keyJump && !this.isAboveGround()) {
+      if (this.world.keyboard.keyJump && !this.isAboveGround() && !this.isDead()) {
         this.jump();
       }
     }, 1000 / 8);

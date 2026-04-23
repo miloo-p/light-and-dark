@@ -1,15 +1,12 @@
-class MovableObject {
-  x;
-  y;
-  img;
-  width;
-  height;
-  imageChache = {};
+class MovableObject extends DrawableObject {
   speed;
   changeDirection = false;
 
   speedY = 0;
   acceleration = 0.5;
+
+  healthPoints;
+  lastHit = 0;
 
   hitboxOffset = {
     top: 0,
@@ -29,23 +26,6 @@ class MovableObject {
 
   isAboveGround() {
     return this.y < 240;
-  }
-
-  loadimage(src) {
-    this.img = new Image();
-    this.img.src = src;
-  }
-
-  loadAimationImages(arr) {
-    arr.forEach((ImageSrc) => {
-      let img = new Image();
-      img.src = ImageSrc;
-      this.imageChache[ImageSrc] = img;
-    });
-  }
-
-  draw(ctx) {
-    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   }
 
   drawFrame(ctx) {
@@ -78,11 +58,11 @@ class MovableObject {
 
   cameraBehavior() {
     setInterval(() => {
-      if (this.world.keyboard.keyRight && this.x < this.world.level.level_end_x) {
+      if (this.world.keyboard.keyRight && this.x < this.world.level.level_end_x && !this.isDead()) {
         this.x += this.speed;
         this.changeDirection = false;
       }
-      if (this.world.keyboard.keyLeft && this.x > 0) {
+      if (this.world.keyboard.keyLeft && this.x > 0 && !this.isDead()) {
         this.x -= this.speed;
         this.changeDirection = true;
       }
@@ -112,15 +92,28 @@ class MovableObject {
     );
   }
 
+  hit() {
+    this.healthPoints -= 1;
+    if (this.healthPoints < 0) {
+      this.healthPoints = 0;
+    } else {
+      this.lastHit = new Date().getTime();
+    }
+  }
+
+  isHurt() {
+    let timePassed = (new Date().getTime() - this.lastHit) / 1000;
+    return timePassed < 0.5;
+  }
+
+  isDead() {
+    return this.healthPoints == 0;
+  }
+
   moveRight() {}
   moveLeft() {
     setInterval(() => {
       this.x -= this.speed;
     }, 1000 / 60);
   }
-  moveJump() {}
-
-  idleState() {}
-  longIdleState() {}
-  animDie() {}
 }

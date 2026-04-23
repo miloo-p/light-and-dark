@@ -22,7 +22,8 @@ class World {
   detectCollision() {
     setInterval(() => {
       this.level.enemyStomps.forEach((enemy) => {
-        if (this.shadowCharacter.isColliding(enemy)) console.log("detected");
+        if (this.shadowCharacter.isColliding(enemy)) this.shadowCharacter.hit();
+        console.log(this.shadowCharacter.healthPoints);
       });
     }, 200);
   }
