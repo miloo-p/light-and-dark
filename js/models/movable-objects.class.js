@@ -11,6 +11,13 @@ class MovableObject {
   speedY = 0;
   acceleration = 0.5;
 
+  hitboxOffset = {
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+  };
+
   applyGravity() {
     setInterval(() => {
       if (this.isAboveGround() || this.speedY > 0) {
@@ -48,6 +55,17 @@ class MovableObject {
       ctx.strokeStyle = "blue";
       ctx.rect(this.x, this.y, this.width, this.height);
       ctx.stroke();
+
+      ctx.beginPath();
+      ctx.lineWidth = "2";
+      ctx.strokeStyle = "red";
+      ctx.rect(
+        this.x + this.hitboxOffset.left,
+        this.y + this.hitboxOffset.top,
+        this.width - this.hitboxOffset.left - this.hitboxOffset.right,
+        this.height - this.hitboxOffset.top - this.hitboxOffset.bottom,
+      );
+      ctx.stroke();
     }
   }
 
@@ -79,11 +97,18 @@ class MovableObject {
   }
 
   isColliding(MovableObject) {
+    let leftSide = this.x + this.hitboxOffset.left;
+    let rightSide = this.x + this.width - this.hitboxOffset.right;
+    let topSide = this.y + this.hitboxOffset.top;
+    let bottomSide = this.y + this.height - this.hitboxOffset.bottom;
+
+    let objLeftSide = MovableObject.x + MovableObject.hitboxOffset.left;
+    let objRightSide = MovableObject.x + MovableObject.width - MovableObject.hitboxOffset.right;
+    let objTopSide = MovableObject.y + MovableObject.hitboxOffset.top;
+    let objBottomSide = MovableObject.y + MovableObject.hitboxOffset.bottom;
+
     return (
-      this.x + this.width > MovableObject.x &&
-      this.y + this.height > MovableObject.y &&
-      this.x < MovableObject.x &&
-      this.y < MovableObject.y + MovableObject.height
+      rightSide > objLeftSide && bottomSide > objTopSide && leftSide < objRightSide && topSide < objBottomSide
     );
   }
 

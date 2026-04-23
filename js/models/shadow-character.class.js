@@ -2,6 +2,13 @@ class ShadowCharacter extends MovableObject {
   speed = 3;
   particles = [];
 
+  hitboxOffset = {
+    top: 20,
+    bottom: 5,
+    left: 60,
+    right: 40,
+  };
+
   imagesIdle = [
     `img/characters/shadow/01_idle/i1-1.png`,
     `img/characters/shadow/01_idle/i1-2.png`,
@@ -79,6 +86,7 @@ class ShadowCharacter extends MovableObject {
     this.loadAimationImages(this.imagesWalk);
     this.loadAimationImages(this.imagesIdle);
     this.loadAimationImages(this.imagesJump);
+    this.loadAimationImages(this.imagesHurt);
     this.cameraBehavior();
     this.applyGravity();
     this.animate();

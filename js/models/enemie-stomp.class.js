@@ -1,6 +1,13 @@
 class EnemyStomp extends MovableObject {
   speed = 0.15 + Math.random() * 0.25;
 
+  hitboxOffset = {
+    top: 0,
+    bottom: 0,
+    left: 15,
+    right: 20,
+  };
+
   imagesIdle = [
     `img/enemies/enemie_stomp/idle/1_i.png`,
     `img/enemies/enemie_stomp/idle/2_i.png`,
