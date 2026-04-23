@@ -14,6 +14,8 @@ class ShadowCharacter extends MovableObject {
     `img/characters/shadow/01_idle/i1-9.png`,
     `img/characters/shadow/01_idle/i1-10.png`,
     `img/characters/shadow/01_idle/i1-11.png`,
+    `img/characters/shadow/01_idle/i1-12.png`,
+    `img/characters/shadow/01_idle/i1-13.png`,
   ];
 
   imagesWalk = [
@@ -29,6 +31,7 @@ class ShadowCharacter extends MovableObject {
     `img/characters/shadow/02_walk/w1-10.png`,
     `img/characters/shadow/02_walk/w1-11.png`,
     `img/characters/shadow/02_walk/w1-12.png`,
+    `img/characters/shadow/02_walk/w1-13.png`,
   ];
 
   imagesJump = [
@@ -43,6 +46,7 @@ class ShadowCharacter extends MovableObject {
     `img/characters/shadow/03_jump/j1-9.png`,
     `img/characters/shadow/03_jump/j1-10.png`,
     `img/characters/shadow/03_jump/j1-11.png`,
+    `img/characters/shadow/03_jump/j1-12.png`,
   ];
 
   imagesHurt = [
@@ -72,44 +76,27 @@ class ShadowCharacter extends MovableObject {
     this.width = 138;
     this.height = 150;
 
+    this.loadAimationImages(this.imagesWalk);
     this.loadAimationImages(this.imagesIdle);
+    this.loadAimationImages(this.imagesJump);
+    this.cameraBehavior();
+    this.applyGravity();
     this.animate();
   }
 
   animate() {
     setInterval(() => {
-      let i = this.currentImage % this.imagesIdle.length;
-      let path = this.imagesIdle[i];
-      this.img = this.imageChache[path];
-      this.currentImage++;
-    }, 150);
-
-    /*     setInterval(() => {
-      if (this.world.keyboard.keyRight || this.world.keyboard.keyLeft) {
-        let i = this.currentImage % this.imagesWalk.length;
-        let path = this.imagesWalk[i];
-        this.img = this.imageChache[path];
-        this.currentImage++;
+      if (this.isAboveGround()) {
+        this.displayAnimation(this.imagesJump);
+      } else {
+        if (this.world.keyboard.keyRight || this.world.keyboard.keyLeft) {
+          this.displayAnimation(this.imagesWalk);
+        }
       }
-    }, 150); */
-
-    setInterval(() => {
-      if (this.world.keyboard.keyRight && this.x < this.world.level.level_end_x) {
-        this.x += this.speed;
-        this.changeDirection = false;
+      if (this.world.keyboard.keyJump && !this.isAboveGround()) {
+        this.jump();
       }
-      if (this.world.keyboard.keyLeft && this.x > 0) {
-        this.x -= this.speed;
-        this.changeDirection = true;
-      }
-
-      //Smooth Camera + Max Distance set
-      let targetCameraX = -this.x + 25;
-      targetCameraX = Math.min(targetCameraX, 0);
-      let maxScrollRight = -(2800 - 700);
-      targetCameraX = Math.max(targetCameraX, maxScrollRight);
-      this.world.camera_x += (targetCameraX - this.world.camera_x) * 0.05;
-    }, 1000 / 60);
+    }, 1000 / 8);
   }
 
   handleParticles(ctx) {
@@ -129,5 +116,9 @@ class ShadowCharacter extends MovableObject {
         p.draw(ctx);
       }
     }
+  }
+
+  jump() {
+    this.speedY = 14;
   }
 }
