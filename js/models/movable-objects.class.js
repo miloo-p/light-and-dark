@@ -15,11 +15,18 @@ class MovableObject extends DrawableObject {
     right: 0,
   };
 
+  fastFallEnabled = false;
+
   applyGravity() {
     setInterval(() => {
       if (this.isAboveGround() || this.speedY > 0) {
         this.y -= this.speedY;
-        this.speedY -= this.acceleration;
+        d;
+        if (this.speedY < 0 && this.fastFallEnabled) {
+          this.speedY -= this.acceleration * 1.5;
+        } else {
+          this.speedY -= this.acceleration;
+        }
       }
     }, 1000 / 60);
   }

@@ -89,6 +89,8 @@ class ShadowCharacter extends MovableObject {
     this.width = 138;
     this.height = 150;
 
+    this.fastFallEnabled = true;
+
     this.loadAimationImages(this.imagesWalk);
     this.loadAimationImages(this.imagesIdle);
     this.loadAimationImages(this.imagesJump);

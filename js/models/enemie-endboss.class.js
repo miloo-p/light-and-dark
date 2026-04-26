@@ -1,7 +1,7 @@
 class EnemyEndboss extends MovableObject {
   speed = 0.15 + Math.random() * 0.25;
 
-  imagesIdle = [`img/characters/light/01_boom/light-b1-7.png`];
+  imagesIdle = [`img/enemies/enemy_boss/1_walk/1_w.png`];
 
   imagesWalk = [];
 
@@ -13,11 +13,11 @@ class EnemyEndboss extends MovableObject {
 
   currentImage = 0;
   constructor() {
-    super().loadimage(`img/characters/light/01_boom/light-b1-7.png`);
+    super().loadimage(`img/enemies/enemy_boss/1_walk/1_w.png`);
 
     this.x = 2400;
-    this.y = 0;
-    this.width = 500;
+    this.y = -25;
+    this.width = 547;
     this.height = 500;
 
     this.loadAimationImages(this.imagesIdle);
