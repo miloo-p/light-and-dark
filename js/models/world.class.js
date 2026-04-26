@@ -2,6 +2,7 @@ class World {
   shadowCharacter = new ShadowCharacter();
   characterStatusBar = new StatusBar();
   lightCharacter = new LightCharacter();
+  shadowProjectile = [];
 
   level = level1;
 
@@ -18,16 +19,29 @@ class World {
     this.draw();
     this.setWorld();
     this.detectCollision();
+    this.run();
+  }
+
+  run() {
+    setInterval(() => {
+      this.detectCollision();
+      this.shootProjectile();
+    }, 200);
+  }
+
+  shootProjectile() {
+    if (this.keyboard.keyAttack) {
+      let singleProjectile = new ProjectileObject(this.shadowCharacter.x + 80, this.shadowCharacter.y);
+      this.shadowProjectile.push(singleProjectile);
+    }
   }
 
   detectCollision() {
-    setInterval(() => {
-      this.level.enemyStomps.forEach((enemy) => {
-        if (this.shadowCharacter.isColliding(enemy)) this.shadowCharacter.hit();
-        this.characterStatusBar.setLifePercentage(this.shadowCharacter.healthPoints);
-        console.log(this.shadowCharacter.healthPoints);
-      });
-    }, 200);
+    this.level.enemyStomps.forEach((enemy) => {
+      if (this.shadowCharacter.isColliding(enemy)) this.shadowCharacter.hit();
+      this.characterStatusBar.setLifePercentage(this.shadowCharacter.healthPoints);
+      console.log(this.shadowCharacter.healthPoints);
+    });
   }
 
   setWorld() {
@@ -46,6 +60,7 @@ class World {
 
     this.addObjectsToMap(this.level.enemyStomps);
     this.addObjectsToMap(this.level.enemyEndboss);
+    this.addObjectsToMap(this.shadowProjectile);
 
     this.addObjectsToMap(this.level.backgroudObjectsFront);
     this.ctx.translate(-this.camera_x, 0);
