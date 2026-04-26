@@ -1,5 +1,6 @@
 class World {
   shadowCharacter = new ShadowCharacter();
+  characterStatusBar = new StatusBar();
   lightCharacter = new LightCharacter();
 
   level = level1;
@@ -23,6 +24,7 @@ class World {
     setInterval(() => {
       this.level.enemyStomps.forEach((enemy) => {
         if (this.shadowCharacter.isColliding(enemy)) this.shadowCharacter.hit();
+        this.characterStatusBar.setLifePercentage(this.shadowCharacter.healthPoints);
         console.log(this.shadowCharacter.healthPoints);
       });
     }, 200);
@@ -35,6 +37,7 @@ class World {
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+    // --- WORLD SPACE BEGINNT ---
     this.ctx.translate(this.camera_x, 0);
     this.addObjectsToMap(this.level.backgroudObjectsRear);
 
@@ -46,6 +49,10 @@ class World {
 
     this.addObjectsToMap(this.level.backgroudObjectsFront);
     this.ctx.translate(-this.camera_x, 0);
+    // --- WORLD SPACE ENDET ---
+    // --- SCREEN SPACE / UI BEGINNT ---
+    this.addToMap(this.characterStatusBar);
+    // --- SCREEN SPACE / UI ENDET ---
 
     let self = this;
     requestAnimationFrame(function () {

@@ -34,27 +34,6 @@ class MovableObject extends DrawableObject {
     return this.y < 240;
   }
 
-  drawFrame(ctx) {
-    if (this instanceof ShadowCharacter || this instanceof EnemyStomp) {
-      ctx.beginPath();
-      ctx.lineWidth = "2";
-      ctx.strokeStyle = "blue";
-      ctx.rect(this.x, this.y, this.width, this.height);
-      ctx.stroke();
-
-      ctx.beginPath();
-      ctx.lineWidth = "2";
-      ctx.strokeStyle = "red";
-      ctx.rect(
-        this.x + this.hitboxOffset.left,
-        this.y + this.hitboxOffset.top,
-        this.width - this.hitboxOffset.left - this.hitboxOffset.right,
-        this.height - this.hitboxOffset.top - this.hitboxOffset.bottom,
-      );
-      ctx.stroke();
-    }
-  }
-
   displayAnimation(arr) {
     let i = this.currentImage % arr.length;
     let path = arr[i];
@@ -99,7 +78,7 @@ class MovableObject extends DrawableObject {
   }
 
   hit() {
-    this.healthPoints -= 1;
+    this.healthPoints -= 20;
     if (this.healthPoints < 0) {
       this.healthPoints = 0;
     } else {
