@@ -3,7 +3,7 @@ class MovableObject extends DrawableObject {
   changeDirection = false;
 
   speedY = 0;
-  acceleration = 0.5;
+  acceleration = 0.6;
 
   healthPoints;
   lastHit = 0;
@@ -21,7 +21,6 @@ class MovableObject extends DrawableObject {
     setInterval(() => {
       if (this.isAboveGround() || this.speedY > 0) {
         this.y -= this.speedY;
-        d;
         if (this.speedY < 0 && this.fastFallEnabled) {
           this.speedY -= this.acceleration * 1.5;
         } else {
