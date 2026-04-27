@@ -4,6 +4,8 @@ class World {
   lightCharacter = new LightCharacter();
   shadowProjectile = [];
 
+  lastProjectileFired = 0;
+
   level = level1;
 
   canvas;
@@ -26,13 +28,20 @@ class World {
     setInterval(() => {
       this.detectCollision();
       this.shootProjectile();
-    }, 200);
+      this.checkItemCollisions();
+    }, 1000 / 60);
   }
 
   shootProjectile() {
     if (this.keyboard.keyAttack) {
-      let singleProjectile = new ProjectileObject(this.shadowCharacter.x + 80, this.shadowCharacter.y);
-      this.shadowProjectile.push(singleProjectile);
+      let timePassed = new Date().getTime() - this.lastProjectileFired;
+
+      if (timePassed > 500) {
+        let singleProjectile = new ProjectileObject(this.shadowCharacter.x + 80, this.shadowCharacter.y);
+        this.shadowProjectile.push(singleProjectile);
+
+        this.lastProjectileFired = new Date().getTime();
+      }
     }
   }
 
@@ -41,6 +50,20 @@ class World {
       if (this.shadowCharacter.isColliding(enemy)) this.shadowCharacter.hit();
       this.characterStatusBar.setLifePercentage(this.shadowCharacter.healthPoints);
       console.log(this.shadowCharacter.healthPoints);
+    });
+  }
+
+  checkItemCollisions() {
+    this.level.coins.forEach((coin, index) => {
+      if (this.shadowCharacter.isColliding(coin)) {
+        this.level.coins.splice(index, 1);
+      }
+    });
+
+    this.level.shadowEnergy.forEach((bottle, index) => {
+      if (this.shadowCharacter.isColliding(bottle)) {
+        this.level.shadowEnergy.splice(index, 1);
+      }
     });
   }
 
