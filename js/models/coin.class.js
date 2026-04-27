@@ -15,6 +15,6 @@ class Coin extends MovableObject {
   animate() {
     setInterval(() => {
       this.displayAnimation(this.imagesAnimation);
-    }, 300); // Wechselt das Bild alle 300ms
+    }, 300);
   }
 }

@@ -2,6 +2,8 @@ class ShadowEnergy extends MovableObject {
   height = 60;
   width = 60;
 
+  particles = [];
+
   images = [
     "img/shadow-energy/1_energy_bottle_on_ground.png",
     "img/shadow-energy/2_energy_bottle_on_ground.png",
@@ -17,6 +19,6 @@ class ShadowEnergy extends MovableObject {
 
   draw(ctx) {
     super.draw(ctx);
-    this.handleParticles(ctx, this.width / 2, 15, 0.03);
+    this.handleParticles(ctx);
   }
 }

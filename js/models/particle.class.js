@@ -36,7 +36,6 @@ class Particle {
 
     ctx.fillStyle = "rgba(84, 31, 133, 0.15)";
 
-    // Partikel zeichnen
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
     ctx.fill();

@@ -1,5 +1,6 @@
 class ShadowCharacter extends MovableObject {
   speed = 3;
+  particles = [];
 
   hitboxOffset = {
     top: 20,

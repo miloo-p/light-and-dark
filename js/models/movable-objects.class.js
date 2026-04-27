@@ -2,8 +2,6 @@ class MovableObject extends DrawableObject {
   speed;
   changeDirection = false;
 
-  particles = [];
-
   speedY = 0;
   acceleration = 0.6;
 
