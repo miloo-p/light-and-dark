@@ -1,6 +1,7 @@
 class World {
   shadowCharacter = new ShadowCharacter();
   characterStatusBar = new StatusBar();
+  characterEnergyStatusBar = new EnergyBar();
   lightCharacter = new LightCharacter();
   shadowProjectile = [];
 
@@ -29,18 +30,21 @@ class World {
       this.detectCollision();
       this.shootProjectile();
       this.checkItemCollisions();
-    }, 1000 / 60);
+    }, 200);
   }
 
   shootProjectile() {
     if (this.keyboard.keyAttack) {
       let timePassed = new Date().getTime() - this.lastProjectileFired;
 
-      if (timePassed > 500) {
+      if (timePassed > 500 && this.shadowCharacter.energyPoints >= 20) {
         let singleProjectile = new ProjectileObject(this.shadowCharacter.x + 80, this.shadowCharacter.y);
         this.shadowProjectile.push(singleProjectile);
 
         this.lastProjectileFired = new Date().getTime();
+
+        this.shadowCharacter.energyPoints -= 20;
+        this.characterEnergyStatusBar.setEnergyPercentage(this.shadowCharacter.energyPoints);
       }
     }
   }
@@ -54,15 +58,16 @@ class World {
   }
 
   checkItemCollisions() {
-    this.level.coins.forEach((coin, index) => {
-      if (this.shadowCharacter.isColliding(coin)) {
-        this.level.coins.splice(index, 1);
-      }
-    });
-
     this.level.shadowEnergy.forEach((bottle, index) => {
       if (this.shadowCharacter.isColliding(bottle)) {
         this.level.shadowEnergy.splice(index, 1);
+
+        this.shadowCharacter.energyPoints += 20;
+        if (this.shadowCharacter.energyPoints > 100) {
+          this.shadowCharacter.energyPoints = 100;
+        }
+
+        this.characterEnergyStatusBar.setEnergyPercentage(this.shadowCharacter.energyPoints);
       }
     });
   }
@@ -98,6 +103,7 @@ class World {
     // --- WORLD SPACE ENDET ---
     // --- SCREEN SPACE / UI BEGINNT ---
     this.addToMap(this.characterStatusBar);
+    this.addToMap(this.characterEnergyStatusBar);
     // --- SCREEN SPACE / UI ENDET ---
 
     let self = this;
