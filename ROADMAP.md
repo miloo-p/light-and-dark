@@ -2,7 +2,7 @@
 
 ## Phase 1: Items & Kern-Kollisionen (Gameplay Loop schließen)
 
-- [ ] **Items in der Welt platzieren**: Arrays für `coins` (Münzen) und `shadowEnergy` (Flaschen-Ersatz) in der `level1.js` anlegen und über die `World`-Klasse auf dem Canvas rendern.
+- [x] **Items in der Welt platzieren**: Arrays für `coins` (Münzen) und `shadowEnergy` (Flaschen-Ersatz) in der `level1.js` anlegen und über die `World`-Klasse auf dem Canvas rendern.
 - [ ] **Collectibles einsammeln**: Kollisionsabfrage zwischen `ShadowCharacter` und Items schreiben. Bei Berührung verschwindet das Item aus dem Array.
 - [ ] **Statusbars updaten**: Einsammeln der Items erhöht die jeweiligen Zähler. Die Coin- und Energy-Statusbars im UI müssen sich entsprechend aktualisieren.
 - [ ] **Munitions-Limitierung**: Die Funktion `shootProjectile()` darf nur noch auslösen, wenn der Energie-Zähler > 0 ist. Bei jedem Schuss muss Energie abgezogen und die Statusbar aktualisiert werden.

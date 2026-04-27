@@ -55,12 +55,20 @@ class World {
     this.ctx.translate(this.camera_x, 0);
     this.addObjectsToMap(this.level.backgroudObjectsRear);
 
-    this.shadowCharacter.handleParticles(this.ctx);
+    this.shadowCharacter.handleParticles(
+      this.ctx,
+      this.shadowCharacter.width / 2,
+      this.shadowCharacter.height / 2 + 20,
+      0.05,
+    );
     this.addToMap(this.shadowCharacter);
 
     this.addObjectsToMap(this.level.enemyStomps);
     this.addObjectsToMap(this.level.enemyEndboss);
     this.addObjectsToMap(this.shadowProjectile);
+
+    this.addObjectsToMap(this.level.coins);
+    this.addObjectsToMap(this.level.shadowEnergy);
 
     this.addObjectsToMap(this.level.backgroudObjectsFront);
     this.ctx.translate(-this.camera_x, 0);

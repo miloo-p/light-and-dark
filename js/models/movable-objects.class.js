@@ -2,6 +2,8 @@ class MovableObject extends DrawableObject {
   speed;
   changeDirection = false;
 
+  particles = [];
+
   speedY = 0;
   acceleration = 0.6;
 
@@ -104,5 +106,24 @@ class MovableObject extends DrawableObject {
     setInterval(() => {
       this.x -= this.speed;
     }, 1000 / 60);
+  }
+
+  handleParticles(ctx) {
+    if (Math.random() < 0.05) {
+      let centerX = this.x + this.width / 2;
+      let centerY = this.y + this.height / 2 + 20;
+      this.particles.push(new Particle(centerX, centerY));
+    }
+
+    for (let i = this.particles.length - 1; i >= 0; i--) {
+      let p = this.particles[i];
+      p.update();
+
+      if (p.life <= 0) {
+        this.particles.splice(i, 1);
+      } else {
+        p.draw(ctx);
+      }
+    }
   }
 }

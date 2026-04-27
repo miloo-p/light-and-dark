@@ -8,8 +8,9 @@ class Particle {
   vy;
 
   constructor(startX, startY) {
-    this.x = startX + (Math.random() * 60 - 30);
-    this.y = startY + Math.random() * 60;
+    this.x = startX + (Math.random() * 20 - 10);
+    this.y = startY + (Math.random() * 10 - 5);
+
     this.size = Math.random() * 2 + 10;
     this.decay = Math.random() * 0.005 + 0.005;
     this.vx = (Math.random() - 0.5) * 0.3;

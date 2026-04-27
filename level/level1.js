@@ -72,4 +72,6 @@ const level1 = new Level(
     new BackgroundObject("img/background/dead/bg_d_6.png", 1139 * 2, 0),
   ],
   [new EnemyEndboss()],
+  [new Coin(400, 150), new Coin(600, 100), new Coin(800, 150)],
+  [new ShadowEnergy(500, 250), new ShadowEnergy(900, 250)],
 );
