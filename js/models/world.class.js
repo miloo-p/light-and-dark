@@ -32,7 +32,7 @@ class World {
       this.shootProjectile();
       this.checkItemCollisions();
       this.checkCoinCollisions();
-    }, 200);
+    }, 1000 / 60);
   }
 
   shootProjectile() {
@@ -52,10 +52,23 @@ class World {
   }
 
   detectCollision() {
-    this.level.enemyStomps.forEach((enemy) => {
-      if (this.shadowCharacter.isColliding(enemy)) this.shadowCharacter.hit();
-      this.characterStatusBar.setLifePercentage(this.shadowCharacter.healthPoints);
-      console.log(this.shadowCharacter.healthPoints);
+    this.level.enemyStomps.forEach((enemy, index) => {
+      if (this.shadowCharacter.isColliding(enemy)) {
+        let charBottom =
+          this.shadowCharacter.y + this.shadowCharacter.height - this.shadowCharacter.hitboxOffset.bottom;
+        let enemyTop = enemy.y + enemy.hitboxOffset.top;
+
+        if (this.shadowCharacter.speedY < 0 && charBottom < enemyTop + 50) {
+          this.level.enemyStomps.splice(index, 1);
+          this.shadowCharacter.speedY = 2;
+        } else {
+          if (!this.shadowCharacter.isHurt()) {
+            this.shadowCharacter.hit();
+            this.characterStatusBar.setLifePercentage(this.shadowCharacter.healthPoints);
+            console.log("Treffer! Leben:", this.shadowCharacter.healthPoints);
+          }
+        }
+      }
     });
   }
 
@@ -64,11 +77,11 @@ class World {
       if (this.shadowCharacter.isColliding(bottle)) {
         this.level.shadowEnergy.splice(index, 1);
 
-        this.shadowCharacter.coins += 1;
-        if (this.shadowCharacter.energyPoints > 10) {
-          this.shadowCharacter.energyPoints = 10;
-        }
+        this.shadowCharacter.energyPoints += 20;
 
+        if (this.shadowCharacter.energyPoints > 100) {
+          this.shadowCharacter.energyPoints = 100;
+        }
         this.characterEnergyStatusBar.setEnergyPercentage(this.shadowCharacter.energyPoints);
       }
     });
