@@ -3,9 +3,10 @@ class World {
   characterStatusBar = new StatusBar();
   characterEnergyStatusBar = new EnergyBar();
   characterCoinBar = new CoinBar();
+  bossStatusBar = new BossStatusBar();
   lightCharacter = new LightCharacter();
   shadowProjectile = [];
-
+  bossTriggered = false;
   lastProjectileFired = 0;
 
   level = level1;
@@ -33,7 +34,19 @@ class World {
       this.checkItemCollisions();
       this.checkCoinCollisions();
       this.checkProjectileCollisions();
+      this.checkBossTrigger();
+      // Das addToMap für den Boss ist hier verschwunden!
     }, 1000 / 60);
+  }
+
+  checkBossTrigger() {
+    if (this.shadowCharacter.x > 2222 && !this.bossTriggered) {
+      this.bossTriggered = true;
+      this.level.level_start_x = 2222;
+
+      this.level.enemyEndboss.forEach((boss) => (boss.isTriggered = true));
+      console.log("Boss Kampf gestartet!");
+    }
   }
 
   shootProjectile() {
@@ -53,14 +66,37 @@ class World {
   }
 
   checkProjectileCollisions() {
-    this.shadowProjectile.forEach((projectile, pIndex) => {
+    for (let pIndex = this.shadowProjectile.length - 1; pIndex >= 0; pIndex--) {
+      let projectile = this.shadowProjectile[pIndex];
+      let projectileHit = false;
+
       this.level.enemyStomps.forEach((enemy, eIndex) => {
         if (projectile.isColliding(enemy)) {
           this.level.enemyStomps.splice(eIndex, 1);
-          this.shadowProjectile.splice(pIndex, 1);
+          projectileHit = true;
         }
       });
-    });
+
+      this.level.enemyEndboss.forEach((boss) => {
+        if (projectile.isColliding(boss) && !boss.isDead()) {
+          boss.hit();
+
+          if (!this.bossTriggered) {
+            this.bossTriggered = true;
+            boss.isTriggered = true;
+            console.log("Boss Kampf durch Fernangriff gestartet!");
+          }
+
+          this.bossStatusBar.setPercentage(boss.healthPoints);
+          projectileHit = true;
+          console.log("BOOOOM! Treffer! Boss HP:", boss.healthPoints);
+        }
+      });
+
+      if (projectileHit || projectile.y > 600 || projectile.x > this.shadowCharacter.x + 800) {
+        this.shadowProjectile.splice(pIndex, 1);
+      }
+    }
   }
 
   detectCollision() {
@@ -77,6 +113,7 @@ class World {
           if (!this.shadowCharacter.isHurt()) {
             this.shadowCharacter.hit();
             this.characterStatusBar.setLifePercentage(this.shadowCharacter.healthPoints);
+
             console.log("Treffer! Leben:", this.shadowCharacter.healthPoints);
           }
         }
@@ -148,6 +185,9 @@ class World {
     this.addToMap(this.characterStatusBar);
     this.addToMap(this.characterEnergyStatusBar);
     this.addToMap(this.characterCoinBar);
+    if (this.bossTriggered) {
+      this.addToMap(this.bossStatusBar);
+    }
     // --- SCREEN SPACE / UI ENDET ---
 
     let self = this;

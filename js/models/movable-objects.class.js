@@ -74,7 +74,7 @@ class MovableObject extends DrawableObject {
     let objLeftSide = MovableObject.x + MovableObject.hitboxOffset.left;
     let objRightSide = MovableObject.x + MovableObject.width - MovableObject.hitboxOffset.right;
     let objTopSide = MovableObject.y + MovableObject.hitboxOffset.top;
-    let objBottomSide = MovableObject.y + MovableObject.hitboxOffset.bottom;
+    let objBottomSide = MovableObject.y + MovableObject.height - MovableObject.hitboxOffset.bottom;
 
     return (
       rightSide > objLeftSide && bottomSide > objTopSide && leftSide < objRightSide && topSide < objBottomSide

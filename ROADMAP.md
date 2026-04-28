@@ -7,11 +7,11 @@
 - [x] **Statusbars updaten**: Einsammeln der Items erhöht die jeweiligen Zähler. Die Coin- und Energy-Statusbars im UI müssen sich entsprechend aktualisieren.
 - [x] **Munitions-Limitierung**: Die Funktion `shootProjectile()` darf nur noch auslösen, wenn der Energie-Zähler > 0 ist. Bei jedem Schuss muss Energie abgezogen und die Statusbar aktualisiert werden.
 - [x] **Gegner durch Sprung besiegen (Stomp)**: Logik einbauen, dass ein `EnemyStomp` stirbt, wenn der Charakter von oben (mit fallender `speedY`) auf ihn trifft. (_Wichtig: Kein Tod bei seitlicher Berührung!_)
-- [ ] **Projektil-Kollision**: Trifft ein `shadowProjectile` einen normalen Gegner, stirbt dieser und das Projektil verschwindet.
+- [x] **Projektil-Kollision**: Trifft ein `shadowProjectile` einen normalen Gegner, stirbt dieser und das Projektil verschwindet.
 
 ## Phase 2: Der Bosskampf (Climax)
 
-- [ ] **Boss-Aktivierung**: Der Boss (`EnemyEndboss`) bewegt sich erst oder greift erst an, wenn der Charakter eine bestimmte X-Koordinate erreicht hat (Kamera-Trigger).
+- [x] **Boss-Aktivierung**: Der Boss (`EnemyEndboss`) bewegt sich erst oder greift erst an, wenn der Charakter eine bestimmte X-Koordinate erreicht hat (Kamera-Trigger).
 - [ ] **Boss-Kollision & Schaden**: Projektile, die den Boss treffen, ziehen ihm Leben ab, töten ihn aber nicht sofort.
 - [ ] **Boss-Statusbar**: Eine riesige Statusbar für den Boss am oberen oder unteren Bildschirmrand einblenden, sobald der Kampf beginnt.
 - [ ] **Sieg-Bedingung**: Wenn die HealthPoints des Bosses 0 erreichen, spielt er seine Sterbe-Animation ab.
