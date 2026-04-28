@@ -1,16 +1,16 @@
 class Level {
   enemyStomps;
-  backgroudObjectsRear;
-  backgroudObjectsFront;
+  backgroundObjectsRear;
+  backgroundObjectsFront;
   enemyEndboss;
   coins;
   shadowEnergy;
   level_end_x = 2700;
 
-  constructor(enemyStomps, backgroudObjectsRear, backgroudObjectsFront, enemyEndboss, coins, shadowEnergy) {
+  constructor(enemyStomps, backgroundObjectsRear, backgroundObjectsFront, enemyEndboss, coins, shadowEnergy) {
     this.enemyStomps = enemyStomps;
-    this.backgroudObjectsRear = backgroudObjectsRear;
-    this.backgroudObjectsFront = backgroudObjectsFront;
+    this.backgroundObjectsRear = backgroundObjectsRear;
+    this.backgroundObjectsFront = backgroundObjectsFront;
     this.enemyEndboss = enemyEndboss;
     this.coins = coins;
     this.shadowEnergy = shadowEnergy;

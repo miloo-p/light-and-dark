@@ -10,7 +10,7 @@ class StatusBar extends DrawableObject {
   lifePercentage = 100;
   constructor() {
     super();
-    this.loadAimationImages(this.imagesStatus);
+    this.loadAnimationImages(this.imagesStatus);
     this.x = 30;
     this.y = 20;
     this.width = 200;
@@ -21,7 +21,7 @@ class StatusBar extends DrawableObject {
   setLifePercentage(hp) {
     this.lifePercentage = hp;
     let path = this.imagesStatus[this.resolveImageIndexForHP()];
-    this.img = this.imageChache[path];
+    this.img = this.imageCache[path];
   }
 
   resolveImageIndexForHP() {

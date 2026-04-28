@@ -84,7 +84,7 @@ class ShadowCharacter extends MovableObject {
   ];
 
   constructor() {
-    super().loadimage(`img/characters/shadow/01_idle/i1-1.png`);
+    super().loadImage(`img/characters/shadow/01_idle/i1-1.png`);
 
     this.x = 20;
     this.y = 240;
@@ -93,11 +93,11 @@ class ShadowCharacter extends MovableObject {
 
     this.fastFallEnabled = true;
 
-    this.loadAimationImages(this.imagesWalk);
-    this.loadAimationImages(this.imagesIdle);
-    this.loadAimationImages(this.imagesJump);
-    this.loadAimationImages(this.imagesHurt);
-    this.loadAimationImages(this.imagesDead);
+    this.loadAnimationImages(this.imagesWalk);
+    this.loadAnimationImages(this.imagesIdle);
+    this.loadAnimationImages(this.imagesJump);
+    this.loadAnimationImages(this.imagesHurt);
+    this.loadAnimationImages(this.imagesDead);
     this.cameraBehavior();
     this.applyGravity();
     this.animate();

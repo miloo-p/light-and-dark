@@ -10,7 +10,7 @@ class EnergyBar extends DrawableObject {
   energyPercentage = 100;
   constructor() {
     super();
-    this.loadAimationImages(this.imagesEnergy);
+    this.loadAnimationImages(this.imagesEnergy);
     this.x = 20;
     this.y = 20;
     this.width = 70;
@@ -21,7 +21,7 @@ class EnergyBar extends DrawableObject {
   setEnergyPercentage(energy) {
     this.energyPercentage = energy;
     let path = this.imagesEnergy[this.resolveImageIndexForEnergy()];
-    this.img = this.imageChache[path];
+    this.img = this.imageCache[path];
   }
 
   resolveImageIndexForEnergy() {

@@ -47,14 +47,14 @@ class EnemyStomp extends MovableObject {
 
   currentImage = 0;
   constructor() {
-    super().loadimage(`img/enemies/enemie_stomp/idle/1_i.png`);
+    super().loadImage(`img/enemies/enemie_stomp/idle/1_i.png`);
 
     this.x = 250 + Math.random() * 500;
     this.y = 300;
     this.width = 71;
     this.height = 70;
 
-    this.loadAimationImages(this.imagesWalk);
+    this.loadAnimationImages(this.imagesWalk);
     this.animate();
     this.moveLeft();
   }
@@ -63,7 +63,7 @@ class EnemyStomp extends MovableObject {
     setInterval(() => {
       let i = this.currentImage % this.imagesWalk.length;
       let path = this.imagesWalk[i];
-      this.img = this.imageChache[path];
+      this.img = this.imageCache[path];
       this.currentImage++;
     }, 250);
   }

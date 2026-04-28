@@ -12,7 +12,7 @@ class ShadowEnergy extends MovableObject {
   constructor(x, y) {
     super();
     let randomIndex = Math.floor(Math.random() * this.images.length);
-    this.loadimage(this.images[randomIndex]);
+    this.loadImage(this.images[randomIndex]);
     this.x = x;
     this.y = y + 75;
   }

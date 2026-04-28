@@ -124,7 +124,7 @@ class World {
 
     // --- WORLD SPACE BEGINNT ---
     this.ctx.translate(this.camera_x, 0);
-    this.addObjectsToMap(this.level.backgroudObjectsRear);
+    this.addObjectsToMap(this.level.backgroundObjectsRear);
 
     this.shadowCharacter.handleParticles(
       this.ctx,
@@ -141,7 +141,7 @@ class World {
     this.addObjectsToMap(this.level.coins);
     this.addObjectsToMap(this.level.shadowEnergy);
 
-    this.addObjectsToMap(this.level.backgroudObjectsFront);
+    this.addObjectsToMap(this.level.backgroundObjectsFront);
     this.ctx.translate(-this.camera_x, 0);
     // --- WORLD SPACE ENDET ---
     // --- SCREEN SPACE / UI BEGINNT ---

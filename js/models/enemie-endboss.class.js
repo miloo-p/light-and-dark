@@ -13,14 +13,14 @@ class EnemyEndboss extends MovableObject {
 
   currentImage = 0;
   constructor() {
-    super().loadimage(`img/enemies/enemy_boss/1_walk/1_w.png`);
+    super().loadImage(`img/enemies/enemy_boss/1_walk/1_w.png`);
 
     this.x = 2400;
     this.y = -25;
     this.width = 547;
     this.height = 500;
 
-    this.loadAimationImages(this.imagesIdle);
+    this.loadAnimationImages(this.imagesIdle);
     this.animate();
   }
 
@@ -28,7 +28,7 @@ class EnemyEndboss extends MovableObject {
     setInterval(() => {
       let i = this.currentImage % this.imagesIdle.length;
       let path = this.imagesIdle[i];
-      this.img = this.imageChache[path];
+      this.img = this.imageCache[path];
       this.currentImage++;
     }, 250);
   }
