@@ -2,11 +2,35 @@ let canvas;
 let ctx;
 let world;
 let keyboard = new Keyboard();
+// #region collision-toggle-debug
+window.showCollisionBoxes = false;
+
+function updateCollisionToggleButton() {
+  const button = document.getElementById("collision-toggle");
+
+  if (button) {
+    button.textContent = window.showCollisionBoxes ? "Hitboxen: an" : "Hitboxen: aus";
+    button.setAttribute("aria-pressed", String(window.showCollisionBoxes));
+  }
+}
+
+function toggleCollisionBoxes() {
+  window.showCollisionBoxes = !window.showCollisionBoxes;
+  updateCollisionToggleButton();
+}
 
 function init() {
   canvas = document.getElementById("game-canvas");
   world = new World(canvas, keyboard);
+  const button = document.getElementById("collision-toggle");
+
+  if (button) {
+    button.addEventListener("click", toggleCollisionBoxes);
+  }
+
+  updateCollisionToggleButton();
 }
+// #endregion collision-toggle-debug
 
 window.addEventListener("keydown", (event) => {
   if (event.key == "a") {

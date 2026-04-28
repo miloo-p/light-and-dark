@@ -35,6 +35,13 @@
     <title>Light & Shadow</title>
   </head>
   <body onload="init()">
-    <canvas id="game-canvas" width="720" height="405"> </canvas>
+    <!-- #region collision-toggle-debug -->
+    <main class="game-shell">
+      <button id="collision-toggle" class="collision-toggle" type="button" aria-pressed="false">
+        Hitboxen: aus
+      </button>
+      <canvas id="game-canvas" width="720" height="405"> </canvas>
+    </main>
+    <!-- #endregion collision-toggle-debug -->
   </body>
 </html>

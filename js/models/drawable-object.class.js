@@ -25,8 +25,9 @@ class DrawableObject {
     });
   }
 
+  // #region collision-toggle-debug
   drawFrame(ctx) {
-    if (this instanceof ShadowCharacter || this instanceof EnemyEndboss || this instanceof ProjectileObject) {
+    if (globalThis.showCollisionBoxes && this instanceof MovableObject) {
       ctx.beginPath();
       ctx.lineWidth = "2";
       ctx.strokeStyle = "blue";
@@ -45,4 +46,5 @@ class DrawableObject {
       ctx.stroke();
     }
   }
+  // #endregion collision-toggle-debug
 }

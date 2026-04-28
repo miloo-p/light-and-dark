@@ -164,6 +164,48 @@ body {
   color: var(--clr-text-main);
 }
 
+.game-shell {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+/* #region collision-toggle-debug */
+.collision-toggle {
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--ui-panel-border);
+  border-radius: 999px;
+  background: rgba(15, 15, 15, 0.88);
+  color: var(--clr-text-main);
+  font: inherit;
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  box-shadow: var(--ui-shadow-soft);
+  backdrop-filter: blur(10px);
+  transition:
+    transform 140ms ease,
+    background-color 140ms ease,
+    border-color 140ms ease;
+}
+
+.collision-toggle:hover {
+  transform: translateY(-1px);
+  background: rgba(28, 28, 28, 0.96);
+  border-color: var(--ui-panel-border-strong);
+}
+
+.collision-toggle:active {
+  transform: translateY(0);
+}
+
+.collision-toggle:focus-visible {
+  outline: 2px solid var(--clr-accent-hover);
+  outline-offset: 3px;
+}
+/* #endregion collision-toggle-debug */
+
 canvas {
   background-color: #090909;
   image-rendering: pixelated;

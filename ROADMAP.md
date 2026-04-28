@@ -12,8 +12,8 @@
 ## Phase 2: Der Bosskampf (Climax)
 
 - [x] **Boss-Aktivierung**: Der Boss (`EnemyEndboss`) bewegt sich erst oder greift erst an, wenn der Charakter eine bestimmte X-Koordinate erreicht hat (Kamera-Trigger).
-- [ ] **Boss-Kollision & Schaden**: Projektile, die den Boss treffen, ziehen ihm Leben ab, töten ihn aber nicht sofort.
-- [ ] **Boss-Statusbar**: Eine riesige Statusbar für den Boss am oberen oder unteren Bildschirmrand einblenden, sobald der Kampf beginnt.
+- [x] **Boss-Kollision & Schaden**: Projektile, die den Boss treffen, ziehen ihm Leben ab, töten ihn aber nicht sofort.
+- [x] **Boss-Statusbar**: Eine riesige Statusbar für den Boss am oberen oder unteren Bildschirmrand einblenden, sobald der Kampf beginnt.
 - [ ] **Sieg-Bedingung**: Wenn die HealthPoints des Bosses 0 erreichen, spielt er seine Sterbe-Animation ab.
 
 ## Phase 3: Game Flow & Outro Cinematic
