@@ -32,6 +32,7 @@ class World {
       this.shootProjectile();
       this.checkItemCollisions();
       this.checkCoinCollisions();
+      this.checkProjectileCollisions();
     }, 1000 / 60);
   }
 
@@ -49,6 +50,17 @@ class World {
         this.characterEnergyStatusBar.setEnergyPercentage(this.shadowCharacter.energyPoints);
       }
     }
+  }
+
+  checkProjectileCollisions() {
+    this.shadowProjectile.forEach((projectile, pIndex) => {
+      this.level.enemyStomps.forEach((enemy, eIndex) => {
+        if (projectile.isColliding(enemy)) {
+          this.level.enemyStomps.splice(eIndex, 1);
+          this.shadowProjectile.splice(pIndex, 1);
+        }
+      });
+    });
   }
 
   detectCollision() {
