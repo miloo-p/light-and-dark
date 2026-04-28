@@ -9,29 +9,29 @@ class EnemyStomp extends MovableObject {
   };
 
   imagesIdle = [
-    `img/enemies/enemie_stomp/idle/1_i.png`,
-    `img/enemies/enemie_stomp/idle/2_i.png`,
-    `img/enemies/enemie_stomp/idle/3_i.png`,
-    `img/enemies/enemie_stomp/idle/4_i.png`,
-    `img/enemies/enemie_stomp/idle/5_i.png`,
-    `img/enemies/enemie_stomp/idle/6_i.png`,
-    `img/enemies/enemie_stomp/idle/7_i.png`,
+    `img/enemies/enemy_stomp/idle/1_i.png`,
+    `img/enemies/enemy_stomp/idle/2_i.png`,
+    `img/enemies/enemy_stomp/idle/3_i.png`,
+    `img/enemies/enemy_stomp/idle/4_i.png`,
+    `img/enemies/enemy_stomp/idle/5_i.png`,
+    `img/enemies/enemy_stomp/idle/6_i.png`,
+    `img/enemies/enemy_stomp/idle/7_i.png`,
   ];
 
   imagesWalk = [
-    `img/enemies/enemie_stomp/walking/1_w.png`,
-    `img/enemies/enemie_stomp/walking/2_w.png`,
-    `img/enemies/enemie_stomp/walking/3_w.png`,
-    `img/enemies/enemie_stomp/walking/4_w.png`,
-    `img/enemies/enemie_stomp/walking/5_w.png`,
+    `img/enemies/enemy_stomp/walking/1_w.png`,
+    `img/enemies/enemy_stomp/walking/2_w.png`,
+    `img/enemies/enemy_stomp/walking/3_w.png`,
+    `img/enemies/enemy_stomp/walking/4_w.png`,
+    `img/enemies/enemy_stomp/walking/5_w.png`,
   ];
 
   imagesAttack = [
-    `img/enemies/enemie_stomp/attack/1_a.png`,
-    `img/enemies/enemie_stomp/attack/2_a.png`,
-    `img/enemies/enemie_stomp/attack/3_a.png`,
-    `img/enemies/enemie_stomp/attack/4_a.png`,
-    `img/enemies/enemie_stomp/attack/5_a.png`,
+    `img/enemies/enemy_stomp/attack/1_a.png`,
+    `img/enemies/enemy_stomp/attack/2_a.png`,
+    `img/enemies/enemy_stomp/attack/3_a.png`,
+    `img/enemies/enemy_stomp/attack/4_a.png`,
+    `img/enemies/enemy_stomp/attack/5_a.png`,
   ];
 
   imagesHurt = [];
@@ -47,7 +47,7 @@ class EnemyStomp extends MovableObject {
 
   currentImage = 0;
   constructor() {
-    super().loadImage(`img/enemies/enemie_stomp/idle/1_i.png`);
+    super().loadImage(`img/enemies/enemy_stomp/idle/1_i.png`);
 
     this.x = 250 + Math.random() * 500;
     this.y = 300;

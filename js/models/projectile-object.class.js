@@ -1,7 +1,7 @@
 class ProjectileObject extends MovableObject {
   constructor(startX, startY) {
     super();
-    this.loadImage("img/characters/shadow/projectile/shaowy_projectile.png");
+    this.loadImage("img/characters/shadow/projectile/shadow_projectile.png");
     this.x = startX;
     this.y = startY;
     this.height = 45;

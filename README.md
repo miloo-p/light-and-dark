@@ -1,4 +1,5 @@
 # light-and-dark
+
 ```
 night-and-shadow-abgabeprojekt
 ├─ audio
@@ -109,12 +110,12 @@ night-and-shadow-abgabeprojekt
 │  │     ├─ prev-shadow-char-side.png
 │  │     ├─ prev-shadow-fron-bigt.png
 │  │     └─ projectile
-│  │        └─ shaowy_projectile.png
+│  │        └─ shadow_projectile.png
 │  ├─ coin
 │  │  ├─ coin_1.png
 │  │  └─ coin_2.png
 │  ├─ enemies
-│  │  ├─ enemie_plant
+│  │  ├─ enemy_plant
 │  │  │  ├─ dies
 │  │  │  │  ├─ 1_d.png
 │  │  │  │  ├─ 2_d.png
@@ -143,7 +144,7 @@ night-and-shadow-abgabeprojekt
 │  │  │     ├─ 3_w.png
 │  │  │     ├─ 4_w.png
 │  │  │     └─ 5_w.png
-│  │  ├─ enemie_stomp
+│  │  ├─ enemy_stomp
 │  │  │  ├─ attack
 │  │  │  │  ├─ 1_a.png
 │  │  │  │  ├─ 2_a.png
@@ -278,9 +279,9 @@ night-and-shadow-abgabeprojekt
 │     ├─ background-object.class.js
 │     ├─ boss.class.js
 │     ├─ drawable-object.class.js
-│     ├─ enemie-endboss.class.js
-│     ├─ enemie-plant.class.js
-│     ├─ enemie-stomp.class.js
+│     ├─ enemy-endboss.class.js
+│     ├─ enemy-plant.class.js
+│     ├─ enemy-stomp.class.js
 │     ├─ keyboard.class.js
 │     ├─ level.class.js
 │     ├─ light-character.class.js
