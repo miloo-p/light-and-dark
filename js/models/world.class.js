@@ -6,6 +6,7 @@ class World {
   bossStatusBar = new BossStatusBar();
   lightCharacter = new LightCharacter();
   shadowProjectile = [];
+  enemyProjectiles = [];
   bossTriggered = false;
   lastProjectileFired = 0;
 
@@ -35,8 +36,20 @@ class World {
       this.checkCoinCollisions();
       this.checkProjectileCollisions();
       this.checkBossTrigger();
-      // Das addToMap für den Boss ist hier verschwunden!
+      this.checkEnemyProjectileCollisions();
     }, 1000 / 60);
+  }
+
+  checkEnemyProjectileCollisions() {
+    this.enemyProjectiles.forEach((projectile, index) => {
+      if (this.shadowCharacter.isColliding(projectile)) {
+        if (!this.shadowCharacter.isHurt()) {
+          this.shadowCharacter.hit();
+          this.characterStatusBar.setLifePercentage(this.shadowCharacter.healthPoints);
+        }
+        this.enemyProjectiles.splice(index, 1);
+      }
+    });
   }
 
   checkBossTrigger() {
@@ -93,6 +106,20 @@ class World {
         }
       });
 
+      this.level.enemyPlant.forEach((plant) => {
+        if (projectile.isColliding(plant) && !plant.isDead()) {
+          plant.hit();
+          projectileHit = true;
+
+          setTimeout(() => {
+            let index = this.level.enemyPlant.indexOf(plant);
+            if (index > -1) {
+              this.level.enemyPlant.splice(index, 1);
+            }
+          }, 1000);
+        }
+      });
+
       if (projectileHit || projectile.y > 600 || projectile.x > this.shadowCharacter.x + 800) {
         this.shadowProjectile.splice(pIndex, 1);
       }
@@ -113,12 +140,39 @@ class World {
           if (!this.shadowCharacter.isHurt()) {
             this.shadowCharacter.hit();
             this.characterStatusBar.setLifePercentage(this.shadowCharacter.healthPoints);
-
-            console.log("Treffer! Leben:", this.shadowCharacter.healthPoints);
+            console.log("Treffer von Stomp! Leben:", this.shadowCharacter.healthPoints);
           }
         }
       }
     });
+
+    if (this.level.enemyPlant) {
+      this.level.enemyPlant.forEach((plant) => {
+        if (this.shadowCharacter.isColliding(plant) && !plant.isDead()) {
+          let charBottom =
+            this.shadowCharacter.y + this.shadowCharacter.height - this.shadowCharacter.hitboxOffset.bottom;
+          let plantTop = plant.y + plant.hitboxOffset.top;
+
+          if (this.shadowCharacter.speedY < 0 && charBottom < plantTop + 50) {
+            plant.hit();
+            this.shadowCharacter.speedY = 2;
+
+            setTimeout(() => {
+              let index = this.level.enemyPlant.indexOf(plant);
+              if (index > -1) {
+                this.level.enemyPlant.splice(index, 1);
+              }
+            }, 1000);
+          } else {
+            if (!this.shadowCharacter.isHurt()) {
+              this.shadowCharacter.hit();
+              this.characterStatusBar.setLifePercentage(this.shadowCharacter.healthPoints);
+              console.log("Pflanze berührt! Leben:", this.shadowCharacter.healthPoints);
+            }
+          }
+        }
+      });
+    }
   }
 
   checkItemCollisions() {
@@ -172,9 +226,10 @@ class World {
     this.addToMap(this.shadowCharacter);
 
     this.addObjectsToMap(this.level.enemyStomps);
+    this.addObjectsToMap(this.level.enemyPlant);
     this.addObjectsToMap(this.level.enemyEndboss);
     this.addObjectsToMap(this.shadowProjectile);
-
+    this.addObjectsToMap(this.enemyProjectiles);
     this.addObjectsToMap(this.level.coins);
     this.addObjectsToMap(this.level.shadowEnergy);
 

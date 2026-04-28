@@ -27,7 +27,6 @@ class BossStatusBar extends DrawableObject {
     this.img = this.imageCache[imagePath];
   }
 
-  // CHANGED: Strict >= boundaries to prevent undefined array indexes
   resolveImageIndex() {
     if (this.percentage >= 100) return 5;
     else if (this.percentage >= 80) return 4;

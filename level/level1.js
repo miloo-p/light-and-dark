@@ -74,4 +74,5 @@ const level1 = new Level(
   [new EnemyEndboss()],
   [new Coin(400, 150), new Coin(600, 100), new Coin(800, 150)],
   [new ShadowEnergy(500, 250), new ShadowEnergy(900, 250)],
+  [new EnemyPlant()],
 );

@@ -55,6 +55,7 @@ class EnemyStomp extends MovableObject {
     this.height = 70;
 
     this.loadAnimationImages(this.imagesWalk);
+    this.loadAnimationImages(this.imagesDead);
     this.animate();
     this.moveLeft();
   }
