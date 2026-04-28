@@ -11,6 +11,7 @@ class ShadowCharacter extends MovableObject {
 
   healthPoints = 100;
   energyPoints = 40;
+  collectedCoins = 0;
 
   imagesIdle = [
     `img/characters/shadow/01_idle/i1-1.png`,

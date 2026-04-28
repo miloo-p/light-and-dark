@@ -2,6 +2,7 @@ class World {
   shadowCharacter = new ShadowCharacter();
   characterStatusBar = new StatusBar();
   characterEnergyStatusBar = new EnergyBar();
+  characterCoinBar = new CoinBar();
   lightCharacter = new LightCharacter();
   shadowProjectile = [];
 
@@ -30,6 +31,7 @@ class World {
       this.detectCollision();
       this.shootProjectile();
       this.checkItemCollisions();
+      this.checkCoinCollisions();
     }, 200);
   }
 
@@ -62,12 +64,28 @@ class World {
       if (this.shadowCharacter.isColliding(bottle)) {
         this.level.shadowEnergy.splice(index, 1);
 
-        this.shadowCharacter.energyPoints += 20;
-        if (this.shadowCharacter.energyPoints > 100) {
-          this.shadowCharacter.energyPoints = 100;
+        this.shadowCharacter.coins += 1;
+        if (this.shadowCharacter.energyPoints > 10) {
+          this.shadowCharacter.energyPoints = 10;
         }
 
         this.characterEnergyStatusBar.setEnergyPercentage(this.shadowCharacter.energyPoints);
+      }
+    });
+  }
+
+  checkCoinCollisions() {
+    this.level.coins.forEach((coin, index) => {
+      if (this.shadowCharacter.isColliding(coin)) {
+        this.level.coins.splice(index, 1);
+
+        this.shadowCharacter.collectedCoins += 1;
+
+        if (this.shadowCharacter.collectedCoins > 10) {
+          this.shadowCharacter.collectedCoins = 10;
+        }
+
+        this.characterCoinBar.setCoins(this.shadowCharacter.collectedCoins);
       }
     });
   }
@@ -104,6 +122,7 @@ class World {
     // --- SCREEN SPACE / UI BEGINNT ---
     this.addToMap(this.characterStatusBar);
     this.addToMap(this.characterEnergyStatusBar);
+    this.addToMap(this.characterCoinBar);
     // --- SCREEN SPACE / UI ENDET ---
 
     let self = this;

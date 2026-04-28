@@ -26,7 +26,7 @@ class DrawableObject {
   }
 
   drawFrame(ctx) {
-    if (this instanceof ShadowCharacter || this instanceof EnemyStomp) {
+    if (this instanceof ShadowCharacter || this instanceof EnemyStomp || this instanceof ShadowEnergy) {
       ctx.beginPath();
       ctx.lineWidth = "2";
       ctx.strokeStyle = "blue";
