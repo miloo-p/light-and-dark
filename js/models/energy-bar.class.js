@@ -25,18 +25,11 @@ class EnergyBar extends DrawableObject {
   }
 
   resolveImageIndexForEnergy() {
-    if (this.energyPercentage == 100) {
-      return 5;
-    } else if (this.energyPercentage > 80) {
-      return 4;
-    } else if (this.energyPercentage > 60) {
-      return 3;
-    } else if (this.energyPercentage > 40) {
-      return 2;
-    } else if (this.energyPercentage > 20) {
-      return 1;
-    } else {
-      return 0;
-    }
+    if (this.energyPercentage >= 100) return 5;
+    else if (this.energyPercentage >= 80) return 4;
+    else if (this.energyPercentage >= 60) return 3;
+    else if (this.energyPercentage >= 40) return 2;
+    else if (this.energyPercentage >= 20) return 1;
+    else return 0;
   }
 }
