@@ -1,0 +1,53 @@
+class MeleeSlashObject extends MovableObject {
+  width = 136;
+  height = 120;
+
+  isFinished = false;
+  hasDealtDamage = false;
+
+  imagesSlash = ["img/characters/shadow/06_slash/1_slash.png", "img/characters/shadow/06_slash/2_slash.png"];
+
+  constructor(character) {
+    super();
+    this.loadImage(this.imagesSlash[0]);
+    this.loadAnimationImages(this.imagesSlash);
+
+    this.character = character;
+    this.currentImage = 0;
+
+    this.updatePosition();
+    this.followCharacter();
+    this.animate();
+  }
+
+  updatePosition() {
+    this.changeDirection = this.character.otherDirection;
+
+    if (this.changeDirection) {
+      this.x = this.character.x + 30;
+    } else {
+      this.x = this.character.x + 30;
+    }
+    this.y = this.character.y;
+  }
+
+  followCharacter() {
+    this.followInterval = setInterval(() => {
+      this.updatePosition();
+    }, 1000 / 60);
+  }
+
+  animate() {
+    this.animationInterval = setInterval(() => {
+      if (this.currentImage < this.imagesSlash.length) {
+        let path = this.imagesSlash[this.currentImage];
+        this.img = this.imageCache[path];
+        this.currentImage++;
+      } else {
+        this.isFinished = true;
+        clearInterval(this.followInterval);
+        clearInterval(this.animationInterval);
+      }
+    }, 100);
+  }
+}

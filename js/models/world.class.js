@@ -1,14 +1,21 @@
 class World {
+  // ==========================================
+  // 1. PROPERTIES & STATE
+  // ==========================================
   shadowCharacter = new ShadowCharacter();
   characterStatusBar = new StatusBar();
   characterEnergyStatusBar = new EnergyBar();
   characterCoinBar = new CoinBar();
   bossStatusBar = new BossStatusBar();
   lightCharacter = new LightCharacter();
+
   shadowProjectile = [];
+  meleeAttacks = [];
   enemyProjectiles = [];
+
   bossTriggered = false;
-  lastProjectileFired = 0;
+  lastAttackTime = 0;
+  attackCooldown = 500;
 
   level = level1;
 
@@ -18,6 +25,9 @@ class World {
   world;
   camera_x = 0;
 
+  // ==========================================
+  // 2. SETUP & LIFECYCLE
+  // ==========================================
   constructor(canvas, keyboard) {
     this.canvas = canvas;
     this.ctx = canvas.getContext("2d");
@@ -28,34 +38,56 @@ class World {
     this.run();
   }
 
+  setWorld() {
+    this.shadowCharacter.world = this;
+  }
+
   run() {
     setInterval(() => {
       this.detectCollision();
       this.shootProjectile();
+      this.performMeleeAttack();
       this.checkBossTrigger();
+
+      this.meleeAttacks = this.meleeAttacks.filter((slash) => !slash.isFinished);
     }, 1000 / 60);
   }
 
-  detectCollision() {
-    this.checkStompCollisions();
-    this.checkPlantCollisions();
-    this.checkItemCollisions();
-    this.checkBossCollisions();
-    this.checkCoinCollisions();
-    this.checkProjectileCollisions();
-    this.checkEnemyProjectileCollisions();
+  // ==========================================
+  // 3. GAME LOGIC & ACTIONS
+  // ==========================================
+  shootProjectile() {
+    if (this.keyboard.keySpell) {
+      if (this.isCooldownOver() && this.shadowCharacter.energyPoints >= 20) {
+        let singleProjectile = new ProjectileObject(this.shadowCharacter.x + 80, this.shadowCharacter.y);
+        this.shadowProjectile.push(singleProjectile);
+
+        this.resetCooldown();
+
+        this.shadowCharacter.energyPoints -= 20;
+        this.characterEnergyStatusBar.setEnergyPercentage(this.shadowCharacter.energyPoints);
+      }
+    }
   }
 
-  checkEnemyProjectileCollisions() {
-    this.enemyProjectiles.forEach((projectile, index) => {
-      if (this.shadowCharacter.isColliding(projectile)) {
-        if (!this.shadowCharacter.isHurt()) {
-          this.shadowCharacter.hit();
-          this.characterStatusBar.setLifePercentage(this.shadowCharacter.healthPoints);
-        }
-        this.enemyProjectiles.splice(index, 1);
+  performMeleeAttack() {
+    if (this.keyboard.keyAttack) {
+      if (this.isCooldownOver()) {
+        let slash = new MeleeSlashObject(this.shadowCharacter);
+        this.meleeAttacks.push(slash);
+
+        this.resetCooldown();
       }
-    });
+    }
+  }
+
+  isCooldownOver() {
+    let timePassed = new Date().getTime() - this.lastAttackTime;
+    return timePassed > this.attackCooldown;
+  }
+
+  resetCooldown() {
+    this.lastAttackTime = new Date().getTime();
   }
 
   checkBossTrigger() {
@@ -68,29 +100,27 @@ class World {
     }
   }
 
-  shootProjectile() {
-    if (this.keyboard.keyAttack) {
-      let timePassed = new Date().getTime() - this.lastProjectileFired;
-
-      if (timePassed > 500 && this.shadowCharacter.energyPoints >= 20) {
-        let singleProjectile = new ProjectileObject(this.shadowCharacter.x + 80, this.shadowCharacter.y);
-        this.shadowProjectile.push(singleProjectile);
-
-        this.lastProjectileFired = new Date().getTime();
-
-        this.shadowCharacter.energyPoints -= 20;
-        this.characterEnergyStatusBar.setEnergyPercentage(this.shadowCharacter.energyPoints);
-      }
-    }
+  // ==========================================
+  // 4. COLLISION ORCHESTRATORS
+  // ==========================================
+  detectCollision() {
+    this.checkStompCollisions();
+    this.checkPlantCollisions();
+    this.checkItemCollisions();
+    this.checkBossCollisions();
+    this.checkCoinCollisions();
+    this.checkProjectileCollisions();
+    this.checkMeleeCollisions();
+    this.checkEnemyProjectileCollisions();
   }
 
   checkProjectileCollisions() {
     for (let pIndex = this.shadowProjectile.length - 1; pIndex >= 0; pIndex--) {
       let projectile = this.shadowProjectile[pIndex];
 
-      let hitStomp = this.checkStompHit(projectile);
-      let hitBoss = this.checkBossHit(projectile);
-      let hitPlant = this.checkPlantHit(projectile);
+      let hitStomp = this.checkStompHit(projectile, null);
+      let hitBoss = this.checkBossHit(projectile, null);
+      let hitPlant = this.checkPlantHit(projectile, null);
 
       let projectileHit = hitStomp || hitBoss || hitPlant;
 
@@ -100,71 +130,19 @@ class World {
     }
   }
 
-  checkStompHit(projectile) {
-    let hasHit = false;
-    this.level.enemyStomps.forEach((enemy, index) => {
-      if (projectile.isColliding(enemy)) {
-        this.level.enemyStomps.splice(index, 1);
-        hasHit = true;
-      }
-    });
-    return hasHit;
-  }
+  checkMeleeCollisions() {
+    for (let mIndex = this.meleeAttacks.length - 1; mIndex >= 0; mIndex--) {
+      let slash = this.meleeAttacks[mIndex];
 
-  checkBossHit(projectile) {
-    let hasHit = false;
-    this.level.enemyEndboss.forEach((boss) => {
-      if (projectile.isColliding(boss) && !boss.isDead()) {
-        boss.hit();
-
-        if (!this.bossTriggered) {
-          this.bossTriggered = true;
-          boss.isTriggered = true;
-          console.log("Boss Kampf durch Fernangriff gestartet!");
-        }
-
-        this.bossStatusBar.setPercentage(boss.healthPoints);
-        console.log("BOOOOM! Treffer! Boss HP:", boss.healthPoints);
-        hasHit = true;
-      }
-    });
-    return hasHit;
-  }
-
-  checkPlantHit(projectile) {
-    let hasHit = false;
-    this.level.enemyPlant.forEach((plant) => {
-      if (projectile.isColliding(plant) && !plant.isDead()) {
-        plant.hit();
-        hasHit = true;
-
-        setTimeout(() => {
-          let index = this.level.enemyPlant.indexOf(plant);
-          if (index > -1) {
-            this.level.enemyPlant.splice(index, 1);
-          }
-        }, 1000);
-      }
-    });
-    return hasHit;
-  }
-
-  isJumpingOn(enemy) {
-    let charBottom =
-      this.shadowCharacter.y + this.shadowCharacter.height - this.shadowCharacter.hitboxOffset.bottom;
-    let enemyTop = enemy.y + enemy.hitboxOffset.top;
-
-    return this.shadowCharacter.speedY < 0 && charBottom < enemyTop + 50;
-  }
-
-  handleCharacterTakingDamage() {
-    if (!this.shadowCharacter.isHurt()) {
-      this.shadowCharacter.hit();
-      this.characterStatusBar.setLifePercentage(this.shadowCharacter.healthPoints);
-      console.log("Charakter getroffen! Leben:", this.shadowCharacter.healthPoints);
+      this.checkStompHit(null, slash);
+      this.checkBossHit(null, slash);
+      this.checkPlantHit(null, slash);
     }
   }
 
+  // ==========================================
+  // 5. COLLISION HELPERS (CHARACTER)
+  // ==========================================
   checkStompCollisions() {
     this.level.enemyStomps.forEach((enemy, index) => {
       if (this.shadowCharacter.isColliding(enemy)) {
@@ -174,16 +152,6 @@ class World {
         } else {
           this.handleCharacterTakingDamage();
         }
-      }
-    });
-  }
-
-  checkBossCollisions() {
-    if (!this.level.enemyEndboss) return;
-
-    this.level.enemyEndboss.forEach((boss) => {
-      if (this.shadowCharacter.isColliding(boss) && !boss.isDead()) {
-        this.handleCharacterTakingDamage();
       }
     });
   }
@@ -206,6 +174,28 @@ class World {
         } else {
           this.handleCharacterTakingDamage();
         }
+      }
+    });
+  }
+
+  checkBossCollisions() {
+    if (!this.level.enemyEndboss) return;
+
+    this.level.enemyEndboss.forEach((boss) => {
+      if (this.shadowCharacter.isColliding(boss) && !boss.isDead()) {
+        this.handleCharacterTakingDamage();
+      }
+    });
+  }
+
+  checkEnemyProjectileCollisions() {
+    this.enemyProjectiles.forEach((projectile, index) => {
+      if (this.shadowCharacter.isColliding(projectile)) {
+        if (!this.shadowCharacter.isHurt()) {
+          this.shadowCharacter.hit();
+          this.characterStatusBar.setLifePercentage(this.shadowCharacter.healthPoints);
+        }
+        this.enemyProjectiles.splice(index, 1);
       }
     });
   }
@@ -241,15 +231,108 @@ class World {
     });
   }
 
-  setWorld() {
-    this.shadowCharacter.world = this;
+  // ==========================================
+  // 6. COLLISION HELPERS (PROJECTILES & SHARED)
+  // ==========================================
+
+  checkStompHit(projectile, meleeSlash) {
+    let hasHit = false;
+
+    this.level.enemyStomps.forEach((enemy, index) => {
+      let projectileHit = projectile && projectile.isColliding(enemy);
+      let meleeHit = meleeSlash && !meleeSlash.hasDealtDamage && meleeSlash.isColliding(enemy);
+
+      if (projectileHit || meleeHit) {
+        if (meleeHit) {
+          meleeSlash.hasDealtDamage = true;
+        }
+        this.level.enemyStomps.splice(index, 1);
+        hasHit = true;
+      }
+    });
+    return hasHit;
   }
 
+  checkBossHit(projectile, meleeSlash) {
+    let hasHit = false;
+    this.level.enemyEndboss.forEach((boss) => {
+      let projectileHit = projectile && projectile.isColliding(boss);
+      let meleeHit = meleeSlash && !meleeSlash.hasDealtDamage && meleeSlash.isColliding(boss);
+
+      if ((projectileHit || meleeHit) && !boss.isDead()) {
+        if (meleeHit) {
+          meleeSlash.hasDealtDamage = true;
+        }
+        boss.hit();
+
+        if (!this.bossTriggered) {
+          this.bossTriggered = true;
+          boss.isTriggered = true;
+          console.log("Boss fight started!");
+        }
+
+        this.bossStatusBar.setPercentage(boss.healthPoints);
+        hasHit = true;
+      }
+    });
+    return hasHit;
+  }
+
+  checkPlantHit(projectile, meleeSlash) {
+    let hasHit = false;
+    this.level.enemyPlant.forEach((plant) => {
+      let projectileHit = projectile && projectile.isColliding(plant);
+      let meleeHit = meleeSlash && !meleeSlash.hasDealtDamage && meleeSlash.isColliding(plant);
+
+      if ((projectileHit || meleeHit) && !plant.isDead()) {
+        if (meleeHit) {
+          meleeSlash.hasDealtDamage = true;
+        }
+        plant.hit();
+        hasHit = true;
+
+        setTimeout(() => {
+          let index = this.level.enemyPlant.indexOf(plant);
+          if (index > -1) {
+            this.level.enemyPlant.splice(index, 1);
+          }
+        }, 1000);
+      }
+    });
+    return hasHit;
+  }
+
+  isJumpingOn(enemy) {
+    let charBottom =
+      this.shadowCharacter.y + this.shadowCharacter.height - this.shadowCharacter.hitboxOffset.bottom;
+    let enemyTop = enemy.y + enemy.hitboxOffset.top;
+
+    return this.shadowCharacter.speedY < 0 && charBottom < enemyTop + 50;
+  }
+
+  handleCharacterTakingDamage() {
+    if (!this.shadowCharacter.isHurt()) {
+      this.shadowCharacter.hit();
+      this.characterStatusBar.setLifePercentage(this.shadowCharacter.healthPoints);
+      console.log("Charakter getroffen! Leben:", this.shadowCharacter.healthPoints);
+    }
+  }
+
+  // ==========================================
+  // 7. RENDERING & DRAWING
+  // ==========================================
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    // --- WORLD SPACE BEGINNT ---
+    this.drawWorldSpace();
+    this.drawScreenSpace();
+
+    requestAnimationFrame(() => this.draw());
+  }
+
+  drawWorldSpace() {
     this.ctx.translate(this.camera_x, 0);
+
     this.addObjectsToMap(this.level.backgroundObjectsRear);
 
     this.shadowCharacter.handleParticles(
@@ -265,31 +348,33 @@ class World {
     this.addObjectsToMap(this.level.enemyEndboss);
     this.addObjectsToMap(this.shadowProjectile);
     this.addObjectsToMap(this.enemyProjectiles);
+    this.addObjectsToMap(this.meleeAttacks);
     this.addObjectsToMap(this.level.coins);
     this.addObjectsToMap(this.level.shadowEnergy);
 
     this.addObjectsToMap(this.level.backgroundObjectsFront);
+
     this.ctx.translate(-this.camera_x, 0);
-    // --- WORLD SPACE ENDET ---
-    // --- SCREEN SPACE / UI BEGINNT ---
+  }
+
+  drawScreenSpace() {
     this.addToMap(this.characterStatusBar);
     this.addToMap(this.characterEnergyStatusBar);
     this.addToMap(this.characterCoinBar);
+
     if (this.bossTriggered) {
       this.addToMap(this.bossStatusBar);
     }
-    // --- SCREEN SPACE / UI ENDET ---
-
-    let self = this;
-    requestAnimationFrame(function () {
-      self.draw();
-    });
   }
+
   addObjectsToMap(objects) {
+    if (!objects) return;
+
     objects.forEach((obj) => {
       this.addToMap(obj);
     });
   }
+
   addToMap(MovableObject) {
     if (MovableObject.changeDirection) {
       this.flipImage(MovableObject);
