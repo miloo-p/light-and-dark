@@ -32,12 +32,18 @@ class World {
     setInterval(() => {
       this.detectCollision();
       this.shootProjectile();
-      this.checkItemCollisions();
-      this.checkCoinCollisions();
-      this.checkProjectileCollisions();
       this.checkBossTrigger();
-      this.checkEnemyProjectileCollisions();
     }, 1000 / 60);
+  }
+
+  detectCollision() {
+    this.checkStompCollisions();
+    this.checkPlantCollisions();
+    this.checkItemCollisions();
+    this.checkBossCollisions();
+    this.checkCoinCollisions();
+    this.checkProjectileCollisions();
+    this.checkEnemyProjectileCollisions();
   }
 
   checkEnemyProjectileCollisions() {
@@ -143,53 +149,65 @@ class World {
     return hasHit;
   }
 
-  detectCollision() {
+  isJumpingOn(enemy) {
+    let charBottom =
+      this.shadowCharacter.y + this.shadowCharacter.height - this.shadowCharacter.hitboxOffset.bottom;
+    let enemyTop = enemy.y + enemy.hitboxOffset.top;
+
+    return this.shadowCharacter.speedY < 0 && charBottom < enemyTop + 50;
+  }
+
+  handleCharacterTakingDamage() {
+    if (!this.shadowCharacter.isHurt()) {
+      this.shadowCharacter.hit();
+      this.characterStatusBar.setLifePercentage(this.shadowCharacter.healthPoints);
+      console.log("Charakter getroffen! Leben:", this.shadowCharacter.healthPoints);
+    }
+  }
+
+  checkStompCollisions() {
     this.level.enemyStomps.forEach((enemy, index) => {
       if (this.shadowCharacter.isColliding(enemy)) {
-        let charBottom =
-          this.shadowCharacter.y + this.shadowCharacter.height - this.shadowCharacter.hitboxOffset.bottom;
-        let enemyTop = enemy.y + enemy.hitboxOffset.top;
-
-        if (this.shadowCharacter.speedY < 0 && charBottom < enemyTop + 50) {
+        if (this.isJumpingOn(enemy)) {
           this.level.enemyStomps.splice(index, 1);
           this.shadowCharacter.speedY = 2;
         } else {
-          if (!this.shadowCharacter.isHurt()) {
-            this.shadowCharacter.hit();
-            this.characterStatusBar.setLifePercentage(this.shadowCharacter.healthPoints);
-            console.log("Treffer von Stomp! Leben:", this.shadowCharacter.healthPoints);
-          }
+          this.handleCharacterTakingDamage();
         }
       }
     });
+  }
 
-    if (this.level.enemyPlant) {
-      this.level.enemyPlant.forEach((plant) => {
-        if (this.shadowCharacter.isColliding(plant) && !plant.isDead()) {
-          let charBottom =
-            this.shadowCharacter.y + this.shadowCharacter.height - this.shadowCharacter.hitboxOffset.bottom;
-          let plantTop = plant.y + plant.hitboxOffset.top;
+  checkBossCollisions() {
+    if (!this.level.enemyEndboss) return;
 
-          if (this.shadowCharacter.speedY < 0 && charBottom < plantTop + 50) {
-            plant.hit();
-            this.shadowCharacter.speedY = 2;
+    this.level.enemyEndboss.forEach((boss) => {
+      if (this.shadowCharacter.isColliding(boss) && !boss.isDead()) {
+        this.handleCharacterTakingDamage();
+      }
+    });
+  }
 
-            setTimeout(() => {
-              let index = this.level.enemyPlant.indexOf(plant);
-              if (index > -1) {
-                this.level.enemyPlant.splice(index, 1);
-              }
-            }, 1000);
-          } else {
-            if (!this.shadowCharacter.isHurt()) {
-              this.shadowCharacter.hit();
-              this.characterStatusBar.setLifePercentage(this.shadowCharacter.healthPoints);
-              console.log("Pflanze berührt! Leben:", this.shadowCharacter.healthPoints);
+  checkPlantCollisions() {
+    if (!this.level.enemyPlant) return;
+
+    this.level.enemyPlant.forEach((plant) => {
+      if (this.shadowCharacter.isColliding(plant) && !plant.isDead()) {
+        if (this.isJumpingOn(plant)) {
+          plant.hit();
+          this.shadowCharacter.speedY = 2;
+
+          setTimeout(() => {
+            let index = this.level.enemyPlant.indexOf(plant);
+            if (index > -1) {
+              this.level.enemyPlant.splice(index, 1);
             }
-          }
+          }, 1000);
+        } else {
+          this.handleCharacterTakingDamage();
         }
-      });
-    }
+      }
+    });
   }
 
   checkItemCollisions() {
