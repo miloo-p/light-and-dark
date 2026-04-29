@@ -81,49 +81,66 @@ class World {
   checkProjectileCollisions() {
     for (let pIndex = this.shadowProjectile.length - 1; pIndex >= 0; pIndex--) {
       let projectile = this.shadowProjectile[pIndex];
-      let projectileHit = false;
 
-      this.level.enemyStomps.forEach((enemy, eIndex) => {
-        if (projectile.isColliding(enemy)) {
-          this.level.enemyStomps.splice(eIndex, 1);
-          projectileHit = true;
-        }
-      });
+      let hitStomp = this.checkStompHit(projectile);
+      let hitBoss = this.checkBossHit(projectile);
+      let hitPlant = this.checkPlantHit(projectile);
 
-      this.level.enemyEndboss.forEach((boss) => {
-        if (projectile.isColliding(boss) && !boss.isDead()) {
-          boss.hit();
-
-          if (!this.bossTriggered) {
-            this.bossTriggered = true;
-            boss.isTriggered = true;
-            console.log("Boss Kampf durch Fernangriff gestartet!");
-          }
-
-          this.bossStatusBar.setPercentage(boss.healthPoints);
-          projectileHit = true;
-          console.log("BOOOOM! Treffer! Boss HP:", boss.healthPoints);
-        }
-      });
-
-      this.level.enemyPlant.forEach((plant) => {
-        if (projectile.isColliding(plant) && !plant.isDead()) {
-          plant.hit();
-          projectileHit = true;
-
-          setTimeout(() => {
-            let index = this.level.enemyPlant.indexOf(plant);
-            if (index > -1) {
-              this.level.enemyPlant.splice(index, 1);
-            }
-          }, 1000);
-        }
-      });
+      let projectileHit = hitStomp || hitBoss || hitPlant;
 
       if (projectileHit || projectile.y > 600 || projectile.x > this.shadowCharacter.x + 800) {
         this.shadowProjectile.splice(pIndex, 1);
       }
     }
+  }
+
+  checkStompHit(projectile) {
+    let hasHit = false;
+    this.level.enemyStomps.forEach((enemy, index) => {
+      if (projectile.isColliding(enemy)) {
+        this.level.enemyStomps.splice(index, 1);
+        hasHit = true;
+      }
+    });
+    return hasHit;
+  }
+
+  checkBossHit(projectile) {
+    let hasHit = false;
+    this.level.enemyEndboss.forEach((boss) => {
+      if (projectile.isColliding(boss) && !boss.isDead()) {
+        boss.hit();
+
+        if (!this.bossTriggered) {
+          this.bossTriggered = true;
+          boss.isTriggered = true;
+          console.log("Boss Kampf durch Fernangriff gestartet!");
+        }
+
+        this.bossStatusBar.setPercentage(boss.healthPoints);
+        console.log("BOOOOM! Treffer! Boss HP:", boss.healthPoints);
+        hasHit = true;
+      }
+    });
+    return hasHit;
+  }
+
+  checkPlantHit(projectile) {
+    let hasHit = false;
+    this.level.enemyPlant.forEach((plant) => {
+      if (projectile.isColliding(plant) && !plant.isDead()) {
+        plant.hit();
+        hasHit = true;
+
+        setTimeout(() => {
+          let index = this.level.enemyPlant.indexOf(plant);
+          if (index > -1) {
+            this.level.enemyPlant.splice(index, 1);
+          }
+        }, 1000);
+      }
+    });
+    return hasHit;
   }
 
   detectCollision() {
