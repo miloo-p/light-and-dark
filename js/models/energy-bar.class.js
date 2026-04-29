@@ -12,9 +12,9 @@ class EnergyBar extends DrawableObject {
     super();
     this.loadAnimationImages(this.imagesEnergy);
     this.x = 20;
-    this.y = 20;
-    this.width = 70;
-    this.height = 70;
+    this.y = 15;
+    this.width = 80;
+    this.height = 80;
     this.setEnergyPercentage(40);
   }
 

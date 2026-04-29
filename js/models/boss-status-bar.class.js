@@ -13,10 +13,10 @@ class BossStatusBar extends DrawableObject {
   constructor() {
     super();
     this.loadAnimationImages(this.imagesBossStatus);
-    this.x = 160;
-    this.y = 10;
-    this.width = 400;
-    this.height = 60;
+    this.x = 200;
+    this.y = -18;
+    this.width = 300;
+    this.height = 80;
     this.setPercentage(100);
   }
 

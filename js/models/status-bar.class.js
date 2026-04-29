@@ -11,10 +11,10 @@ class StatusBar extends DrawableObject {
   constructor() {
     super();
     this.loadAnimationImages(this.imagesStatus);
-    this.x = 30;
-    this.y = 20;
+    this.x = 60;
+    this.y = 28;
     this.width = 200;
-    this.height = 60;
+    this.height = 53;
     this.setLifePercentage(100);
   }
 
@@ -25,18 +25,11 @@ class StatusBar extends DrawableObject {
   }
 
   resolveImageIndexForHP() {
-    if (this.lifePercentage == 100) {
-      return 5;
-    } else if (this.lifePercentage > 80) {
-      return 4;
-    } else if (this.lifePercentage > 60) {
-      return 3;
-    } else if (this.lifePercentage > 40) {
-      return 2;
-    } else if (this.lifePercentage > 20) {
-      return 1;
-    } else {
-      return 0;
-    }
+    if (this.lifePercentage >= 100) return 5;
+    else if (this.lifePercentage >= 80) return 4;
+    else if (this.lifePercentage >= 60) return 3;
+    else if (this.lifePercentage >= 40) return 2;
+    else if (this.lifePercentage >= 20) return 1;
+    else return 0;
   }
 }

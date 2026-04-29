@@ -4,8 +4,8 @@ class CoinBar extends DrawableObject {
   constructor() {
     super();
     this.loadImage("img/coin/coin_1.png");
-    this.x = 130;
-    this.y = -5;
+    this.x = 70;
+    this.y = 0;
     this.width = 60;
     this.height = 60;
   }
@@ -18,6 +18,6 @@ class CoinBar extends DrawableObject {
     super.draw(ctx);
     ctx.font = "16px Arial";
     ctx.fillStyle = "white";
-    ctx.fillText(`${this.collectedCoins} / 10`, this.x + 50, this.y + 34);
+    ctx.fillText(`${this.collectedCoins} / 10`, this.x + 50, this.y + 35);
   }
 }
