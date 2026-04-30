@@ -18,7 +18,7 @@ class MovableObject extends DrawableObject {
   fastFallEnabled = false;
 
   applyGravity() {
-    setInterval(() => {
+    this.gravityInterval = setInterval(() => {
       if (this.isAboveGround() || this.speedY > 0) {
         this.y -= this.speedY;
         if (this.speedY < 0 && this.fastFallEnabled) {
@@ -28,6 +28,8 @@ class MovableObject extends DrawableObject {
         }
       }
     }, 1000 / 60);
+
+    return this.gravityInterval;
   }
 
   isAboveGround() {

@@ -2,10 +2,10 @@ class EnemyPlantProjectileObject extends MovableObject {
   imagesFly = [`img/enemies/enemy_plant/projectile/1_p.png`, `img/enemies/enemy_plant/projectile/2_p.png`];
 
   hitboxOffset = {
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
+    top: 8,
+    bottom: 8,
+    left: 8,
+    right: 5,
   };
 
   constructor(startX, startY) {
@@ -23,14 +23,26 @@ class EnemyPlantProjectileObject extends MovableObject {
   }
 
   shootProjectile() {
-    setInterval(() => {
+    this.moveInterval = setInterval(() => {
       this.x -= 6;
     }, 1000 / 60);
   }
 
   animate() {
-    setInterval(() => {
+    this.animationInterval = setInterval(() => {
       this.displayAnimation(this.imagesFly);
     }, 150);
+  }
+
+  destroy() {
+    if (this.moveInterval) {
+      clearInterval(this.moveInterval);
+      this.moveInterval = null;
+    }
+
+    if (this.animationInterval) {
+      clearInterval(this.animationInterval);
+      this.animationInterval = null;
+    }
   }
 }

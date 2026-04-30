@@ -6,10 +6,10 @@ class EnemyBossProjectileObject extends MovableObject {
   ];
 
   hitboxOffset = {
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
+    top: 25,
+    bottom: 25,
+    left: 20,
+    right: 20,
   };
 
   constructor(startX, startY) {
@@ -19,22 +19,34 @@ class EnemyBossProjectileObject extends MovableObject {
 
     this.x = startX;
     this.y = startY;
-    this.height = 145;
-    this.width = 200;
+    this.height = 123;
+    this.width = 170;
 
     this.animate();
     this.shootProjectile();
   }
 
   shootProjectile() {
-    setInterval(() => {
+    this.moveInterval = setInterval(() => {
       this.x -= 6;
     }, 1000 / 60);
   }
 
   animate() {
-    setInterval(() => {
+    this.animationInterval = setInterval(() => {
       this.displayAnimation(this.imagesFly);
     }, 150);
+  }
+
+  destroy() {
+    if (this.moveInterval) {
+      clearInterval(this.moveInterval);
+      this.moveInterval = null;
+    }
+
+    if (this.animationInterval) {
+      clearInterval(this.animationInterval);
+      this.animationInterval = null;
+    }
   }
 }

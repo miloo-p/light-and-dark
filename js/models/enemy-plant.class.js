@@ -2,10 +2,10 @@ class EnemyPlant extends MovableObject {
   speed = 0.15 + Math.random() * 0.25;
 
   hitboxOffset = {
-    top: 0,
+    top: 15,
     bottom: 0,
-    left: 15,
-    right: 20,
+    left: 30,
+    right: 30,
   };
 
   healthPoints = 20;

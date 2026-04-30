@@ -47,6 +47,7 @@ class World {
   run() {
     setInterval(() => {
       this.detectCollision();
+      this.cleanupEnemyProjectiles();
       this.shootProjectile();
       this.performMeleeAttack();
       this.checkBossTrigger();
@@ -135,6 +136,7 @@ class World {
       let projectileHit = hitStomp || hitBoss || hitPlant;
 
       if (projectileHit || projectile.y > 600 || projectile.x > this.shadowCharacter.x + 800) {
+        projectile.destroy?.();
         this.shadowProjectile.splice(pIndex, 1);
       }
     }
@@ -206,9 +208,24 @@ class World {
           this.shadowCharacter.hit();
           this.characterStatusBar.setLifePercentage(this.shadowCharacter.healthPoints);
         }
+        projectile.destroy?.();
         this.enemyProjectiles.splice(index, 1);
       }
     });
+  }
+
+  cleanupEnemyProjectiles() {
+    let leftCameraEdge = -this.camera_x;
+
+    for (let i = this.enemyProjectiles.length - 1; i >= 0; i--) {
+      let projectile = this.enemyProjectiles[i];
+      let projectileRightSide = projectile.x + projectile.width;
+
+      if (projectileRightSide < leftCameraEdge) {
+        projectile.destroy?.();
+        this.enemyProjectiles.splice(i, 1);
+      }
+    }
   }
 
   checkItemCollisions() {

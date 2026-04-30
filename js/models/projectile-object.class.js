@@ -28,12 +28,24 @@ class ProjectileObject extends MovableObject {
     this.speedY = 10;
     this.applyGravity();
 
-    setInterval(() => {
+    this.moveInterval = setInterval(() => {
       if (this.changeDirection) {
         this.x -= 6;
       } else {
         this.x += 6;
       }
     }, 1000 / 60);
+  }
+
+  destroy() {
+    if (this.moveInterval) {
+      clearInterval(this.moveInterval);
+      this.moveInterval = null;
+    }
+
+    if (this.gravityInterval) {
+      clearInterval(this.gravityInterval);
+      this.gravityInterval = null;
+    }
   }
 }
