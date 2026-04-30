@@ -21,13 +21,14 @@ class MeleeSlashObject extends MovableObject {
   }
 
   updatePosition() {
-    this.changeDirection = this.character.otherDirection;
+    this.changeDirection = this.character.changeDirection;
 
     if (this.changeDirection) {
-      this.x = this.character.x + 30;
+      this.x = this.character.x - 30;
     } else {
       this.x = this.character.x + 30;
     }
+
     this.y = this.character.y;
   }
 

@@ -2,6 +2,7 @@ class World {
   // ==========================================
   // 1. PROPERTIES & STATE
   // ==========================================
+
   shadowCharacter = new ShadowCharacter();
   characterStatusBar = new StatusBar();
   characterEnergyStatusBar = new EnergyBar();
@@ -28,6 +29,7 @@ class World {
   // ==========================================
   // 2. SETUP & LIFECYCLE
   // ==========================================
+
   constructor(canvas, keyboard) {
     this.canvas = canvas;
     this.ctx = canvas.getContext("2d");
@@ -56,10 +58,17 @@ class World {
   // ==========================================
   // 3. GAME LOGIC & ACTIONS
   // ==========================================
+
   shootProjectile() {
     if (this.keyboard.keySpell) {
       if (this.isCooldownOver() && this.shadowCharacter.energyPoints >= 20) {
-        let singleProjectile = new ProjectileObject(this.shadowCharacter.x + 80, this.shadowCharacter.y);
+        let isFacingLeft = this.shadowCharacter.changeDirection;
+        let singleProjectile = new ProjectileObject(
+          this.shadowCharacter.x,
+          this.shadowCharacter.y,
+          isFacingLeft,
+        );
+
         this.shadowProjectile.push(singleProjectile);
 
         this.resetCooldown();
@@ -103,6 +112,7 @@ class World {
   // ==========================================
   // 4. COLLISION ORCHESTRATORS
   // ==========================================
+
   detectCollision() {
     this.checkStompCollisions();
     this.checkPlantCollisions();
@@ -143,6 +153,7 @@ class World {
   // ==========================================
   // 5. COLLISION HELPERS (CHARACTER)
   // ==========================================
+
   checkStompCollisions() {
     this.level.enemyStomps.forEach((enemy, index) => {
       if (this.shadowCharacter.isColliding(enemy)) {
@@ -321,6 +332,7 @@ class World {
   // ==========================================
   // 7. RENDERING & DRAWING
   // ==========================================
+
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 

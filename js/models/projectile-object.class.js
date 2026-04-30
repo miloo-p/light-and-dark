@@ -5,24 +5,35 @@ class ProjectileObject extends MovableObject {
     left: 0,
     right: 0,
   };
-  constructor(startX, startY) {
+
+  constructor(characterX, characterY, isFacingLeft) {
     super();
     this.loadImage("img/characters/shadow/projectile/shadow_projectile.png");
-    this.x = startX;
-    this.y = startY;
     this.height = 45;
     this.width = 45;
-    this.shootProjectile(startX, startY);
+
+    this.changeDirection = isFacingLeft;
+
+    if (this.changeDirection) {
+      this.x = characterX;
+    } else {
+      this.x = characterX + 80;
+    }
+    this.y = characterY;
+
+    this.shootProjectile();
   }
 
-  shootProjectile(x, y) {
-    this.x = x;
-    this.y = y;
+  shootProjectile() {
     this.speedY = 10;
     this.applyGravity();
 
     setInterval(() => {
-      this.x += 6;
+      if (this.changeDirection) {
+        this.x -= 6;
+      } else {
+        this.x += 6;
+      }
     }, 1000 / 60);
   }
 }
