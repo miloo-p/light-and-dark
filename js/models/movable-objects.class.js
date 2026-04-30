@@ -45,6 +45,18 @@ class MovableObject extends DrawableObject {
     this.currentImage++;
   }
 
+  displayAnimationOnce(arr) {
+    let i = this.currentImage;
+    if (i >= arr.length) {
+      i = arr.length - 1;
+    } else {
+      this.currentImage++;
+    }
+
+    let path = arr[i];
+    this.img = this.imageCache[path];
+  }
+
   cameraBehavior() {
     setInterval(() => {
       if (this.world.keyboard.keyRight && this.x < this.world.level.level_end_x && !this.isDead()) {
@@ -82,9 +94,13 @@ class MovableObject extends DrawableObject {
   }
 
   hit() {
+    if (this.isDead()) return;
+
     this.healthPoints -= 20;
-    if (this.healthPoints < 0) {
+
+    if (this.healthPoints <= 0) {
       this.healthPoints = 0;
+      this.currentImage = 0;
     } else {
       this.lastHit = new Date().getTime();
     }

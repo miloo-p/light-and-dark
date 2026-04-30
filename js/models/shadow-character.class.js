@@ -81,6 +81,7 @@ class ShadowCharacter extends MovableObject {
     `img/characters/shadow/05_dead/d1-10.png`,
     `img/characters/shadow/05_dead/d1-11.png`,
     `img/characters/shadow/05_dead/d1-12.png`,
+    `img/characters/shadow/05_dead/d1-13.png`,
   ];
 
   constructor() {
@@ -106,7 +107,7 @@ class ShadowCharacter extends MovableObject {
   animate() {
     setInterval(() => {
       if (this.isDead()) {
-        this.displayAnimation(this.imagesDead);
+        this.displayAnimationOnce(this.imagesDead);
       } else if (this.isHurt()) {
         this.displayAnimation(this.imagesHurt);
       } else if (this.isAboveGround()) {

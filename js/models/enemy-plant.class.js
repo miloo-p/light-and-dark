@@ -68,7 +68,7 @@ class EnemyPlant extends MovableObject {
   }
 
   shoot() {
-    let projectile = new EnemyPlantProjectileObject(this.x - 20, this.y + 30);
-    world.enemyProjectiles.push(projectile);
+    let bossProjectile = new EnemyPlantProjectileObject(this.x - 20, this.y + 30);
+    world.enemyProjectiles.push(bossProjectile);
   }
 }

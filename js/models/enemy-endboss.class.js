@@ -14,8 +14,12 @@ class EnemyEndboss extends MovableObject {
 
   healthPoints = 100;
 
+  // State Variables
   isTriggered = false;
-  isDeadState = false;
+  isShooting = false; // NEW: Track if boss is currently in attack animation
+  hasFiredProjectile = false; // NEW: Frame-lock for spawning the projectile
+  isNextPoisonHigh = false; // NEW: Corrected spelling from 'Poisen'
+  attackLoopStarted = false; // NEW: Guard to prevent multiple intervals
 
   imagesIdle = [
     `img/enemies/enemy_boss/6_idle/1_i.png`,
@@ -37,7 +41,6 @@ class EnemyEndboss extends MovableObject {
     `img/enemies/enemy_boss/1_walk/9_w.png`,
     `img/enemies/enemy_boss/1_walk/10_w.png`,
   ];
-
   imagesDead = [
     `img/enemies/enemy_boss/5_dead/1_d.png`,
     `img/enemies/enemy_boss/5_dead/2_d.png`,
@@ -45,7 +48,6 @@ class EnemyEndboss extends MovableObject {
     `img/enemies/enemy_boss/5_dead/4_d.png`,
     `img/enemies/enemy_boss/5_dead/5_d.png`,
   ];
-
   imagesHurt = [
     `img/enemies/enemy_boss/4_hurt/1_h.png`,
     `img/enemies/enemy_boss/4_hurt/2_h.png`,
@@ -54,7 +56,6 @@ class EnemyEndboss extends MovableObject {
     `img/enemies/enemy_boss/4_hurt/5_h.png`,
     `img/enemies/enemy_boss/4_hurt/6_h.png`,
   ];
-
   imagesShoot = [
     `img/enemies/enemy_boss/2_shoot-spell/1_s.png`,
     `img/enemies/enemy_boss/2_shoot-spell/2_s.png`,
@@ -77,28 +78,69 @@ class EnemyEndboss extends MovableObject {
   animate() {
     setInterval(() => {
       if (this.isDead()) {
-        this.displayAnimation(this.imagesDead);
+        this.displayAnimationOnce(this.imagesDead);
       } else if (this.isHurt()) {
         this.displayAnimation(this.imagesHurt);
+      } else if (this.isShooting) {
+        this.handleShootingState();
       } else if (this.isTriggered) {
-        if (this.x > this.targetX) {
-          this.displayAnimation(this.imagesWalk);
-        } else {
-          this.displayAnimation(this.imagesIdle);
-        }
+        this.handleMovementAnimation();
       } else {
         this.displayAnimation(this.imagesIdle);
       }
     }, 200);
 
     setInterval(() => {
-      if (this.isTriggered && !this.isDead() && !this.isHurt() && this.x > this.targetX) {
-        this.x -= 2.5;
+      if (this.isTriggered && !this.isDead() && !this.isHurt() && !this.isShooting) {
+        if (this.x > this.targetX) {
+          this.x -= 2.5;
+        } else if (!this.attackLoopStarted) {
+          this.x = this.targetX;
+          this.attackLoopStarted = true;
+          this.startAttackDecisionLoop();
+        }
       }
     }, 1000 / 60);
   }
 
-  moveLeft() {
-    this.x -= 0.5;
+  handleMovementAnimation() {
+    if (this.x > this.targetX) {
+      this.displayAnimation(this.imagesWalk);
+    } else {
+      this.displayAnimation(this.imagesIdle);
+    }
+  }
+
+  handleShootingState() {
+    this.displayAnimation(this.imagesShoot);
+    let currentFrameIndex = this.currentImage % this.imagesShoot.length;
+
+    if (currentFrameIndex === 3 && !this.hasFiredProjectile) {
+      this.shootPoison();
+      this.hasFiredProjectile = true;
+    }
+
+    if (currentFrameIndex === this.imagesShoot.length - 1) {
+      this.isShooting = false;
+    }
+  }
+
+  startAttackDecisionLoop() {
+    setInterval(() => {
+      if (this.isTriggered && !this.isDead() && !this.isHurt() && !this.isShooting) {
+        this.isShooting = true;
+        this.hasFiredProjectile = false;
+        this.currentImage = 0;
+      }
+    }, 3000);
+  }
+
+  shootPoison() {
+    let spawnX = this.x - 20;
+    let spawnY = this.isNextPoisonHigh ? this.y + 100 : this.y + 300;
+
+    let poisonProjectile = new EnemyBossProjectileObject(spawnX, spawnY);
+    world.enemyProjectiles.push(poisonProjectile);
+    this.isNextPoisonHigh = !this.isNextPoisonHigh;
   }
 }
