@@ -2,6 +2,8 @@ class Level {
   enemyStomps;
   backgroundObjectsRear;
   backgroundObjectsFront;
+  backgroundObjectsRearEndgame;
+  backgroundObjectsFrontEndgame;
   enemyEndboss;
   coins;
   shadowEnergy;
@@ -12,6 +14,8 @@ class Level {
     enemyStomps,
     backgroundObjectsRear,
     backgroundObjectsFront,
+    backgroundObjectsRearEndgame,
+    backgroundObjectsFrontEndgame,
     enemyEndboss,
     coins,
     shadowEnergy,
@@ -20,6 +24,8 @@ class Level {
     this.enemyStomps = enemyStomps;
     this.backgroundObjectsRear = backgroundObjectsRear;
     this.backgroundObjectsFront = backgroundObjectsFront;
+    this.backgroundObjectsRearEndgame = backgroundObjectsRearEndgame;
+    this.backgroundObjectsFrontEndgame = backgroundObjectsFrontEndgame;
     this.enemyEndboss = enemyEndboss;
     this.coins = coins;
     this.shadowEnergy = shadowEnergy;

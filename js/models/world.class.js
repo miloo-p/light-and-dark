@@ -19,6 +19,7 @@ class World {
   attackCooldown = 500;
 
   level = level1;
+  isGamePaused = false;
 
   canvas;
   ctx;
@@ -46,6 +47,8 @@ class World {
 
   run() {
     setInterval(() => {
+      if (this.isGamePaused) return;
+
       this.detectCollision();
       this.cleanupEnemyProjectiles();
       this.shootProjectile();
@@ -293,10 +296,8 @@ class World {
         }
         boss.hit();
 
-        if (!this.bossTriggered) {
-          this.bossTriggered = true;
-          boss.isTriggered = true;
-          console.log("Boss fight started!");
+        if (boss.isDead()) {
+          this.executeLevelEndCut();
         }
 
         this.bossStatusBar.setPercentage(boss.healthPoints);
@@ -425,5 +426,15 @@ class World {
   flipImageBack(MovableObject) {
     this.ctx.restore();
     MovableObject.x = MovableObject.x * -1;
+  }
+
+  executeLevelEndCut() {
+    this.isGamePaused = true;
+    this.keyboard.keyLeft = false;
+    this.keyboard.keyRight = false;
+
+    this.level.backgroundObjectsRear = this.level.backgroundObjectsRearEndgame;
+
+    this.level.backgroundObjectsFront = this.level.backgroundObjectsFrontEndgame;
   }
 }
