@@ -28,7 +28,7 @@ class ProjectileObject extends MovableObject {
     this.speedY = 10;
     this.applyGravity();
 
-    this.moveInterval = setInterval(() => {
+    this.moveInterval = this.setStoppableInterval(() => {
       if (this.changeDirection) {
         this.x -= 6;
       } else {

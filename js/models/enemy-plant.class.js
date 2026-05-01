@@ -51,7 +51,7 @@ class EnemyPlant extends MovableObject {
   }
 
   animate() {
-    setInterval(() => {
+    this.setStoppableInterval(() => {
       if (this.isDead()) {
         this.displayAnimation(this.imagesDead);
       } else if (this.isHurt()) {

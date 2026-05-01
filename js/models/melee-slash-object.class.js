@@ -33,13 +33,13 @@ class MeleeSlashObject extends MovableObject {
   }
 
   followCharacter() {
-    this.followInterval = setInterval(() => {
+    this.followInterval = this.setStoppableInterval(() => {
       this.updatePosition();
     }, 1000 / 60);
   }
 
   animate() {
-    this.animationInterval = setInterval(() => {
+    this.animationInterval = this.setStoppableInterval(() => {
       if (this.currentImage < this.imagesSlash.length) {
         let path = this.imagesSlash[this.currentImage];
         this.img = this.imageCache[path];

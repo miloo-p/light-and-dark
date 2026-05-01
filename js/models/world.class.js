@@ -365,12 +365,6 @@ class World {
 
     this.addObjectsToMap(this.level.backgroundObjectsRear);
 
-    this.shadowCharacter.handleParticles(
-      this.ctx,
-      this.shadowCharacter.width / 2,
-      this.shadowCharacter.height / 2 + 20,
-      0.05,
-    );
     this.addToMap(this.shadowCharacter);
 
     this.addObjectsToMap(this.level.enemyStomps);
@@ -432,9 +426,18 @@ class World {
     this.isGamePaused = true;
     this.keyboard.keyLeft = false;
     this.keyboard.keyRight = false;
+    this.keyboard.keyJump = false;
+    this.keyboard.keySpell = false;
+    this.keyboard.keyAttack = false;
 
     this.level.backgroundObjectsRear = this.level.backgroundObjectsRearEndgame;
-
     this.level.backgroundObjectsFront = this.level.backgroundObjectsFrontEndgame;
+
+    console.log("Boss is dead! Starting 5-second cinematic delay...");
+
+    setTimeout(() => {
+      MovableObject.stopAllIntervals();
+      console.log("Level finished: Environment transformed and time stopped!");
+    }, 5000);
   }
 }

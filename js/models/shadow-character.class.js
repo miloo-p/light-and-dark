@@ -104,8 +104,13 @@ class ShadowCharacter extends MovableObject {
     this.animate();
   }
 
+  draw(ctx) {
+    this.handleParticles(ctx);
+    super.draw(ctx);
+  }
+
   animate() {
-    setInterval(() => {
+    this.setStoppableInterval(() => {
       if (this.isDead()) {
         this.displayAnimationOnce(this.imagesDead);
       } else if (this.isHurt()) {

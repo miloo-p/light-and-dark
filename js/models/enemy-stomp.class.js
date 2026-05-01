@@ -61,7 +61,7 @@ class EnemyStomp extends MovableObject {
   }
 
   animate() {
-    setInterval(() => {
+    this.setStoppableInterval(() => {
       let i = this.currentImage % this.imagesWalk.length;
       let path = this.imagesWalk[i];
       this.img = this.imageCache[path];

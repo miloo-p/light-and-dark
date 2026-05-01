@@ -18,7 +18,7 @@ class ShadowEnergy extends MovableObject {
   }
 
   draw(ctx) {
-    super.draw(ctx);
     this.handleParticles(ctx);
+    super.draw(ctx);
   }
 }

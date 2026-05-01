@@ -1,4 +1,5 @@
 class MovableObject extends DrawableObject {
+  static stoppableIntervalIds = [];
   speed;
   changeDirection = false;
 
@@ -17,8 +18,18 @@ class MovableObject extends DrawableObject {
 
   fastFallEnabled = false;
 
+  setStoppableInterval(taskFunction, timeInMs) {
+    let id = setInterval(taskFunction, timeInMs);
+    MovableObject.stoppableIntervalIds.push(id);
+    return id;
+  }
+  static stopAllIntervals() {
+    MovableObject.stoppableIntervalIds.forEach(clearInterval);
+    MovableObject.stoppableIntervalIds = [];
+  }
+
   applyGravity() {
-    setInterval(() => {
+    this.setStoppableInterval(() => {
       if (this.isAboveGround() || this.speedY > 0) {
         this.y -= this.speedY;
         if (this.speedY < 0 && this.fastFallEnabled) {
@@ -58,7 +69,7 @@ class MovableObject extends DrawableObject {
   }
 
   cameraBehavior() {
-    setInterval(() => {
+    this.setStoppableInterval(() => {
       if (this.world.keyboard.keyRight && this.x < this.world.level.level_end_x && !this.isDead()) {
         this.x += this.speed;
         this.changeDirection = false;
@@ -98,7 +109,6 @@ class MovableObject extends DrawableObject {
 
     this.healthPoints -= 20;
 
-    // CHANGED: From < 0 to <= 0 to properly catch exact zero
     if (this.healthPoints <= 0) {
       this.healthPoints = 0;
       this.currentImage = 0;
@@ -118,7 +128,7 @@ class MovableObject extends DrawableObject {
 
   moveRight() {}
   moveLeft() {
-    setInterval(() => {
+    this.setStoppableInterval(() => {
       this.x -= this.speed;
     }, 1000 / 60);
   }

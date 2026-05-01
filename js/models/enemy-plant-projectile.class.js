@@ -23,13 +23,13 @@ class EnemyPlantProjectileObject extends MovableObject {
   }
 
   shootProjectile() {
-    this.moveInterval = setInterval(() => {
+    this.moveInterval = this.setStoppableInterval(() => {
       this.x -= 6;
     }, 1000 / 60);
   }
 
   animate() {
-    this.animationInterval = setInterval(() => {
+    this.animationInterval = this.setStoppableInterval(() => {
       this.displayAnimation(this.imagesFly);
     }, 150);
   }
