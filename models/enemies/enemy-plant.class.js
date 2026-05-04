@@ -36,9 +36,9 @@ class EnemyPlant extends MovableObject {
 
   currentImage = 0;
 
-  constructor() {
+  constructor(x) {
     super().loadImage(`img/enemies/enemy_plant/walking/1_w.png`);
-    this.x = 600;
+    this.x = x;
     this.y = 265;
     this.width = 124;
     this.height = 110;

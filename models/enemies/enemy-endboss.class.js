@@ -14,12 +14,11 @@ class EnemyEndboss extends MovableObject {
 
   healthPoints = 100;
 
-  // State Variables
   isTriggered = false;
-  isShooting = false; // NEW: Track if boss is currently in attack animation
-  hasFiredProjectile = false; // NEW: Frame-lock for spawning the projectile
-  isNextPoisonHigh = false; // NEW: Corrected spelling from 'Poisen'
-  attackLoopStarted = false; // NEW: Guard to prevent multiple intervals
+  isShooting = false;
+  hasFiredProjectile = false;
+  isNextPoisonHigh = false;
+  attackLoopStarted = false;
 
   imagesIdle = [
     `img/enemies/enemy_boss/6_idle/1_i.png`,

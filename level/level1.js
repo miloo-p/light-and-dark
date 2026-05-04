@@ -1,5 +1,18 @@
 const level1 = new Level(
-  [new EnemyStomp(), new EnemyStomp(), new EnemyStomp()],
+  [
+    new EnemyStomp(500),
+    new EnemyStomp(500),
+    new EnemyStomp(500),
+    new EnemyStomp(1000),
+    new EnemyStomp(1000),
+    new EnemyStomp(1000),
+    new EnemyStomp(1500),
+    new EnemyStomp(1500),
+    new EnemyStomp(1500),
+    new EnemyStomp(2100),
+    new EnemyStomp(2100),
+    new EnemyStomp(2100),
+  ],
   [
     new BackgroundObject("img/background/dead/bg_d_1.png", -1139, 0),
     new BackgroundObject("img/background/dead/bg_d_2.png", -1139, 0),
@@ -92,5 +105,5 @@ const level1 = new Level(
     new ShadowEnergy(2100, 250),
     new ShadowEnergy(2200, 250),
   ],
-  [new EnemyPlant()],
+  [new EnemyPlant(600)],
 );

@@ -46,10 +46,10 @@ class EnemyStomp extends MovableObject {
   ];
 
   currentImage = 0;
-  constructor() {
+  constructor(x) {
     super().loadImage(`img/enemies/enemy_stomp/idle/1_i.png`);
 
-    this.x = 250 + Math.random() * 500;
+    this.x = x + Math.random() * 500;
     this.y = 300;
     this.width = 71;
     this.height = 70;
