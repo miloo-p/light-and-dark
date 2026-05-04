@@ -108,8 +108,11 @@ class World {
       this.bossTriggered = true;
       this.level.level_start_x = 2222;
 
+      AudioManager.stopLayer("ambience_layer");
+      AudioManager.stopLayer("music_layer");
+      AudioManager.playLayer("fight_the_devil", "music_layer");
+
       this.level.enemyEndboss.forEach((boss) => (boss.isTriggered = true));
-      console.log("Boss Kampf gestartet!");
     }
   }
 
@@ -429,6 +432,9 @@ class World {
     this.keyboard.keyJump = false;
     this.keyboard.keySpell = false;
     this.keyboard.keyAttack = false;
+
+    AudioManager.stopLayer("music_layer");
+    AudioManager.playLayer("morning_in_the_forest", "music_layer");
 
     this.level.backgroundObjectsRear = this.level.backgroundObjectsRearEndgame;
     this.level.backgroundObjectsFront = this.level.backgroundObjectsFrontEndgame;

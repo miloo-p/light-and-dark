@@ -43,6 +43,7 @@ class MeleeSlashObject extends MovableObject {
       if (this.currentImage < this.imagesSlash.length) {
         let path = this.imagesSlash[this.currentImage];
         this.img = this.imageCache[path];
+        AudioManager.playSFX("melee_swoosh");
         this.currentImage++;
       } else {
         this.isFinished = true;

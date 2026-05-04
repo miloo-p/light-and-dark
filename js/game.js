@@ -19,7 +19,7 @@ function toggleCollisionBoxes() {
   updateCollisionToggleButton();
 }
 
-function init() {
+function initStartGame() {
   canvas = document.getElementById("game-canvas");
   world = new World(canvas, keyboard);
   const button = document.getElementById("collision-toggle");
@@ -27,8 +27,11 @@ function init() {
   if (button) {
     button.addEventListener("click", toggleCollisionBoxes);
   }
-
+  AudioManager.initAudioManager();
   updateCollisionToggleButton();
+
+  AudioManager.playLayer("horror_ambience", "ambience_layer");
+  AudioManager.playLayer("winter_ruins", "music_layer");
 }
 // #endregion collision-toggle-debug
 

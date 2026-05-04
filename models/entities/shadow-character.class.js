@@ -13,6 +13,8 @@ class ShadowCharacter extends MovableObject {
   energyPoints = 40;
   collectedCoins = 0;
 
+  isWalkingSoundPlaying = false;
+
   imagesIdle = [
     `img/characters/shadow/01_idle/i1-1.png`,
     `img/characters/shadow/01_idle/i1-2.png`,
@@ -113,15 +115,22 @@ class ShadowCharacter extends MovableObject {
     this.setStoppableInterval(() => {
       if (this.isDead()) {
         this.displayAnimationOnce(this.imagesDead);
+        this.stopWalkingSound();
       } else if (this.isHurt()) {
         this.displayAnimation(this.imagesHurt);
+        this.stopWalkingSound();
       } else if (this.isAboveGround()) {
         this.displayAnimation(this.imagesJump);
+        this.stopWalkingSound();
       } else {
         if (this.world.keyboard.keyRight || this.world.keyboard.keyLeft) {
           this.displayAnimation(this.imagesWalk);
+          this.playWalkingSound();
+        } else {
+          this.stopWalkingSound();
         }
       }
+
       if (this.world.keyboard.keyJump && !this.isAboveGround() && !this.isDead()) {
         this.jump();
       }
@@ -130,5 +139,21 @@ class ShadowCharacter extends MovableObject {
 
   jump() {
     this.speedY = 15;
+  }
+
+  playWalkingSound() {
+    if (!this.isWalkingSoundPlaying) {
+      AudioManager.playLayer("walking_forest", "player_walk_layer");
+      AudioManager.playLayer("whispering_spells", "player_walk_layer-2");
+      this.isWalkingSoundPlaying = true;
+    }
+  }
+
+  stopWalkingSound() {
+    if (this.isWalkingSoundPlaying) {
+      AudioManager.stopLayer("player_walk_layer");
+      AudioManager.stopLayer("player_walk_layer-2");
+      this.isWalkingSoundPlaying = false;
+    }
   }
 }

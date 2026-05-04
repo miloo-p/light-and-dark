@@ -126,7 +126,6 @@ class MovableObject extends DrawableObject {
     return this.healthPoints == 0;
   }
 
-  moveRight() {}
   moveLeft() {
     this.setStoppableInterval(() => {
       this.x -= this.speed;

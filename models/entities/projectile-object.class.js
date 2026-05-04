@@ -27,6 +27,7 @@ class ProjectileObject extends MovableObject {
   shootProjectile() {
     this.speedY = 10;
     this.applyGravity();
+    AudioManager.playSFX("spell_shoot");
 
     this.moveInterval = this.setStoppableInterval(() => {
       if (this.changeDirection) {
