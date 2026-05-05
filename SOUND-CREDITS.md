@@ -11,6 +11,7 @@ Huge thanks to the original creators!
 | `winter_ruins.ogg`          | FarBeyond Studio | Freebies Vol. 1 - 05                                 | CC-BY 4.0         |
 | `fight_the_devil.wav`       | FarBeyond Studio | Freebies Vol. 1 - 06                                 | CC-BY 4.0         |
 | `morning_in_the_forest.mp3` | viramiller       | [Freesound #425705](https://freesound.org/s/425705/) | _Check Freesound_ |
+| `piano_theme.ogg`           | djgriffin        | [Freesound #425705](https://freesound.org/s/730277/) | _Check Freesound_ |
 
 ## Transformation & Special Effects
 
@@ -38,5 +39,7 @@ Huge thanks to the original creators!
 | `stomp_dead_crate.wav`   | kevinkace        | [Freesound #66780](https://freesound.org/s/66780/)   | _Check Freesound_ |
 | `stomp_dead_pain.wav`    | tonsil5          | [Freesound #555426](https://freesound.org/s/555426/) | _Check Freesound_ |
 | `stomp_walking.wav`      | vhbc             | [Freesound #633193](https://freesound.org/s/633193/) | _Check Freesound_ |
+| `plant_dies.wav`         | sirplus          | [Freesound #633193](https://freesound.org/s/622335/) | _Check Freesound_ |
+| `plant_dies-2.wav`       | nebulousflynn    | [Freesound #633193](https://freesound.org/s/221554/) | _Check Freesound_ |
 
 > **Note on Licenses:** Freesound assets typically fall under CC0 (Public Domain), CC-BY (Attribution), or CC-BY-NC (Non-Commercial). Please check the individual source links for exact licensing details.

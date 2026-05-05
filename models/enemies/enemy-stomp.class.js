@@ -1,6 +1,12 @@
 class EnemyStomp extends MovableObject {
   speed = 0.15 + Math.random() * 0.25;
 
+  healthPoints = 20;
+
+  isWalkingSoundPlaying = false;
+  walkLayerId = `stomp_walk_${Math.random()}`;
+  hasPlayedDeathSound = false;
+
   hitboxOffset = {
     top: 0,
     bottom: 0,
@@ -36,14 +42,7 @@ class EnemyStomp extends MovableObject {
 
   imagesHurt = [];
 
-  imagesDead = [
-    `img/characters/shadow/05_dead/d1-1.png`,
-    `img/characters/shadow/05_dead/d1-2.png`,
-    `img/characters/shadow/05_dead/d1-3.png`,
-    `img/characters/shadow/05_dead/d1-4.png`,
-    `img/characters/shadow/05_dead/d1-5.png`,
-    `img/characters/shadow/05_dead/d1-6.png`,
-  ];
+  imagesDead = [`img/enemies/enemy_stomp/death/6_d.png`, `img/enemies/enemy_stomp/death/7_d.png`];
 
   currentImage = 0;
   constructor(x) {
@@ -62,10 +61,38 @@ class EnemyStomp extends MovableObject {
 
   animate() {
     this.setStoppableInterval(() => {
-      let i = this.currentImage % this.imagesWalk.length;
-      let path = this.imagesWalk[i];
-      this.img = this.imageCache[path];
-      this.currentImage++;
+      if (this.isDead()) {
+        this.displayAnimation(this.imagesDead);
+        this.checkStompIsDead();
+      } else {
+        let i = this.currentImage % this.imagesWalk.length;
+        let path = this.imagesWalk[i];
+        this.img = this.imageCache[path];
+        this.currentImage++;
+      }
     }, 250);
+  }
+
+  playWalkingSound() {
+    if (!this.isWalkingSoundPlaying) {
+      AudioManager.playLayer("stomp_walking", this.walkLayerId);
+      this.isWalkingSoundPlaying = true;
+    }
+  }
+
+  stopWalkingSound() {
+    if (this.isWalkingSoundPlaying) {
+      AudioManager.stopLayer(this.walkLayerId);
+      this.isWalkingSoundPlaying = false;
+    }
+  }
+
+  checkStompIsDead() {
+    if (this.isDead() && !this.hasPlayedDeathSound) {
+      this.stopWalkingSound();
+      AudioManager.playSFX("stomp_dead_crate");
+      AudioManager.playSFX("stomp_dead_pain");
+      this.hasPlayedDeathSound = true;
+    }
   }
 }

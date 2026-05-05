@@ -163,11 +163,20 @@ class World {
   // ==========================================
 
   checkStompCollisions() {
-    this.level.enemyStomps.forEach((enemy, index) => {
-      if (this.shadowCharacter.isColliding(enemy)) {
-        if (this.isJumpingOn(enemy)) {
-          this.level.enemyStomps.splice(index, 1);
+    if (!this.level.enemyStomps) return;
+
+    this.level.enemyStomps.forEach((stomp) => {
+      if (this.shadowCharacter.isColliding(stomp) && !stomp.isDead()) {
+        if (this.isJumpingOn(stomp)) {
+          stomp.hit();
           this.shadowCharacter.speedY = 2;
+
+          setTimeout(() => {
+            let index = this.level.enemyStomps.indexOf(stomp);
+            if (index > -1) {
+              this.level.enemyStomps.splice(index, 1);
+            }
+          }, 1000);
         } else {
           this.handleCharacterTakingDamage();
         }
@@ -272,16 +281,23 @@ class World {
   checkStompHit(projectile, meleeSlash) {
     let hasHit = false;
 
-    this.level.enemyStomps.forEach((enemy, index) => {
-      let projectileHit = projectile && projectile.isColliding(enemy);
-      let meleeHit = meleeSlash && !meleeSlash.hasDealtDamage && meleeSlash.isColliding(enemy);
+    this.level.enemyStomps.forEach((stomp, index) => {
+      let projectileHit = projectile && projectile.isColliding(stomp);
+      let meleeHit = meleeSlash && !meleeSlash.hasDealtDamage && meleeSlash.isColliding(stomp);
 
-      if (projectileHit || meleeHit) {
+      if ((projectileHit || meleeHit) && !stomp.isDead()) {
         if (meleeHit) {
           meleeSlash.hasDealtDamage = true;
         }
-        this.level.enemyStomps.splice(index, 1);
+        stomp.hit();
         hasHit = true;
+
+        setTimeout(() => {
+          let index = this.level.enemyStomps.indexOf(stomp);
+          if (index > -1) {
+            this.level.enemyStomps.splice(index, 1);
+          }
+        }, 1000);
       }
     });
     return hasHit;
@@ -434,7 +450,7 @@ class World {
     this.keyboard.keyAttack = false;
 
     AudioManager.stopLayer("music_layer");
-    AudioManager.playLayer("morning_in_the_forest", "music_layer");
+    AudioManager.playLayer("piano_theme", "music_layer");
 
     this.level.backgroundObjectsRear = this.level.backgroundObjectsRearEndgame;
     this.level.backgroundObjectsFront = this.level.backgroundObjectsFrontEndgame;
@@ -444,6 +460,6 @@ class World {
     setTimeout(() => {
       MovableObject.stopAllIntervals();
       console.log("Level finished: Environment transformed and time stopped!");
-    }, 5000);
+    }, 15000);
   }
 }

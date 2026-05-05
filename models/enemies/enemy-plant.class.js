@@ -10,6 +10,8 @@ class EnemyPlant extends MovableObject {
 
   healthPoints = 20;
 
+  hasPlayedDeathSound = false;
+
   imagesAttack = [
     `img/enemies/enemy_plant/shoot/1_s.png`,
     `img/enemies/enemy_plant/shoot/2_s.png`,
@@ -26,9 +28,6 @@ class EnemyPlant extends MovableObject {
   ];
 
   imagesDead = [
-    `img/enemies/enemy_plant/dies/1_d.png`,
-    `img/enemies/enemy_plant/dies/2_d.png`,
-    `img/enemies/enemy_plant/dies/3_d.png`,
     `img/enemies/enemy_plant/dies/4_d.png`,
     `img/enemies/enemy_plant/dies/5_d.png`,
     `img/enemies/enemy_plant/dies/6_d.png`,
@@ -54,6 +53,7 @@ class EnemyPlant extends MovableObject {
     this.setStoppableInterval(() => {
       if (this.isDead()) {
         this.displayAnimation(this.imagesDead);
+        this.checkStompIsDead();
       } else if (this.isHurt()) {
         this.displayAnimation(this.imagesHurt);
       } else {
@@ -70,5 +70,14 @@ class EnemyPlant extends MovableObject {
   shoot() {
     let bossProjectile = new EnemyPlantProjectileObject(this.x - 20, this.y + 30);
     world.enemyProjectiles.push(bossProjectile);
+    AudioManager.playSFX("plant_attack");
+  }
+
+  checkStompIsDead() {
+    if (this.isDead() && !this.hasPlayedDeathSound) {
+      AudioManager.playSFX("plant_dies");
+      AudioManager.playSFX("plant_dies-2");
+      this.hasPlayedDeathSound = true;
+    }
   }
 }

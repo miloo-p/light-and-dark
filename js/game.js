@@ -2,24 +2,9 @@ let canvas;
 let ctx;
 let world;
 let keyboard = new Keyboard();
-// #region collision-toggle-debug
-window.showCollisionBoxes = false;
-
-function updateCollisionToggleButton() {
-  const button = document.getElementById("collision-toggle");
-
-  if (button) {
-    button.textContent = window.showCollisionBoxes ? "Hitboxen: an" : "Hitboxen: aus";
-    button.setAttribute("aria-pressed", String(window.showCollisionBoxes));
-  }
-}
-
-function toggleCollisionBoxes() {
-  window.showCollisionBoxes = !window.showCollisionBoxes;
-  updateCollisionToggleButton();
-}
 
 function initStartGame() {
+  initLevel();
   canvas = document.getElementById("game-canvas");
   world = new World(canvas, keyboard);
   const button = document.getElementById("collision-toggle");
@@ -28,12 +13,10 @@ function initStartGame() {
     button.addEventListener("click", toggleCollisionBoxes);
   }
   AudioManager.initAudioManager();
-  updateCollisionToggleButton();
 
   AudioManager.playLayer("horror_ambience", "ambience_layer");
   AudioManager.playLayer("winter_ruins", "music_layer");
 }
-// #endregion collision-toggle-debug
 
 window.addEventListener("keydown", (event) => {
   if (event.key == "a") {

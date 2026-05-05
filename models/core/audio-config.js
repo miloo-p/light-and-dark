@@ -23,6 +23,12 @@ const AUDIO_ASSETS = [
     loop: true,
     defaultVolume: 0.2,
   },
+  {
+    id: "piano_theme",
+    path: "audio/background/vibrant-forest/piano_theme.ogg",
+    loop: true,
+    defaultVolume: 0.2,
+  },
 
   { id: "melee_swoosh", path: "audio/character/melee/melee_swoosh.ogg", loop: false, defaultVolume: 0.5 },
   { id: "spell_shoot", path: "audio/character/spell/spell_shoot.wav", loop: false, defaultVolume: 0.2 },
@@ -52,6 +58,18 @@ const AUDIO_ASSETS = [
     defaultVolume: 0.4,
   },
   {
+    id: "plant_dies",
+    path: "audio/enemies/plant/dead/plant_dies.wav",
+    loop: false,
+    defaultVolume: 0.4,
+  },
+  {
+    id: "plant_dies-2",
+    path: "audio/enemies/plant/dead/plant_dies-2.wav",
+    loop: false,
+    defaultVolume: 0.4,
+  },
+  {
     id: "stomp_dead_crate",
     path: "audio/enemies/stomp/dead/stomp_dead_crate.wav",
     loop: false,
@@ -65,8 +83,8 @@ const AUDIO_ASSETS = [
   },
   {
     id: "stomp_walking",
-    path: "audio/enemies/stomp/Walking/stomp_walking.wav",
+    path: "audio/enemies/stomp/walking/stomp_walking.wav",
     loop: true,
-    defaultVolume: 0.3,
+    defaultVolume: 1,
   },
 ];
