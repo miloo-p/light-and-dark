@@ -6,6 +6,8 @@ class MovableObject extends DrawableObject {
   speedY = 0;
   acceleration = 0.6;
 
+  cameraOffset = 25;
+
   healthPoints;
   lastHit = 0;
 
@@ -78,12 +80,12 @@ class MovableObject extends DrawableObject {
         this.x -= this.speed;
         this.changeDirection = true;
       }
+      let targetCameraX = -this.x + this.cameraOffset;
 
-      //Smooth Camera + Max Distance set
-      let targetCameraX = -this.x + 25;
       targetCameraX = Math.min(targetCameraX, 0);
       let maxScrollRight = -(2800 - 700);
       targetCameraX = Math.max(targetCameraX, maxScrollRight);
+
       this.world.camera_x += (targetCameraX - this.world.camera_x) * 0.05;
     }, 1000 / 60);
   }

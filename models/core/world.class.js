@@ -26,6 +26,7 @@ class World {
   keyboard;
   world;
   camera_x = 0;
+  cameraOffset = 500;
 
   // ==========================================
   // 2. SETUP & LIFECYCLE
@@ -451,6 +452,8 @@ class World {
 
     AudioManager.stopLayer("music_layer");
     AudioManager.playLayer("piano_theme", "music_layer");
+
+    this.shadowCharacter.cameraOffset = 500;
 
     this.level.backgroundObjectsRear = this.level.backgroundObjectsRearEndgame;
     this.level.backgroundObjectsFront = this.level.backgroundObjectsFrontEndgame;
