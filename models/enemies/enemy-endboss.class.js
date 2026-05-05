@@ -19,6 +19,7 @@ class EnemyEndboss extends MovableObject {
   hasFiredProjectile = false;
   isNextPoisonHigh = false;
   attackLoopStarted = false;
+  hasPlayedDeathSound = false;
 
   imagesIdle = [
     `img/enemies/enemy_boss/6_idle/1_i.png`,
@@ -78,8 +79,10 @@ class EnemyEndboss extends MovableObject {
     this.setStoppableInterval(() => {
       if (this.isDead()) {
         this.displayAnimationOnce(this.imagesDead);
+        this.checkIsDead();
       } else if (this.isHurt()) {
         this.displayAnimation(this.imagesHurt);
+        this.checkIsHurt();
       } else if (this.isShooting) {
         this.handleShootingState();
       } else if (this.isTriggered) {
@@ -131,7 +134,7 @@ class EnemyEndboss extends MovableObject {
         this.hasFiredProjectile = false;
         this.currentImage = 0;
       }
-    }, 3000);
+    }, 2000);
   }
 
   shootPoison() {
@@ -140,6 +143,21 @@ class EnemyEndboss extends MovableObject {
 
     let poisonProjectile = new EnemyBossProjectileObject(spawnX, spawnY);
     world.enemyProjectiles.push(poisonProjectile);
+    AudioManager.playSFX("boss_serpent_spell");
     this.isNextPoisonHigh = !this.isNextPoisonHigh;
+  }
+
+  checkIsDead() {
+    if (this.isDead() && !this.hasPlayedDeathSound) {
+      AudioManager.playSFX("boss_dies");
+      this.hasPlayedDeathSound = true;
+    }
+  }
+
+  checkIsHurt() {
+    if (this.isHurt()) {
+      let soundToPlay = Math.random() < 0.5 ? "boss_hurt_1" : "boss_hurt_2";
+      AudioManager.playSFX(soundToPlay);
+    }
   }
 }

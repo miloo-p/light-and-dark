@@ -53,7 +53,7 @@ class EnemyPlant extends MovableObject {
     this.setStoppableInterval(() => {
       if (this.isDead()) {
         this.displayAnimation(this.imagesDead);
-        this.checkStompIsDead();
+        this.checkIsDead();
       } else if (this.isHurt()) {
         this.displayAnimation(this.imagesHurt);
       } else {
@@ -73,7 +73,7 @@ class EnemyPlant extends MovableObject {
     AudioManager.playSFX("plant_attack");
   }
 
-  checkStompIsDead() {
+  checkIsDead() {
     if (this.isDead() && !this.hasPlayedDeathSound) {
       AudioManager.playSFX("plant_dies");
       AudioManager.playSFX("plant_dies-2");
