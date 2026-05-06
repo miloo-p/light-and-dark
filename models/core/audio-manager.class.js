@@ -16,7 +16,7 @@ class AudioManager {
     });
 
     this.isInitialized = true;
-    console.log(`AudioManager ready. Loaded ${Object.keys(this.sounds).length} sounds.`);
+    console.log(`AudioManager ready`);
   }
 
   static playSFX(soundKey) {
