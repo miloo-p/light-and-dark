@@ -209,7 +209,9 @@ class World {
     if (!this.level.enemyEndboss) return;
 
     this.level.enemyEndboss.forEach((boss) => {
-      if (this.shadowCharacter.isColliding(boss) && !boss.isDead()) {
+      let isBossEntering = boss.isTriggered && boss.x > boss.targetX;
+
+      if (this.shadowCharacter.isColliding(boss) && !boss.isDead() && !isBossEntering) {
         this.handleCharacterTakingDamage();
       }
     });
@@ -305,10 +307,11 @@ class World {
   checkBossHit(projectile, meleeSlash) {
     let hasHit = false;
     this.level.enemyEndboss.forEach((boss) => {
+      let isBossEntering = boss.isTriggered && boss.x > boss.targetX;
       let projectileHit = projectile && projectile.isColliding(boss);
       let meleeHit = meleeSlash && !meleeSlash.hasDealtDamage && meleeSlash.isColliding(boss);
 
-      if ((projectileHit || meleeHit) && !boss.isDead()) {
+      if ((projectileHit || meleeHit) && !boss.isDead() && !isBossEntering) {
         if (meleeHit) {
           meleeSlash.hasDealtDamage = true;
         }

@@ -80,11 +80,11 @@ class EnemyEndboss extends MovableObject {
       if (this.isDead()) {
         this.displayAnimationOnce(this.imagesDead);
         this.checkIsDead();
+      } else if (this.isShooting) {
+        this.handleShootingState();
       } else if (this.isHurt()) {
         this.displayAnimation(this.imagesHurt);
         this.checkIsHurt();
-      } else if (this.isShooting) {
-        this.handleShootingState();
       } else if (this.isTriggered) {
         this.handleMovementAnimation();
       } else {
@@ -129,7 +129,7 @@ class EnemyEndboss extends MovableObject {
 
   startAttackDecisionLoop() {
     this.setStoppableInterval(() => {
-      if (this.isTriggered && !this.isDead() && !this.isHurt() && !this.isShooting) {
+      if (this.isTriggered && !this.isDead() && !this.isShooting) {
         this.isShooting = true;
         this.hasFiredProjectile = false;
         this.currentImage = 0;

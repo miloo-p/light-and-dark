@@ -40,6 +40,8 @@ class Keyboard {
 
   bindKeyUpEvents() {
     window.addEventListener("keyup", (event) => {
+      if (this.keyLocked) return;
+
       if (event.key == "a") {
         this.keyLeft = false;
       }
