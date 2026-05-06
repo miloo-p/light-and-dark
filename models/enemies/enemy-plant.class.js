@@ -33,8 +33,6 @@ class EnemyPlant extends MovableObject {
     `img/enemies/enemy_plant/dies/6_d.png`,
   ];
 
-  currentImage = 0;
-
   constructor(x) {
     super().loadImage(`img/enemies/enemy_plant/walking/1_w.png`);
     this.x = x;

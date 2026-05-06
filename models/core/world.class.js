@@ -8,7 +8,6 @@ class World {
   characterEnergyStatusBar = new EnergyBar();
   characterCoinBar = new CoinBar();
   bossStatusBar = new BossStatusBar();
-  lightCharacter = new LightCharacter();
 
   shadowProjectile = [];
   meleeAttacks = [];
@@ -25,7 +24,6 @@ class World {
   canvas;
   ctx;
   keyboard;
-  world;
   camera_x = 0;
   cameraOffset = 500;
 
@@ -108,7 +106,6 @@ class World {
   checkBossTrigger() {
     if (this.shadowCharacter.x > 2222 && !this.bossTriggered) {
       this.bossTriggered = true;
-      this.level.level_start_x = 2222;
 
       AudioManager.stopLayer("ambience_layer");
       AudioManager.stopLayer("music_layer");
@@ -364,7 +361,6 @@ class World {
     if (!this.shadowCharacter.isHurt()) {
       this.shadowCharacter.hit();
       this.characterStatusBar.setLifePercentage(this.shadowCharacter.healthPoints);
-      console.log("Charakter getroffen! Leben:", this.shadowCharacter.healthPoints);
     }
   }
 

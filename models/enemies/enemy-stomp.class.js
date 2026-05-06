@@ -40,11 +40,8 @@ class EnemyStomp extends MovableObject {
     `img/enemies/enemy_stomp/attack/5_a.png`,
   ];
 
-  imagesHurt = [];
-
   imagesDead = [`img/enemies/enemy_stomp/death/6_d.png`, `img/enemies/enemy_stomp/death/7_d.png`];
 
-  currentImage = 0;
   constructor(x) {
     super().loadImage(`img/enemies/enemy_stomp/idle/1_i.png`);
 

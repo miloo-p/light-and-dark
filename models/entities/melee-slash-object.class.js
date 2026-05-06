@@ -13,7 +13,6 @@ class MeleeSlashObject extends MovableObject {
     this.loadAnimationImages(this.imagesSlash);
 
     this.character = character;
-    this.currentImage = 0;
 
     this.updatePosition();
     this.followCharacter();

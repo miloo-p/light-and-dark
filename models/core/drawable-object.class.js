@@ -5,12 +5,25 @@ class DrawableObject {
   height;
 
   img;
-  imageCache = {};
+  static imageCache = {};
   currentImage = 0;
 
+  get imageCache() {
+    return DrawableObject.imageCache;
+  }
+
   loadImage(src) {
-    this.img = new Image();
-    this.img.src = src;
+    this.img = this.getCachedImage(src);
+  }
+
+  getCachedImage(src) {
+    if (!DrawableObject.imageCache[src]) {
+      let img = new Image();
+      img.src = src;
+      DrawableObject.imageCache[src] = img;
+    }
+
+    return DrawableObject.imageCache[src];
   }
 
   draw(ctx) {
@@ -18,33 +31,8 @@ class DrawableObject {
   }
 
   loadAnimationImages(arr) {
-    arr.forEach((ImageSrc) => {
-      let img = new Image();
-      img.src = ImageSrc;
-      this.imageCache[ImageSrc] = img;
+    arr.forEach((imageSrc) => {
+      this.getCachedImage(imageSrc);
     });
   }
-
-  // #region collision-toggle-debug
-  drawFrame(ctx) {
-    if (globalThis.showCollisionBoxes && this instanceof MovableObject) {
-      ctx.beginPath();
-      ctx.lineWidth = "2";
-      ctx.strokeStyle = "blue";
-      ctx.rect(this.x, this.y, this.width, this.height);
-      ctx.stroke();
-
-      ctx.beginPath();
-      ctx.lineWidth = "2";
-      ctx.strokeStyle = "red";
-      ctx.rect(
-        this.x + this.hitboxOffset.left,
-        this.y + this.hitboxOffset.top,
-        this.width - this.hitboxOffset.left - this.hitboxOffset.right,
-        this.height - this.hitboxOffset.top - this.hitboxOffset.bottom,
-      );
-      ctx.stroke();
-    }
-  }
-  // #endregion collision-toggle-debug
 }

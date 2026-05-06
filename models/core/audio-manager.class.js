@@ -16,7 +16,6 @@ class AudioManager {
     });
 
     this.isInitialized = true;
-    console.log(`AudioManager ready`);
   }
 
   static playSFX(soundKey) {
@@ -53,7 +52,5 @@ class AudioManager {
     Object.values(this.sounds).forEach((sound) => {
       sound.muted = this.isMuted;
     });
-
-    console.log(`AudioManager: All sounds are now ${this.isMuted ? "MUTED" : "UNMUTED"}.`);
   }
 }
