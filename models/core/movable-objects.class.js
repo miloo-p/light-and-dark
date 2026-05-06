@@ -72,22 +72,30 @@ class MovableObject extends DrawableObject {
 
   cameraBehavior() {
     this.setStoppableInterval(() => {
-      if (this.world.keyboard.keyRight && this.x < this.world.level.level_end_x && !this.isDead()) {
-        this.x += this.speed;
-        this.changeDirection = false;
-      }
-      if (this.world.keyboard.keyLeft && this.x > 0 && !this.isDead()) {
-        this.x -= this.speed;
-        this.changeDirection = true;
-      }
-      let targetCameraX = -this.x + this.cameraOffset;
-
-      targetCameraX = Math.min(targetCameraX, 0);
-      let maxScrollRight = -(2800 - 700);
-      targetCameraX = Math.max(targetCameraX, maxScrollRight);
-
-      this.world.camera_x += (targetCameraX - this.world.camera_x) * 0.05;
+      this.cameraInputs();
+      this.cameraSmoothing();
     }, 1000 / 60);
+  }
+
+  cameraInputs() {
+    if (this.world.keyboard.keyRight && this.x < this.world.level.level_end_x && !this.isDead()) {
+      this.x += this.speed;
+      this.changeDirection = false;
+    }
+    if (this.world.keyboard.keyLeft && this.x > 0 && !this.isDead()) {
+      this.x -= this.speed;
+      this.changeDirection = true;
+    }
+  }
+
+  cameraSmoothing() {
+    let targetCameraX = -this.x + this.cameraOffset;
+
+    targetCameraX = Math.min(targetCameraX, 0);
+    let maxScrollRight = -(2800 - 700);
+    targetCameraX = Math.max(targetCameraX, maxScrollRight);
+
+    this.world.camera_x += (targetCameraX - this.world.camera_x) * 0.05;
   }
 
   isColliding(MovableObject) {
