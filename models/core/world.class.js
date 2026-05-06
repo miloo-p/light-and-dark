@@ -20,6 +20,7 @@ class World {
 
   level = level1;
   isGamePaused = false;
+  flashAlpha = 0;
 
   canvas;
   ctx;
@@ -409,6 +410,7 @@ class World {
     if (this.bossTriggered) {
       this.addToMap(this.bossStatusBar);
     }
+    this.executeLevelEndFLash();
   }
 
   addObjectsToMap(objects) {
@@ -442,6 +444,19 @@ class World {
     MovableObject.x = MovableObject.x * -1;
   }
 
+  executeLevelEndFLash() {
+    if (this.flashAlpha > 0) {
+      this.ctx.fillStyle = `rgba(255, 255, 255, ${this.flashAlpha})`;
+      this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+      this.flashAlpha -= 0.02;
+
+      if (this.flashAlpha < 0) {
+        this.flashAlpha = 0;
+      }
+    }
+  }
+
   executeLevelEndCut() {
     this.isGamePaused = true;
     this.keyboard.keyLeft = false;
@@ -452,17 +467,17 @@ class World {
 
     AudioManager.stopLayer("music_layer");
     AudioManager.playLayer("piano_theme", "music_layer");
-
-    this.shadowCharacter.cameraOffset = 500;
-
-    this.level.backgroundObjectsRear = this.level.backgroundObjectsRearEndgame;
-    this.level.backgroundObjectsFront = this.level.backgroundObjectsFrontEndgame;
-
-    console.log("Boss is dead! Starting 5-second cinematic delay...");
+    setTimeout(() => {
+      this.flashAlpha = 1.0;
+      this.level.backgroundObjectsRear = this.level.backgroundObjectsRearEndgame;
+      this.level.backgroundObjectsFront = this.level.backgroundObjectsFrontEndgame;
+    }, 1000);
 
     setTimeout(() => {
+      this.shadowCharacter.cameraOffset = 600;
+    }, 2000);
+    setTimeout(() => {
       MovableObject.stopAllIntervals();
-      console.log("Level finished: Environment transformed and time stopped!");
     }, 15000);
   }
 }
