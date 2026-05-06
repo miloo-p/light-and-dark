@@ -78,6 +78,8 @@ class MovableObject extends DrawableObject {
   }
 
   cameraInputs() {
+    if (!this.world || !this.world.keyboard || !this.world.level) return;
+
     if (this.world.keyboard.keyRight && this.x < this.world.level.level_end_x && !this.isDead()) {
       this.x += this.speed;
       this.changeDirection = false;
@@ -89,6 +91,8 @@ class MovableObject extends DrawableObject {
   }
 
   cameraSmoothing() {
+    if (!this.world) return;
+
     let targetCameraX = -this.x + this.cameraOffset;
 
     targetCameraX = Math.min(targetCameraX, 0);

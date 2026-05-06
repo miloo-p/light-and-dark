@@ -113,6 +113,8 @@ class ShadowCharacter extends MovableObject {
 
   animate() {
     this.setStoppableInterval(() => {
+      if (!this.world || !this.world.keyboard) return;
+
       if (this.isDead()) {
         this.displayAnimationOnce(this.imagesDead);
         this.stopWalkingSound();

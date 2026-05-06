@@ -421,7 +421,6 @@ class World {
     if (MovableObject.changeDirection) {
       this.flipImage(MovableObject);
     }
-    MovableObject.drawFrame(this.ctx);
     MovableObject.draw(this.ctx);
     if (MovableObject.changeDirection) {
       this.flipImageBack(MovableObject);
