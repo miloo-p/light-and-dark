@@ -66,4 +66,13 @@ class Keyboard {
     this.keySpell = false;
     this.keyAttack = false;
   }
+
+  unlockAndReset() {
+    this.keyLocked = false;
+    this.keyLeft = false;
+    this.keyRight = false;
+    this.keyJump = false;
+    this.keyAttack = false;
+    this.keySpell = false;
+  }
 }

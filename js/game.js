@@ -4,16 +4,20 @@ let world;
 let keyboard = new Keyboard();
 
 function initStartGame() {
+  resetGame();
   initLevel();
+
   canvas = document.getElementById("game-canvas");
   world = new World(canvas, keyboard);
-  const button = document.getElementById("collision-toggle");
 
-  if (button) {
-    button.addEventListener("click", toggleCollisionBoxes);
-  }
+  world.isGamePaused = false;
+
   AudioManager.initAudioManager();
-
   AudioManager.playLayer("horror_ambience", "ambience_layer");
   AudioManager.playLayer("winter_ruins", "music_layer");
+}
+
+function resetGame() {
+  keyboard.unlockAndReset();
+  MovableObject.stopAllIntervals();
 }

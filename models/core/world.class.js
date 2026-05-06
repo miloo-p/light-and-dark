@@ -459,12 +459,7 @@ class World {
 
   executeLevelEndCut() {
     this.isGamePaused = true;
-    this.keyboard.keyLeft = false;
-    this.keyboard.keyRight = false;
-    this.keyboard.keyJump = false;
-    this.keyboard.keySpell = false;
-    this.keyboard.keyAttack = false;
-
+    this.keyboard.lockAndReset();
     AudioManager.stopLayer("music_layer");
     AudioManager.playLayer("piano_theme", "music_layer");
     setTimeout(() => {
@@ -475,9 +470,8 @@ class World {
 
     setTimeout(() => {
       this.shadowCharacter.cameraOffset = 600;
+      this.keyboard.keyLeft = true;
+      this.bossTriggered = false;
     }, 2000);
-    setTimeout(() => {
-      MovableObject.stopAllIntervals();
-    }, 15000);
   }
 }
