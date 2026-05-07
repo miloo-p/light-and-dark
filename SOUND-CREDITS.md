@@ -9,8 +9,8 @@ Huge thanks to the original creators!
 | :-------------------------- | :--------------- | :--------------------------------------------------- | :---------------- |
 | `horror_ambience.ogg`       | klankbeeld       | [Freesound #192489](https://freesound.org/s/192489/) | _Check Freesound_ |
 | `winter_ruins.ogg`          | FarBeyond Studio | Freebies Vol. 1 - 05                                 | CC-BY 4.0         |
-| `fight_the_devil.wav`       | FarBeyond Studio | Freebies Vol. 1 - 06                                 | CC-BY 4.0         |
-| `morning_in_the_forest.mp3` | viramiller       | [Freesound #425705](https://freesound.org/s/425705/) | _Check Freesound_ |
+| `fight_the_devil.ogg`       | FarBeyond Studio | Freebies Vol. 1 - 06                                 | CC-BY 4.0         |
+| `morning_in_the_forest.ogg` | viramiller       | [Freesound #425705](https://freesound.org/s/425705/) | _Check Freesound_ |
 | `piano_theme.ogg`           | djgriffin        | [Freesound #425705](https://freesound.org/s/730277/) | _Check Freesound_ |
 
 ## Transformation & Special Effects
@@ -25,16 +25,16 @@ Huge thanks to the original creators!
 | :---------------------- | :--------------- | :--------------------------------------------------- | :---------------- |
 | `melee_swoosh.ogg`      | soundcollectah   | [Freesound #157790](https://freesound.org/s/157790/) | _Check Freesound_ |
 | `spell_shoot.wav`       | bertsz           | [Freesound #524305](https://freesound.org/s/524305/) | _Check Freesound_ |
-| `walking_forest.wav`    | deadrobotmusic   | [Freesound #687059](https://freesound.org/s/687059/) | _Check Freesound_ |
-| `whispering_spells.wav` | newlocknew       | [Freesound #763000](https://freesound.org/s/763000/) | _Check Freesound_ |
+| `walking_forest.ogg`    | deadrobotmusic   | [Freesound #687059](https://freesound.org/s/687059/) | _Check Freesound_ |
+| `whispering_spells.ogg` | newlocknew       | [Freesound #763000](https://freesound.org/s/763000/) | _Check Freesound_ |
 
 ## Enemies
 
 | In-Game File             | Original Creator | Source Link                                          | License           |
 | :----------------------- | :--------------- | :--------------------------------------------------- | :---------------- |
-| `boss_serpent_spell.wav` | lukabea          | [Freesound #660486](https://freesound.org/s/660486/) | _Check Freesound_ |
-| `boss_scream.wav`        | gpag1            | [Freesound #391552](https://freesound.org/s/391552/) | _Check Freesound_ |
-| `boss_walk_giant.wav`    | newlocknew       | [Freesound #677414](https://freesound.org/s/677414/) | _Check Freesound_ |
+| `boss_serpent_spell.ogg` | lukabea          | [Freesound #660486](https://freesound.org/s/660486/) | _Check Freesound_ |
+| `boss_scream.ogg`        | gpag1            | [Freesound #391552](https://freesound.org/s/391552/) | _Check Freesound_ |
+| `boss_walk_giant.ogg`    | newlocknew       | [Freesound #677414](https://freesound.org/s/677414/) | _Check Freesound_ |
 | `plant_attack.wav`       | richerlandtv     | [Freesound #700722](https://freesound.org/s/700722/) | _Check Freesound_ |
 | `stomp_dead_crate.wav`   | kevinkace        | [Freesound #66780](https://freesound.org/s/66780/)   | _Check Freesound_ |
 | `stomp_dead_pain.wav`    | tonsil5          | [Freesound #555426](https://freesound.org/s/555426/) | _Check Freesound_ |

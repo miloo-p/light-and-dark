@@ -13,7 +13,7 @@ const AUDIO_ASSETS = [
   },
   {
     id: "fight_the_devil",
-    path: "audio/background/bossight/fight_the_devil.wav",
+    path: "audio/background/bossight/fight_the_devil.ogg",
     loop: true,
     defaultVolume: 0.05,
   },
@@ -25,7 +25,7 @@ const AUDIO_ASSETS = [
   },
   {
     id: "morning_in_the_forest",
-    path: "audio/background/vibrant-forest/morning_in_the_forest.mp3",
+    path: "audio/background/vibrant-forest/morning_in_the_forest.ogg",
     loop: true,
     defaultVolume: 0.05,
   },
@@ -40,26 +40,26 @@ const AUDIO_ASSETS = [
   { id: "spell_shoot", path: "audio/character/spell/spell_shoot.wav", loop: false, defaultVolume: 0.2 },
   {
     id: "walking_forest",
-    path: "audio/character/walking/walking_forest.wav",
+    path: "audio/character/walking/walking_forest.ogg",
     loop: true,
     defaultVolume: 0.1,
   },
   {
     id: "whispering_spells",
-    path: "audio/character/walking/whispering_spells.wav",
+    path: "audio/character/walking/whispering_spells.ogg",
     loop: false,
     defaultVolume: 0.05,
   },
 
   {
     id: "boss_serpent_spell",
-    path: "audio/enemies/boss/attack/boss_serpent_spell.wav",
+    path: "audio/enemies/boss/attack/boss_serpent_spell.ogg",
     loop: false,
     defaultVolume: 0.1,
   },
   {
     id: "boss_scream",
-    path: "audio/enemies/boss/screams/boss_scream.wav",
+    path: "audio/enemies/boss/screams/boss_scream.ogg",
     loop: false,
     defaultVolume: 0.2,
   },
@@ -83,8 +83,8 @@ const AUDIO_ASSETS = [
   },
 
   {
-    id: "stomp_walk_giant",
-    path: "audio/enemies/boss/walking/stomp_walk_giant.wav",
+    id: "boss_walk_giant",
+    path: "audio/enemies/boss/walking/boss_walk_giant.ogg",
     loop: true,
     defaultVolume: 0.3,
   },
