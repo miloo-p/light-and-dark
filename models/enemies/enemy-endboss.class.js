@@ -20,6 +20,7 @@ class EnemyEndboss extends MovableObject {
   isNextPoisonHigh = false;
   attackLoopStarted = false;
   hasPlayedDeathSound = false;
+  hasPlayedWalkingSound = false;
 
   imagesIdle = [
     `img/enemies/enemy_boss/6_idle/1_i.png`,
@@ -87,6 +88,7 @@ class EnemyEndboss extends MovableObject {
         this.checkIsHurt();
       } else if (this.isTriggered) {
         this.handleMovementAnimation();
+        this.checkIsWalking();
       } else {
         this.displayAnimation(this.imagesIdle);
       }
@@ -151,6 +153,13 @@ class EnemyEndboss extends MovableObject {
     if (this.isDead() && !this.hasPlayedDeathSound) {
       AudioManager.playSFX("boss_dies");
       this.hasPlayedDeathSound = true;
+    }
+  }
+
+  checkIsWalking() {
+    if (this.isTriggered && !this.hasPlayedWalkingSound) {
+      AudioManager.playSFX("boss_walk_giant");
+      this.hasPlayedWalkingSound = true;
     }
   }
 

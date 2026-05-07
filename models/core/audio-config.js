@@ -85,7 +85,7 @@ const AUDIO_ASSETS = [
   {
     id: "boss_walk_giant",
     path: "audio/enemies/boss/walking/boss_walk_giant.ogg",
-    loop: true,
+    loop: false,
     defaultVolume: 0.3,
   },
   {
