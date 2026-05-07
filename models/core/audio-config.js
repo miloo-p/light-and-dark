@@ -9,25 +9,25 @@ const AUDIO_ASSETS = [
     id: "winter_ruins",
     path: "audio/background/dead-forest/winter_ruins.ogg",
     loop: true,
-    defaultVolume: 0.1,
+    defaultVolume: 0.05,
   },
   {
     id: "fight_the_devil",
     path: "audio/background/bossight/fight_the_devil.wav",
     loop: true,
-    defaultVolume: 0.1,
+    defaultVolume: 0.05,
   },
   {
     id: "transformation_woosh",
     path: "audio/background/transformation/transformation_woosh.wav",
     loop: false,
-    defaultVolume: 0.1,
+    defaultVolume: 0.3,
   },
   {
     id: "morning_in_the_forest",
     path: "audio/background/vibrant-forest/morning_in_the_forest.mp3",
     loop: true,
-    defaultVolume: 0.1,
+    defaultVolume: 0.05,
   },
   {
     id: "piano_theme",
@@ -48,7 +48,7 @@ const AUDIO_ASSETS = [
     id: "whispering_spells",
     path: "audio/character/walking/whispering_spells.wav",
     loop: false,
-    defaultVolume: 0.1,
+    defaultVolume: 0.05,
   },
 
   {
@@ -61,32 +61,32 @@ const AUDIO_ASSETS = [
     id: "boss_scream",
     path: "audio/enemies/boss/screams/boss_scream.wav",
     loop: false,
-    defaultVolume: 0.1,
+    defaultVolume: 0.2,
   },
   {
     id: "boss_dies",
     path: "audio/enemies/boss/screams/boss_dies.mp3",
     loop: false,
-    defaultVolume: 0.1,
+    defaultVolume: 0.2,
   },
   {
     id: "boss_hurt_1",
     path: "audio/enemies/boss/screams/boss_hurt_1.mp3",
     loop: false,
-    defaultVolume: 0.1,
+    defaultVolume: 0.3,
   },
   {
     id: "boss_hurt_2",
     path: "audio/enemies/boss/screams/boss_hurt_2.mp3",
     loop: false,
-    defaultVolume: 0.1,
+    defaultVolume: 0.3,
   },
 
   {
     id: "stomp_walk_giant",
     path: "audio/enemies/boss/walking/stomp_walk_giant.wav",
     loop: true,
-    defaultVolume: 0.1,
+    defaultVolume: 0.3,
   },
   {
     id: "plant_attack",
@@ -98,13 +98,13 @@ const AUDIO_ASSETS = [
     id: "plant_dies",
     path: "audio/enemies/plant/dead/plant_dies.wav",
     loop: false,
-    defaultVolume: 0.1,
+    defaultVolume: 0.3,
   },
   {
     id: "plant_dies-2",
     path: "audio/enemies/plant/dead/plant_dies-2.wav",
     loop: false,
-    defaultVolume: 0.1,
+    defaultVolume: 0.2,
   },
   {
     id: "stomp_dead_crate",
@@ -116,7 +116,7 @@ const AUDIO_ASSETS = [
     id: "stomp_dead_pain",
     path: "audio/enemies/stomp/dead/stomp_dead_pain.wav",
     loop: false,
-    defaultVolume: 0.1,
+    defaultVolume: 0.2,
   },
   {
     id: "stomp_walking",

@@ -464,6 +464,7 @@ class World {
       this.flashAlpha = 1.0;
       this.level.backgroundObjectsRear = this.level.backgroundObjectsRearEndgame;
       this.level.backgroundObjectsFront = this.level.backgroundObjectsFrontEndgame;
+      AudioManager.playSFX("transformation_woosh");
     }, 1000);
 
     setTimeout(() => {

@@ -12,7 +12,7 @@ class EnemyEndboss extends MovableObject {
     right: 40,
   };
 
-  healthPoints = 100;
+  healthPoints = 200;
 
   isTriggered = false;
   isShooting = false;
