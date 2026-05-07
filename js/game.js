@@ -2,6 +2,7 @@ let canvas;
 let ctx;
 let world;
 let keyboard = new Keyboard();
+let uiManager = new UIManager();
 
 function initStartGame() {
   resetGame();

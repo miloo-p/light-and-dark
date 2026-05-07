@@ -460,6 +460,7 @@ class World {
     this.keyboard.lockAndReset();
     AudioManager.stopLayer("music_layer");
     AudioManager.playLayer("piano_theme", "music_layer");
+
     setTimeout(() => {
       this.flashAlpha = 1.0;
       this.level.backgroundObjectsRear = this.level.backgroundObjectsRearEndgame;
@@ -472,5 +473,11 @@ class World {
       this.keyboard.keyLeft = true;
       this.bossTriggered = false;
     }, 2000);
+
+    setTimeout(() => {
+      if (typeof uiManager !== "undefined") {
+        uiManager.showEndScreen();
+      }
+    }, 10000);
   }
 }

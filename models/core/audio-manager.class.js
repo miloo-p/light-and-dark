@@ -48,7 +48,6 @@ class AudioManager {
 
   static toggleMute() {
     this.isMuted = !this.isMuted;
-
     Object.values(this.sounds).forEach((sound) => {
       sound.muted = this.isMuted;
     });
