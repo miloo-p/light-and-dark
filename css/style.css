@@ -289,9 +289,16 @@ canvas {
 }
 
 .narrative-box {
-  flex: 1.2;
   text-align: left;
-  padding-right: var(--spacing-md);
+
+  background: var(--ui-panel-bg);
+  border: 1px solid var(--ui-panel-border);
+
+  border-radius: var(--ui-radius-lg) var(--ui-radius-lg) var(--ui-radius-lg) 0;
+
+  padding: var(--spacing-md) var(--spacing-lg);
+  box-shadow: var(--ui-shadow-soft);
+  margin: var(--spacing-md);
 }
 
 .controls-box {
@@ -343,10 +350,6 @@ canvas {
   text-align: center;
   box-shadow: 0 2px 0 #000;
   margin-right: 4px;
-}
-.end-content-wrapper {
-  padding-left: 10%;
-  padding-top: var(--spacing-xl);
 }
 
 .btn-group-sm {
