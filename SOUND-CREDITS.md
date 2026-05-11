@@ -7,7 +7,7 @@ Huge thanks to the original creators!
 
 | In-Game File                | Original Creator | Source Link                                          | License           |
 | :-------------------------- | :--------------- | :--------------------------------------------------- | :---------------- |
-| `horror_ambience.ogg`       | klankbeeld       | [Freesound #192489](https://freesound.org/s/192489/) | _Check Freesound_ |
+| `horror_ambience.ogg`       | Marb7e           | [Freesound #192489](https://freesound.org/s/674392/) | _Check Freesound_ |
 | `winter_ruins.ogg`          | FarBeyond Studio | Freebies Vol. 1 - 05                                 | CC-BY 4.0         |
 | `fight_the_devil.ogg`       | FarBeyond Studio | Freebies Vol. 1 - 06                                 | CC-BY 4.0         |
 | `morning_in_the_forest.ogg` | viramiller       | [Freesound #425705](https://freesound.org/s/425705/) | _Check Freesound_ |

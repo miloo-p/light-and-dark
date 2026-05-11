@@ -3,7 +3,7 @@ const AUDIO_ASSETS = [
     id: "horror_ambience",
     path: "audio/background/dead-forest/horror_ambience.ogg",
     loop: true,
-    defaultVolume: 0.1,
+    defaultVolume: 0.5,
   },
   {
     id: "winter_ruins",
