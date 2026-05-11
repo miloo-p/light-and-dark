@@ -2,45 +2,53 @@ class UIManager {
   constructor() {
     this.startScreen = document.getElementById("start-screen");
     this.endScreen = document.getElementById("end-screen");
-    this.endButtons = document.getElementById("end-menu-buttons");
-    this.endButtonTimeout = null;
-    this.controlsBox = document.querySelector(".controls-box");
-    this.narrativeBox = document.querySelector(".narrative-box");
+    this.gameOverScreen = document.getElementById("game-over-screen"); // NEU
+    this.controlsBox = document.getElementById("controls-box");
+    this.narrativeBox = document.querySelector("#start-screen .content-box");
 
+    this.endButtonTimeout = null;
     UIManager.updateMuteButtonState();
   }
 
-  hideStartScreen() {
+  // --- Hilfsmethoden zum Aufräumen ---
+  hideAllOverlayScreens() {
     if (this.startScreen) this.startScreen.classList.add("d_none");
-  }
-
-  showStartScreen() {
-    if (this.startScreen) this.startScreen.classList.remove("d_none");
-  }
-
-  hideEndScreen() {
     if (this.endScreen) this.endScreen.classList.add("d_none");
-    if (this.endButtons) this.endButtons.classList.add("d_none");
+    if (this.gameOverScreen) this.gameOverScreen.classList.add("d_none");
     if (this.endButtonTimeout) clearTimeout(this.endButtonTimeout);
   }
 
-  showEndScreen() {
-    if (this.endScreen) this.endScreen.classList.remove("d_none");
-    this.endButtonTimeout = setTimeout(() => {
-      if (this.endButtons) this.endButtons.classList.remove("d_none");
-    }, 3000);
+  // --- Screen Controls ---
+  showStartScreen() {
+    this.hideAllOverlayScreens();
+    if (this.startScreen) this.startScreen.classList.remove("d_none");
   }
 
+  showGameOver() {
+    this.hideAllOverlayScreens();
+    if (this.gameOverScreen) {
+      this.gameOverScreen.classList.remove("d_none");
+      document.getElementById("in-game-hud").classList.add("d_none");
+    }
+  }
+
+  showEndScreen() {
+    this.hideAllOverlayScreens();
+    if (this.endScreen) {
+      this.endScreen.classList.remove("d_none");
+      document.getElementById("in-game-hud").classList.add("d_none");
+    }
+  }
+
+  // --- Game Flow ---
   startGame() {
-    this.hideStartScreen();
-    this.hideEndScreen();
+    this.hideAllOverlayScreens();
+    document.getElementById("in-game-hud").classList.remove("d_none");
     initStartGame();
   }
 
   backToMenu() {
-    this.hideEndScreen();
     this.showStartScreen();
-
     if (typeof MovableObject !== "undefined") {
       MovableObject.stopAllIntervals();
     }
@@ -48,16 +56,19 @@ class UIManager {
 
   toggleControls() {
     if (this.controlsBox && this.narrativeBox) {
+      const isHidden = this.controlsBox.classList.contains("d_none");
+
       this.controlsBox.classList.toggle("d_none");
       this.narrativeBox.classList.toggle("d_none");
 
       const btn = document.getElementById("btn-show-controls");
       if (btn) {
-        btn.innerText = this.controlsBox.classList.contains("d_none") ? "Controls" : "Back";
+        btn.innerText = isHidden ? "Zurück" : "Steuerung";
       }
     }
   }
 
+  // --- Audio UI ---
   static toggleMute() {
     AudioManager.toggleMute();
     UIManager.updateMuteButtonState();
@@ -67,7 +78,7 @@ class UIManager {
     const muteIcon = document.getElementById("mute-icon");
     if (muteIcon) {
       muteIcon.src = AudioManager.isMuted ? "./img/ui/sound-mute.svg" : "./img/ui/sound.svg";
-      muteIcon.alt = AudioManager.isMuted ? "Unmute Gamesound Button" : "Mute Gamesound Button";
+      muteIcon.alt = AudioManager.isMuted ? "Sound einschalten" : "Sound stummschalten";
     }
   }
 }

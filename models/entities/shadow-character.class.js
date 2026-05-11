@@ -14,6 +14,7 @@ class ShadowCharacter extends MovableObject {
   collectedCoins = 0;
 
   isWalkingSoundPlaying = false;
+  gameOverProcessed = false;
 
   static imagesIdle = [
     `img/characters/shadow/01_idle/i1-1.png`,
@@ -114,6 +115,7 @@ class ShadowCharacter extends MovableObject {
       if (this.isDead()) {
         this.displayAnimationOnce(ShadowCharacter.imagesDead);
         this.stopWalkingSound();
+        this.triggerGameOver();
       } else if (this.isHurt()) {
         this.displayAnimation(ShadowCharacter.imagesHurt);
         this.stopWalkingSound();
@@ -138,6 +140,18 @@ class ShadowCharacter extends MovableObject {
 
   jump() {
     this.speedY = 15;
+  }
+
+  triggerGameOver() {
+    if (!this.gameOverProcessed) {
+      this.gameOverProcessed = true;
+
+      setTimeout(() => {
+        if (typeof uiManager !== "undefined") {
+          uiManager.showGameOver();
+        }
+      }, 1500);
+    }
   }
 
   playWalkingSound() {

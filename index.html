@@ -49,13 +49,9 @@
   <body>
     <main class="game-shell">
       <div id="game-container" class="game-container">
-        <div id="init-screen" class="overlay-screen init-screen-bg utc_flex-ai-center utc_flex-jc-center">
-          <div class="utc_flex-dir-col utc_flex-gap-md utc_flex-ai-center">
-            <img
-              src="./img/game-logo.png"
-              alt="Light & Shadow Logo"
-              style="width: 300px; max-width: 80%; pointer-events: none"
-            />
+        <div id="init-screen" class="overlay-screen init-screen-bg">
+          <div class="menu-panel utc_flex-dir-col utc_flex-ai-center utc_flex-gap-md">
+            <img src="./img/game-logo.png" alt="Light & Shadow Logo" class="game-logo" />
 
             <button id="btn-init" class="btn" onclick="startPreload()">Spiel initialisieren</button>
 
@@ -67,6 +63,7 @@
             </div>
           </div>
         </div>
+
         <canvas id="game-canvas" width="720" height="405"></canvas>
 
         <div id="in-game-hud" class="hud-overlay utc_flex-dir-row utc_flex-gap-sm">
@@ -75,58 +72,79 @@
             class="btn mute-btn utc_flex-dir-row utc_flex-jc-center utc_flex-ai-center"
             onclick="UIManager.toggleMute()"
           >
-            <img id="mute-icon" src="./img/ui/sound.svg" alt="Mute Gamesound Button" />
+            <img id="mute-icon" src="./img/ui/sound.svg" alt="Sound" />
           </button>
         </div>
 
         <div id="start-screen" class="overlay-screen d_none">
-          <div class="menu-content utc_flex-dir-row utc_flex-jc-center utc_flex-ai-center utc_flex-gap-md">
-            <div class="narrative-box">
-              <h1 class="headline-sm">Das letzte Echo</h1>
-              <p class="text-sm">
-                "Hörst du mich im Dunkeln? Ich bin der letzte Funke des alten Lichts...<br /><br />
-                Sammle die verstreute Energie, bezwinge seine Schergen und durchbrich die Dunkelheit. Befreie
-                mich... bevor ich für immer erlösche."
-              </p>
+          <div class="menu-panel utc_flex-dir-col utc_flex-ai-center utc_flex-gap-md">
+            <div class="utc_flex-dir-row utc_flex-jc-center utc_flex-ai-start utc_flex-gap-md">
+              <div class="content-box">
+                <h1 class="headline-sm text-center">Das letzte Echo</h1>
+                <p class="text-sm">
+                  "Hörst du mich im Dunkeln? Ich bin der letzte Funke des alten Lichts...<br /><br />
+                  Sammle die verstreute Energie, bezwinge seine Schergen und durchbrich die Dunkelheit.
+                  Befreie mich... bevor ich für immer erlösche."
+                </p>
+              </div>
+
+              <div id="controls-box" class="content-box controls-box d_none">
+                <h2 class="headline-xs">Steuerung</h2>
+                <ul class="control-list">
+                  <li>
+                    <div class="keys"><span class="key-cap">A</span><span class="key-cap">D</span></div>
+                    <span class="action text-xs">Laufen</span>
+                  </li>
+                  <li>
+                    <div class="keys"><span class="key-cap">Space</span></div>
+                    <span class="action text-xs">Sprung</span>
+                  </li>
+                  <li>
+                    <div class="keys"><span class="key-cap">Q</span></div>
+                    <span class="action text-xs">Puls</span>
+                  </li>
+                  <li>
+                    <div class="keys"><span class="key-cap">E</span></div>
+                    <span class="action text-xs">Klinge</span>
+                  </li>
+                </ul>
+              </div>
             </div>
 
-            <div class="controls-box d_none">
-              <h2 class="headline-xs">Steuerung</h2>
-              <ul class="control-list">
-                <li>
-                  <div class="keys"><span class="key-cap">A</span><span class="key-cap">D</span></div>
-                  <span class="action text-xs">Laufen</span>
-                </li>
-                <li>
-                  <div class="keys"><span class="key-cap">Space</span></div>
-                  <span class="action text-xs">Sprung</span>
-                </li>
-                <li>
-                  <div class="keys"><span class="key-cap">Q</span></div>
-                  <span class="action text-xs">Schattenpuls</span>
-                </li>
-                <li>
-                  <div class="keys"><span class="key-cap">E</span></div>
-                  <span class="action text-xs">Schattenklinge</span>
-                </li>
-              </ul>
+            <div class="menu-buttons utc_flex-dir-row utc_flex-gap-sm">
+              <button id="btn-start-game" class="btn" onclick="uiManager.startGame()">Start Game</button>
+              <button id="btn-show-controls" class="btn" onclick="uiManager.toggleControls()">
+                Steuerung
+              </button>
             </div>
-          </div>
-
-          <div class="menu-buttons utc_flex-dir-row utc_flex-gap-sm">
-            <button id="btn-start-game" class="btn" onclick="uiManager.startGame()">Start Game</button>
-            <button id="btn-show-controls" class="btn" onclick="uiManager.toggleControls()">Controls</button>
           </div>
         </div>
 
-        <div id="end-screen" class="overlay-screen d_none utc_flex-ai-start">
-          <div class="end-content-wrapper utc_flex-dir-col utc_flex-gap-sm">
-            <div class="narrative-box">
-              <h2 class="headline-xs" style="text-align: left">Das Licht ist befreit...</h2>
-              <p class="text-xs">Die Dunkelheit weicht. Dein Dienst ist getan, Wächter.</p>
+        <div id="game-over-screen" class="overlay-screen d_none">
+          <div class="menu-panel utc_flex-dir-col utc_flex-ai-center utc_flex-gap-md">
+            <div class="content-box">
+              <h2 class="headline-sm text-center" style="color: var(--clr-accent)">Verschlungen...</h2>
+              <p class="text-sm text-center">
+                Das Licht ist erloschen. Die Dunkelheit hat dich eingeholt, Wächter. Lass das letzte Echo
+                nicht verstummen!
+              </p>
             </div>
+            <div class="utc_flex-dir-row utc_flex-gap-sm">
+              <button class="btn" onclick="uiManager.startGame()">Nochmal versuchen</button>
+              <button class="btn" onclick="uiManager.backToMenu()">Hauptmenü</button>
+            </div>
+          </div>
+        </div>
 
-            <div id="end-menu-buttons" class="btn-group-sm utc_flex-dir-row utc_flex-gap-sm d_none">
+        <div id="end-screen" class="overlay-screen d_none">
+          <div class="menu-panel utc_flex-dir-col utc_flex-ai-center utc_flex-gap-md">
+            <div class="content-box">
+              <h2 class="headline-sm text-center">Das Licht ist befreit...</h2>
+              <p class="text-sm text-center">
+                Die Dunkelheit weicht. Dein Dienst ist getan, Wächter. Die Welt erstrahlt in neuem Glanz.
+              </p>
+            </div>
+            <div class="utc_flex-dir-row utc_flex-gap-sm">
               <button class="btn" onclick="uiManager.startGame()">Neues Spiel</button>
               <button class="btn" onclick="uiManager.backToMenu()">Hauptmenü</button>
             </div>

@@ -38,7 +38,7 @@ const IMAGE_ASSETS = [
   ...ShadowCharacter.imagesDead,
 
   // --- Projektile & Attacken ---
-  "img/characters/shadow/projectile/shadow_projectile.png", // Hatte kein Array, sondern war direkt in der Klasse!
+  "img/characters/shadow/projectile/shadow_projectile.png",
   ...MeleeSlashObject.imagesSlash,
   ...EnemyBossProjectileObject.imagesFly,
   ...EnemyPlantProjectileObject.imagesFly,
@@ -65,7 +65,7 @@ const IMAGE_ASSETS = [
   ...EnergyBar.imagesEnergy,
   ...StatusBar.imagesStatus,
 
-  // --- Backgrounds (Aus deiner initLevel Funktion extrahiert!) ---
+  // --- Backgrounds ---
   "img/background/dead/bg_d_1.png",
   "img/background/dead/bg_d_2.png",
   "img/background/dead/bg_d_3.png",
