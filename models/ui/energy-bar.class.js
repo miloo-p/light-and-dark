@@ -1,5 +1,5 @@
 class EnergyBar extends DrawableObject {
-  imagesEnergy = [
+  static imagesEnergy = [
     `img/statusbars/1_statusbar/3_statusbar_energy/shadow/0.png`,
     `img/statusbars/1_statusbar/3_statusbar_energy/shadow/20.png`,
     `img/statusbars/1_statusbar/3_statusbar_energy/shadow/40.png`,
@@ -7,10 +7,11 @@ class EnergyBar extends DrawableObject {
     `img/statusbars/1_statusbar/3_statusbar_energy/shadow/80.png`,
     `img/statusbars/1_statusbar/3_statusbar_energy/shadow/100.png`,
   ];
+
   energyPercentage = 100;
+
   constructor() {
     super();
-    this.loadAnimationImages(this.imagesEnergy);
     this.x = 20;
     this.y = 15;
     this.width = 80;
@@ -20,8 +21,13 @@ class EnergyBar extends DrawableObject {
 
   setEnergyPercentage(energy) {
     this.energyPercentage = energy;
-    let path = this.imagesEnergy[this.resolveImageIndexForEnergy()];
-    this.img = this.imageCache[path];
+    let path = EnergyBar.imagesEnergy[this.resolveImageIndexForEnergy()];
+
+    if (DrawableObject.imageCache[path]) {
+      this.img = DrawableObject.imageCache[path];
+    } else {
+      this.loadImage(path);
+    }
   }
 
   resolveImageIndexForEnergy() {

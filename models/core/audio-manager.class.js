@@ -2,7 +2,14 @@ class AudioManager {
   static sounds = {};
   static activeLayers = {};
   static isInitialized = false;
-  static isMuted = false;
+  static muteStorageKey = "lightAndShadowMute";
+  static isMuted = localStorage.getItem(AudioManager.muteStorageKey) === "true";
+
+  static applyMuteState() {
+    Object.values(this.sounds).forEach((sound) => {
+      sound.muted = this.isMuted;
+    });
+  }
 
   static initAudioManager() {
     if (this.isInitialized) return;
@@ -14,6 +21,8 @@ class AudioManager {
 
       this.sounds[config.id] = audioObj;
     });
+
+    this.applyMuteState();
 
     this.isInitialized = true;
   }
@@ -48,8 +57,7 @@ class AudioManager {
 
   static toggleMute() {
     this.isMuted = !this.isMuted;
-    Object.values(this.sounds).forEach((sound) => {
-      sound.muted = this.isMuted;
-    });
+    localStorage.setItem(this.muteStorageKey, String(this.isMuted));
+    this.applyMuteState();
   }
 }

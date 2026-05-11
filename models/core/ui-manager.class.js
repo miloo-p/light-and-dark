@@ -6,6 +6,8 @@ class UIManager {
     this.endButtonTimeout = null;
     this.controlsBox = document.querySelector(".controls-box");
     this.narrativeBox = document.querySelector(".narrative-box");
+
+    UIManager.updateMuteButtonState();
   }
 
   hideStartScreen() {
@@ -58,7 +60,10 @@ class UIManager {
 
   static toggleMute() {
     AudioManager.toggleMute();
+    UIManager.updateMuteButtonState();
+  }
 
+  static updateMuteButtonState() {
     const muteIcon = document.getElementById("mute-icon");
     if (muteIcon) {
       muteIcon.src = AudioManager.isMuted ? "./img/ui/sound-mute.svg" : "./img/ui/sound.svg";

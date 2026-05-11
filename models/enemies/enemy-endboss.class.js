@@ -22,7 +22,7 @@ class EnemyEndboss extends MovableObject {
   hasPlayedDeathSound = false;
   hasPlayedWalkingSound = false;
 
-  imagesIdle = [
+  static imagesIdle = [
     `img/enemies/enemy_boss/6_idle/1_i.png`,
     `img/enemies/enemy_boss/6_idle/2_i.png`,
     `img/enemies/enemy_boss/6_idle/3_i.png`,
@@ -30,7 +30,7 @@ class EnemyEndboss extends MovableObject {
     `img/enemies/enemy_boss/6_idle/5_i.png`,
     `img/enemies/enemy_boss/6_idle/6_i.png`,
   ];
-  imagesWalk = [
+  static imagesWalk = [
     `img/enemies/enemy_boss/1_walk/1_w.png`,
     `img/enemies/enemy_boss/1_walk/2_w.png`,
     `img/enemies/enemy_boss/1_walk/3_w.png`,
@@ -42,14 +42,14 @@ class EnemyEndboss extends MovableObject {
     `img/enemies/enemy_boss/1_walk/9_w.png`,
     `img/enemies/enemy_boss/1_walk/10_w.png`,
   ];
-  imagesDead = [
+  static imagesDead = [
     `img/enemies/enemy_boss/5_dead/1_d.png`,
     `img/enemies/enemy_boss/5_dead/2_d.png`,
     `img/enemies/enemy_boss/5_dead/3_d.png`,
     `img/enemies/enemy_boss/5_dead/4_d.png`,
     `img/enemies/enemy_boss/5_dead/5_d.png`,
   ];
-  imagesHurt = [
+  static imagesHurt = [
     `img/enemies/enemy_boss/4_hurt/1_h.png`,
     `img/enemies/enemy_boss/4_hurt/2_h.png`,
     `img/enemies/enemy_boss/4_hurt/3_h.png`,
@@ -57,7 +57,7 @@ class EnemyEndboss extends MovableObject {
     `img/enemies/enemy_boss/4_hurt/5_h.png`,
     `img/enemies/enemy_boss/4_hurt/6_h.png`,
   ];
-  imagesShoot = [
+  static imagesShoot = [
     `img/enemies/enemy_boss/2_shoot-spell/1_s.png`,
     `img/enemies/enemy_boss/2_shoot-spell/2_s.png`,
     `img/enemies/enemy_boss/2_shoot-spell/3_s.png`,
@@ -67,30 +67,26 @@ class EnemyEndboss extends MovableObject {
   ];
 
   constructor() {
-    super().loadImage(this.imagesIdle[0]);
-    this.loadAnimationImages(this.imagesIdle);
-    this.loadAnimationImages(this.imagesWalk);
-    this.loadAnimationImages(this.imagesHurt);
-    this.loadAnimationImages(this.imagesShoot);
-    this.loadAnimationImages(this.imagesDead);
+    super();
+    this.loadImage(EnemyEndboss.imagesIdle[0]);
     this.animate();
   }
 
   animate() {
     this.setStoppableInterval(() => {
       if (this.isDead()) {
-        this.displayAnimationOnce(this.imagesDead);
+        this.displayAnimationOnce(EnemyEndboss.imagesDead);
         this.checkIsDead();
       } else if (this.isShooting) {
         this.handleShootingState();
       } else if (this.isHurt()) {
-        this.displayAnimation(this.imagesHurt);
+        this.displayAnimation(EnemyEndboss.imagesHurt);
         this.checkIsHurt();
       } else if (this.isTriggered) {
         this.handleMovementAnimation();
         this.checkIsWalking();
       } else {
-        this.displayAnimation(this.imagesIdle);
+        this.displayAnimation(EnemyEndboss.imagesIdle);
       }
     }, 200);
 
@@ -109,22 +105,22 @@ class EnemyEndboss extends MovableObject {
 
   handleMovementAnimation() {
     if (this.x > this.targetX) {
-      this.displayAnimation(this.imagesWalk);
+      this.displayAnimation(EnemyEndboss.imagesWalk);
     } else {
-      this.displayAnimation(this.imagesIdle);
+      this.displayAnimation(EnemyEndboss.imagesIdle);
     }
   }
 
   handleShootingState() {
-    this.displayAnimation(this.imagesShoot);
-    let currentFrameIndex = this.currentImage % this.imagesShoot.length;
+    this.displayAnimation(EnemyEndboss.imagesShoot);
+    let currentFrameIndex = this.currentImage % EnemyEndboss.imagesShoot.length;
 
     if (currentFrameIndex === 3 && !this.hasFiredProjectile) {
       this.shootPoison();
       this.hasFiredProjectile = true;
     }
 
-    if (currentFrameIndex === this.imagesShoot.length - 1) {
+    if (currentFrameIndex === EnemyEndboss.imagesShoot.length - 1) {
       this.isShooting = false;
     }
   }

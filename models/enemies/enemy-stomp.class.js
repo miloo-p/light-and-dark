@@ -14,7 +14,7 @@ class EnemyStomp extends MovableObject {
     right: 20,
   };
 
-  imagesIdle = [
+  static imagesIdle = [
     `img/enemies/enemy_stomp/idle/1_i.png`,
     `img/enemies/enemy_stomp/idle/2_i.png`,
     `img/enemies/enemy_stomp/idle/3_i.png`,
@@ -24,7 +24,7 @@ class EnemyStomp extends MovableObject {
     `img/enemies/enemy_stomp/idle/7_i.png`,
   ];
 
-  imagesWalk = [
+  static imagesWalk = [
     `img/enemies/enemy_stomp/walking/1_w.png`,
     `img/enemies/enemy_stomp/walking/2_w.png`,
     `img/enemies/enemy_stomp/walking/3_w.png`,
@@ -32,7 +32,7 @@ class EnemyStomp extends MovableObject {
     `img/enemies/enemy_stomp/walking/5_w.png`,
   ];
 
-  imagesAttack = [
+  static imagesAttack = [
     `img/enemies/enemy_stomp/attack/1_a.png`,
     `img/enemies/enemy_stomp/attack/2_a.png`,
     `img/enemies/enemy_stomp/attack/3_a.png`,
@@ -40,18 +40,17 @@ class EnemyStomp extends MovableObject {
     `img/enemies/enemy_stomp/attack/5_a.png`,
   ];
 
-  imagesDead = [`img/enemies/enemy_stomp/death/6_d.png`, `img/enemies/enemy_stomp/death/7_d.png`];
+  static imagesDead = [`img/enemies/enemy_stomp/death/6_d.png`, `img/enemies/enemy_stomp/death/7_d.png`];
 
   constructor(x) {
-    super().loadImage(`img/enemies/enemy_stomp/idle/1_i.png`);
+    super();
+    this.loadImage(EnemyStomp.imagesIdle[0]);
 
     this.x = x + Math.random() * 500;
     this.y = 300;
     this.width = 71;
     this.height = 70;
 
-    this.loadAnimationImages(this.imagesWalk);
-    this.loadAnimationImages(this.imagesDead);
     this.animate();
     this.moveLeft();
   }
@@ -59,13 +58,10 @@ class EnemyStomp extends MovableObject {
   animate() {
     this.setStoppableInterval(() => {
       if (this.isDead()) {
-        this.displayAnimation(this.imagesDead);
+        this.displayAnimation(EnemyStomp.imagesDead); // HIER GEFIXT
         this.checkStompIsDead();
       } else {
-        let i = this.currentImage % this.imagesWalk.length;
-        let path = this.imagesWalk[i];
-        this.img = this.imageCache[path];
-        this.currentImage++;
+        this.displayAnimation(EnemyStomp.imagesWalk);
       }
     }, 250);
   }

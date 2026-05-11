@@ -1,5 +1,5 @@
 class BossStatusBar extends DrawableObject {
-  imagesBossStatus = [
+  static imagesBossStatus = [
     `img/statusbars/2_statusbar_endboss/0.png`,
     `img/statusbars/2_statusbar_endboss/20.png`,
     `img/statusbars/2_statusbar_endboss/40.png`,
@@ -17,7 +17,6 @@ class BossStatusBar extends DrawableObject {
 
   constructor() {
     super();
-    this.loadAnimationImages(this.imagesBossStatus);
     this.x = 200;
     this.y = -18;
     this.width = 300;
@@ -28,8 +27,10 @@ class BossStatusBar extends DrawableObject {
   setPercentage(percentage) {
     this.percentage = percentage;
     let imageIndex = this.resolveImageIndex();
-    let imagePath = this.imagesBossStatus[imageIndex];
-    this.img = this.imageCache[imagePath];
+
+    let imagePath = BossStatusBar.imagesBossStatus[imageIndex];
+
+    this.img = DrawableObject.imageCache[imagePath];
   }
 
   resolveImageIndex() {

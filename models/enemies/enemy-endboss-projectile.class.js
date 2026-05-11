@@ -1,5 +1,5 @@
 class EnemyBossProjectileObject extends MovableObject {
-  imagesFly = [
+  static imagesFly = [
     `img/enemies/enemy_boss/3_poison-spell/1_poisenj.png`,
     `img/enemies/enemy_boss/3_poison-spell/2_poisenj.png`,
     `img/enemies/enemy_boss/3_poison-spell/3_poisenj.png`,
@@ -14,8 +14,7 @@ class EnemyBossProjectileObject extends MovableObject {
 
   constructor(startX, startY) {
     super();
-    this.loadImage(this.imagesFly[0]);
-    this.loadAnimationImages(this.imagesFly);
+    this.loadImage(EnemyBossProjectileObject.imagesFly[0]);
 
     this.x = startX;
     this.y = startY;
@@ -34,7 +33,7 @@ class EnemyBossProjectileObject extends MovableObject {
 
   animate() {
     this.animationInterval = this.setStoppableInterval(() => {
-      this.displayAnimation(this.imagesFly);
+      this.displayAnimation(EnemyBossProjectileObject.imagesFly);
     }, 150);
   }
 

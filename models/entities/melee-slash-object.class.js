@@ -5,12 +5,14 @@ class MeleeSlashObject extends MovableObject {
   isFinished = false;
   hasDealtDamage = false;
 
-  imagesSlash = ["img/characters/shadow/06_slash/1_slash.png", "img/characters/shadow/06_slash/2_slash.png"];
+  static imagesSlash = [
+    "img/characters/shadow/06_slash/1_slash.png",
+    "img/characters/shadow/06_slash/2_slash.png",
+  ];
 
   constructor(character) {
     super();
-    this.loadImage(this.imagesSlash[0]);
-    this.loadAnimationImages(this.imagesSlash);
+    this.loadImage(MeleeSlashObject.imagesSlash[0]);
 
     this.character = character;
 
@@ -39,8 +41,8 @@ class MeleeSlashObject extends MovableObject {
 
   animate() {
     this.animationInterval = this.setStoppableInterval(() => {
-      if (this.currentImage < this.imagesSlash.length) {
-        let path = this.imagesSlash[this.currentImage];
+      if (this.currentImage < MeleeSlashObject.imagesSlash.length) {
+        let path = MeleeSlashObject.imagesSlash[this.currentImage];
         this.img = this.imageCache[path];
         AudioManager.playSFX("melee_swoosh");
         this.currentImage++;

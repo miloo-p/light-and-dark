@@ -54,7 +54,12 @@ class MovableObject extends DrawableObject {
   displayAnimation(arr) {
     let i = this.currentImage % arr.length;
     let path = arr[i];
-    this.img = this.imageCache[path];
+    if (DrawableObject.imageCache[path]) {
+      this.img = DrawableObject.imageCache[path];
+    } else {
+      this.loadImage(path);
+    }
+
     this.currentImage++;
   }
 
@@ -67,7 +72,11 @@ class MovableObject extends DrawableObject {
     }
 
     let path = arr[i];
-    this.img = this.imageCache[path];
+    if (DrawableObject.imageCache[path]) {
+      this.img = DrawableObject.imageCache[path];
+    } else {
+      this.loadImage(path);
+    }
   }
 
   cameraBehavior() {

@@ -1,5 +1,8 @@
 class EnemyPlantProjectileObject extends MovableObject {
-  imagesFly = [`img/enemies/enemy_plant/projectile/1_p.png`, `img/enemies/enemy_plant/projectile/2_p.png`];
+  static imagesFly = [
+    `img/enemies/enemy_plant/projectile/1_p.png`,
+    `img/enemies/enemy_plant/projectile/2_p.png`,
+  ];
 
   hitboxOffset = {
     top: 8,
@@ -10,9 +13,7 @@ class EnemyPlantProjectileObject extends MovableObject {
 
   constructor(startX, startY) {
     super();
-    this.loadImage(this.imagesFly[0]);
-    this.loadAnimationImages(this.imagesFly);
-
+    this.loadImage(EnemyPlantProjectileObject.imagesFly[0]);
     this.x = startX;
     this.y = startY;
     this.height = 45;
@@ -30,7 +31,7 @@ class EnemyPlantProjectileObject extends MovableObject {
 
   animate() {
     this.animationInterval = this.setStoppableInterval(() => {
-      this.displayAnimation(this.imagesFly);
+      this.displayAnimation(EnemyPlantProjectileObject.imagesFly);
     }, 150);
   }
 

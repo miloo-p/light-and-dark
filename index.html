@@ -49,6 +49,24 @@
   <body>
     <main class="game-shell">
       <div id="game-container" class="game-container">
+        <div id="init-screen" class="overlay-screen init-screen-bg utc_flex-ai-center utc_flex-jc-center">
+          <div class="utc_flex-dir-col utc_flex-gap-md utc_flex-ai-center">
+            <img
+              src="./img/game-logo.png"
+              alt="Light & Shadow Logo"
+              style="width: 300px; max-width: 80%; pointer-events: none"
+            />
+
+            <button id="btn-init" class="btn" onclick="startPreload()">Spiel initialisieren</button>
+
+            <div id="loading-container" class="loading-container utc_flex-dir-col utc_flex-gap-sm d_none">
+              <span id="loading-text" class="text-xs text-center">Lade Assets (0%)...</span>
+              <div class="loading-bar-bg">
+                <div id="loading-bar-fill" class="loading-bar-fill"></div>
+              </div>
+            </div>
+          </div>
+        </div>
         <canvas id="game-canvas" width="720" height="405"></canvas>
 
         <div id="in-game-hud" class="hud-overlay utc_flex-dir-row utc_flex-gap-sm">
@@ -61,7 +79,7 @@
           </button>
         </div>
 
-        <div id="start-screen" class="overlay-screen">
+        <div id="start-screen" class="overlay-screen d_none">
           <div class="menu-content utc_flex-dir-row utc_flex-jc-center utc_flex-ai-center utc_flex-gap-md">
             <div class="narrative-box">
               <h1 class="headline-sm">Das letzte Echo</h1>

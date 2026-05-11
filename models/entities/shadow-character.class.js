@@ -15,7 +15,7 @@ class ShadowCharacter extends MovableObject {
 
   isWalkingSoundPlaying = false;
 
-  imagesIdle = [
+  static imagesIdle = [
     `img/characters/shadow/01_idle/i1-1.png`,
     `img/characters/shadow/01_idle/i1-2.png`,
     `img/characters/shadow/01_idle/i1-3.png`,
@@ -31,7 +31,7 @@ class ShadowCharacter extends MovableObject {
     `img/characters/shadow/01_idle/i1-13.png`,
   ];
 
-  imagesWalk = [
+  static imagesWalk = [
     `img/characters/shadow/02_walk/w1-1.png`,
     `img/characters/shadow/02_walk/w1-2.png`,
     `img/characters/shadow/02_walk/w1-3.png`,
@@ -47,7 +47,7 @@ class ShadowCharacter extends MovableObject {
     `img/characters/shadow/02_walk/w1-13.png`,
   ];
 
-  imagesJump = [
+  static imagesJump = [
     `img/characters/shadow/03_jump/j1-1.png`,
     `img/characters/shadow/03_jump/j1-2.png`,
     `img/characters/shadow/03_jump/j1-3.png`,
@@ -62,7 +62,7 @@ class ShadowCharacter extends MovableObject {
     `img/characters/shadow/03_jump/j1-12.png`,
   ];
 
-  imagesHurt = [
+  static imagesHurt = [
     `img/characters/shadow/04_hurt/h1-1.png`,
     `img/characters/shadow/04_hurt/h1-2.png`,
     `img/characters/shadow/04_hurt/h1-3.png`,
@@ -70,7 +70,7 @@ class ShadowCharacter extends MovableObject {
     `img/characters/shadow/04_hurt/h1-5.png`,
   ];
 
-  imagesDead = [
+  static imagesDead = [
     `img/characters/shadow/05_dead/d1-1.png`,
     `img/characters/shadow/05_dead/d1-2.png`,
     `img/characters/shadow/05_dead/d1-3.png`,
@@ -87,7 +87,8 @@ class ShadowCharacter extends MovableObject {
   ];
 
   constructor() {
-    super().loadImage(`img/characters/shadow/01_idle/i1-1.png`);
+    super();
+    this.loadImage(ShadowCharacter.imagesIdle[0]);
 
     this.x = 20;
     this.y = 240;
@@ -96,11 +97,6 @@ class ShadowCharacter extends MovableObject {
 
     this.fastFallEnabled = true;
 
-    this.loadAnimationImages(this.imagesWalk);
-    this.loadAnimationImages(this.imagesIdle);
-    this.loadAnimationImages(this.imagesJump);
-    this.loadAnimationImages(this.imagesHurt);
-    this.loadAnimationImages(this.imagesDead);
     this.cameraBehavior();
     this.applyGravity();
     this.animate();
@@ -116,19 +112,20 @@ class ShadowCharacter extends MovableObject {
       if (!this.world || !this.world.keyboard) return;
 
       if (this.isDead()) {
-        this.displayAnimationOnce(this.imagesDead);
+        this.displayAnimationOnce(ShadowCharacter.imagesDead);
         this.stopWalkingSound();
       } else if (this.isHurt()) {
-        this.displayAnimation(this.imagesHurt);
+        this.displayAnimation(ShadowCharacter.imagesHurt);
         this.stopWalkingSound();
       } else if (this.isAboveGround()) {
-        this.displayAnimation(this.imagesJump);
+        this.displayAnimation(ShadowCharacter.imagesJump);
         this.stopWalkingSound();
       } else {
         if (this.world.keyboard.keyRight || this.world.keyboard.keyLeft) {
-          this.displayAnimation(this.imagesWalk);
+          this.displayAnimation(ShadowCharacter.imagesWalk);
           this.playWalkingSound();
         } else {
+          this.displayAnimation(ShadowCharacter.imagesIdle);
           this.stopWalkingSound();
         }
       }
