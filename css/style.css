@@ -574,7 +574,8 @@ canvas {
   canvas,
   .game-container,
   .overlay-screen,
-  .init-screen-bg {
+  .init-screen-bg,
+  .menu-panel {
     height: 100dvh;
   }
 }
