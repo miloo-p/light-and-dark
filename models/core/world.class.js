@@ -1,36 +1,79 @@
+/**
+ * The central game engine and orchestrator.
+ * Manages the game loop, rendering, entity management, collision detection, and level state.
+ * @class
+ */
 class World {
   // ==========================================
   // 1. PROPERTIES & STATE
   // ==========================================
 
+  /** @type {ShadowCharacter} The main player character. */
   shadowCharacter = new ShadowCharacter();
+
+  /** @type {StatusBar} UI element displaying the player's health. */
   characterStatusBar = new StatusBar();
+
+  /** @type {EnergyBar} UI element displaying the player's shadow energy. */
   characterEnergyStatusBar = new EnergyBar();
+
+  /** @type {CoinBar} UI element displaying the collected coins. */
   characterCoinBar = new CoinBar();
+
+  /** @type {BossStatusBar} UI element displaying the end boss's health. */
   bossStatusBar = new BossStatusBar();
 
+  /** @type {ProjectileObject[]} Active projectiles fired by the player. */
   shadowProjectile = [];
+
+  /** @type {MeleeSlashObject[]} Active melee attacks performed by the player. */
   meleeAttacks = [];
+
+  /** @type {Object[]} Active projectiles fired by enemies. */
   enemyProjectiles = [];
 
+  /** @type {boolean} Flag indicating whether the boss fight has started. */
   bossTriggered = false;
+
+  /** @type {number} Timestamp of the player's last attack (projectile or melee). */
   lastAttackTime = 0;
+
+  /** @type {number} Global cooldown for player attacks in milliseconds. */
   attackCooldown = 500;
 
+  /** @type {Level} The current level instance containing all environment data and enemies. */
   level = level1;
+
+  /** @type {boolean} Flag to pause game logic (e.g., during cutscenes). */
   isGamePaused = false;
+
+  /** @type {number} Opacity value (0.0 to 1.0) for the screen-wide flash effect. */
   flashAlpha = 0;
 
+  /** @type {HTMLCanvasElement} The HTML canvas element. */
   canvas;
+
+  /** @type {CanvasRenderingContext2D} The 2D rendering context for the canvas. */
   ctx;
+
+  /** @type {Keyboard} Reference to the global keyboard input manager. */
   keyboard;
+
+  /** @type {number} The current x-translation of the game camera. */
   camera_x = 0;
+
+  /** @type {number} Offset to keep the character centered in the camera view. */
   cameraOffset = 500;
 
   // ==========================================
   // 2. SETUP & LIFECYCLE
   // ==========================================
 
+  /**
+   * Initializes the game world, binds the canvas context, and starts the game loops.
+   * @param {HTMLCanvasElement} canvas - The canvas element to render on.
+   * @param {Keyboard} keyboard - The global input tracker.
+   */
   constructor(canvas, keyboard) {
     this.canvas = canvas;
     this.ctx = canvas.getContext("2d");
@@ -41,10 +84,17 @@ class World {
     this.run();
   }
 
+  /**
+   * Links the world instance to the main character to allow the character to access global state.
+   */
   setWorld() {
     this.shadowCharacter.world = this;
   }
 
+  /**
+   * The main logic loop running at roughly 60 FPS.
+   * Handles collisions, entity cleanup, attacks, and triggers.
+   */
   run() {
     setInterval(() => {
       if (this.isGamePaused) return;
@@ -55,6 +105,7 @@ class World {
       this.performMeleeAttack();
       this.checkBossTrigger();
 
+      // Remove melee attacks that have finished their animation
       this.meleeAttacks = this.meleeAttacks.filter((slash) => !slash.isFinished);
     }, 1000 / 60);
   }
@@ -63,6 +114,10 @@ class World {
   // 3. GAME LOGIC & ACTIONS
   // ==========================================
 
+  /**
+   * Spawns a shadow projectile if the player presses the spell key,
+   * has enough energy, and the cooldown is over.
+   */
   shootProjectile() {
     if (this.keyboard.keySpell) {
       if (this.isCooldownOver() && this.shadowCharacter.energyPoints >= 20) {
@@ -74,7 +129,6 @@ class World {
         );
 
         this.shadowProjectile.push(singleProjectile);
-
         this.resetCooldown();
 
         this.shadowCharacter.energyPoints -= 20;
@@ -83,26 +137,39 @@ class World {
     }
   }
 
+  /**
+   * Spawns a melee slash object if the player presses the attack key and the cooldown is over.
+   */
   performMeleeAttack() {
     if (this.keyboard.keyAttack) {
       if (this.isCooldownOver()) {
         let slash = new MeleeSlashObject(this.shadowCharacter);
         this.meleeAttacks.push(slash);
-
         this.resetCooldown();
       }
     }
   }
 
+  /**
+   * Checks if enough time has passed since the last attack.
+   * @returns {boolean} True if the player can attack again.
+   */
   isCooldownOver() {
     let timePassed = new Date().getTime() - this.lastAttackTime;
     return timePassed > this.attackCooldown;
   }
 
+  /**
+   * Updates the attack timestamp to the current time, initiating a new cooldown phase.
+   */
   resetCooldown() {
     this.lastAttackTime = new Date().getTime();
   }
 
+  /**
+   * Checks if the player has advanced far enough to trigger the boss fight.
+   * Changes the background music and awakens the boss.
+   */
   checkBossTrigger() {
     if (this.shadowCharacter.x > 2222 && !this.bossTriggered) {
       this.bossTriggered = true;
@@ -119,6 +186,9 @@ class World {
   // 4. COLLISION ORCHESTRATORS
   // ==========================================
 
+  /**
+   * Central orchestrator function that triggers all specific collision routines.
+   */
   detectCollision() {
     this.checkStompCollisions();
     this.checkPlantCollisions();
@@ -130,6 +200,10 @@ class World {
     this.checkEnemyProjectileCollisions();
   }
 
+  /**
+   * Iterates through player projectiles and checks for collisions with enemies or level bounds.
+   * Destroys the projectile upon impact or when flying out of bounds.
+   */
   checkProjectileCollisions() {
     for (let pIndex = this.shadowProjectile.length - 1; pIndex >= 0; pIndex--) {
       let projectile = this.shadowProjectile[pIndex];
@@ -140,6 +214,7 @@ class World {
 
       let projectileHit = hitStomp || hitBoss || hitPlant;
 
+      // Remove projectile if it hit something, fell below the map, or flew too far
       if (projectileHit || projectile.y > 600 || projectile.x > this.shadowCharacter.x + 800) {
         projectile.destroy?.();
         this.shadowProjectile.splice(pIndex, 1);
@@ -147,6 +222,9 @@ class World {
     }
   }
 
+  /**
+   * Iterates through active melee attacks and checks for collisions with enemies.
+   */
   checkMeleeCollisions() {
     for (let mIndex = this.meleeAttacks.length - 1; mIndex >= 0; mIndex--) {
       let slash = this.meleeAttacks[mIndex];
@@ -161,6 +239,10 @@ class World {
   // 5. COLLISION HELPERS (CHARACTER)
   // ==========================================
 
+  /**
+   * Checks interactions between the player and Stomp enemies.
+   * Handles jumping on enemies (Goomba-style) vs taking damage.
+   */
   checkStompCollisions() {
     if (!this.level.enemyStomps) return;
 
@@ -168,7 +250,7 @@ class World {
       if (this.shadowCharacter.isColliding(stomp) && !stomp.isDead()) {
         if (this.isJumpingOn(stomp)) {
           stomp.hit();
-          this.shadowCharacter.speedY = 2;
+          this.shadowCharacter.speedY = 2; // Small bounce effect
 
           setTimeout(() => {
             let index = this.level.enemyStomps.indexOf(stomp);
@@ -183,6 +265,9 @@ class World {
     });
   }
 
+  /**
+   * Checks interactions between the player and Plant enemies.
+   */
   checkPlantCollisions() {
     if (!this.level.enemyPlant) return;
 
@@ -205,6 +290,10 @@ class World {
     });
   }
 
+  /**
+   * Checks interactions between the player and the End Boss.
+   * Prevents taking damage while the boss is still in its entering animation.
+   */
   checkBossCollisions() {
     if (!this.level.enemyEndboss) return;
 
@@ -217,6 +306,9 @@ class World {
     });
   }
 
+  /**
+   * Checks if enemy projectiles have hit the player.
+   */
   checkEnemyProjectileCollisions() {
     this.enemyProjectiles.forEach((projectile, index) => {
       if (this.shadowCharacter.isColliding(projectile)) {
@@ -230,6 +322,9 @@ class World {
     });
   }
 
+  /**
+   * Removes enemy projectiles that have flown out of the left side of the camera view.
+   */
   cleanupEnemyProjectiles() {
     let leftCameraEdge = -this.camera_x;
 
@@ -244,11 +339,14 @@ class World {
     }
   }
 
+  /**
+   * Checks if the player collects shadow energy bottles.
+   * Updates energy points and the UI up to a maximum of 100.
+   */
   checkItemCollisions() {
     this.level.shadowEnergy.forEach((bottle, index) => {
       if (this.shadowCharacter.isColliding(bottle)) {
         this.level.shadowEnergy.splice(index, 1);
-
         this.shadowCharacter.energyPoints += 20;
 
         if (this.shadowCharacter.energyPoints > 100) {
@@ -259,11 +357,14 @@ class World {
     });
   }
 
+  /**
+   * Checks if the player collects coins.
+   * Updates coin count and the UI up to a maximum of 10.
+   */
   checkCoinCollisions() {
     this.level.coins.forEach((coin, index) => {
       if (this.shadowCharacter.isColliding(coin)) {
         this.level.coins.splice(index, 1);
-
         this.shadowCharacter.collectedCoins += 1;
 
         if (this.shadowCharacter.collectedCoins > 10) {
@@ -279,6 +380,12 @@ class World {
   // 6. COLLISION HELPERS (PROJECTILES & SHARED)
   // ==========================================
 
+  /**
+   * Helper to check if a specific attack hit a Stomp enemy.
+   * @param {ProjectileObject} [projectile] - The projectile to check (optional).
+   * @param {MeleeSlashObject} [meleeSlash] - The melee attack to check (optional).
+   * @returns {boolean} True if a hit was registered.
+   */
   checkStompHit(projectile, meleeSlash) {
     let hasHit = false;
 
@@ -304,6 +411,12 @@ class World {
     return hasHit;
   }
 
+  /**
+   * Helper to check if a specific attack hit the Boss enemy.
+   * @param {ProjectileObject} [projectile] - The projectile to check (optional).
+   * @param {MeleeSlashObject} [meleeSlash] - The melee attack to check (optional).
+   * @returns {boolean} True if a hit was registered.
+   */
   checkBossHit(projectile, meleeSlash) {
     let hasHit = false;
     this.level.enemyEndboss.forEach((boss) => {
@@ -328,6 +441,12 @@ class World {
     return hasHit;
   }
 
+  /**
+   * Helper to check if a specific attack hit a Plant enemy.
+   * @param {ProjectileObject} [projectile] - The projectile to check (optional).
+   * @param {MeleeSlashObject} [meleeSlash] - The melee attack to check (optional).
+   * @returns {boolean} True if a hit was registered.
+   */
   checkPlantHit(projectile, meleeSlash) {
     let hasHit = false;
     this.level.enemyPlant.forEach((plant) => {
@@ -352,6 +471,11 @@ class World {
     return hasHit;
   }
 
+  /**
+   * Evaluates whether the player character is physically landing on top of an enemy.
+   * @param {MovableObject} enemy - The enemy object to evaluate against.
+   * @returns {boolean} True if the player is moving downwards and above the enemy's hitbox.
+   */
   isJumpingOn(enemy) {
     let charBottom =
       this.shadowCharacter.y + this.shadowCharacter.height - this.shadowCharacter.hitboxOffset.bottom;
@@ -360,6 +484,9 @@ class World {
     return this.shadowCharacter.speedY < 0 && charBottom < enemyTop + 50;
   }
 
+  /**
+   * Centralized method to apply damage to the player and update the health UI.
+   */
   handleCharacterTakingDamage() {
     if (!this.shadowCharacter.isHurt()) {
       this.shadowCharacter.hit();
@@ -371,6 +498,10 @@ class World {
   // 7. RENDERING & DRAWING
   // ==========================================
 
+  /**
+   * The core rendering loop synchronized with the browser's refresh rate.
+   * Clears the canvas, delegates drawing to world and screen spaces, and recursively requests the next frame.
+   */
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -380,13 +511,15 @@ class World {
     requestAnimationFrame(() => this.draw());
   }
 
+  /**
+   * Renders all game entities that exist within the level geometry.
+   * Applies camera translation (`camera_x`) to create a scrolling effect.
+   */
   drawWorldSpace() {
     this.ctx.translate(this.camera_x, 0);
 
     this.addObjectsToMap(this.level.backgroundObjectsRear);
-
     this.addToMap(this.shadowCharacter);
-
     this.addObjectsToMap(this.level.enemyStomps);
     this.addObjectsToMap(this.level.enemyPlant);
     this.addObjectsToMap(this.level.enemyEndboss);
@@ -395,12 +528,15 @@ class World {
     this.addObjectsToMap(this.meleeAttacks);
     this.addObjectsToMap(this.level.coins);
     this.addObjectsToMap(this.level.shadowEnergy);
-
     this.addObjectsToMap(this.level.backgroundObjectsFront);
 
     this.ctx.translate(-this.camera_x, 0);
   }
 
+  /**
+   * Renders static HUD/UI elements overlaying the game world.
+   * Unaffected by camera translation.
+   */
   drawScreenSpace() {
     this.addToMap(this.characterStatusBar);
     this.addToMap(this.characterEnergyStatusBar);
@@ -412,14 +548,22 @@ class World {
     this.executeLevelEndFLash();
   }
 
+  /**
+   * Utility to render an entire array of objects onto the canvas.
+   * @param {MovableObject[]} objects - Array of entities to draw.
+   */
   addObjectsToMap(objects) {
     if (!objects) return;
-
     objects.forEach((obj) => {
       this.addToMap(obj);
     });
   }
 
+  /**
+   * Handles the rendering of a single object.
+   * Automatically flips the canvas context if the object is facing left.
+   * @param {MovableObject} MovableObject - The object to draw.
+   */
   addToMap(MovableObject) {
     if (MovableObject.changeDirection) {
       this.flipImage(MovableObject);
@@ -430,6 +574,10 @@ class World {
     }
   }
 
+  /**
+   * Flips the rendering context horizontally for an object facing left.
+   * @param {MovableObject} MovableObject - The object causing the flip.
+   */
   flipImage(MovableObject) {
     this.ctx.save();
     this.ctx.translate(MovableObject.width, 0);
@@ -437,11 +585,18 @@ class World {
     MovableObject.x = MovableObject.x * -1;
   }
 
+  /**
+   * Restores the original rendering context after a flipped object was drawn.
+   * @param {MovableObject} MovableObject - The object that was flipped.
+   */
   flipImageBack(MovableObject) {
     this.ctx.restore();
     MovableObject.x = MovableObject.x * -1;
   }
 
+  /**
+   * Renders a fading white screen flash overlay, typically used for cinematic transitions.
+   */
   executeLevelEndFLash() {
     if (this.flashAlpha > 0) {
       this.ctx.fillStyle = `rgba(255, 255, 255, ${this.flashAlpha})`;
@@ -455,6 +610,10 @@ class World {
     }
   }
 
+  /**
+   * Orchestrates the cinematic sequence triggered upon defeating the end boss.
+   * Pauses gameplay, swaps backgrounds, locks player input, and transitions to the end screen.
+   */
   executeLevelEndCut() {
     this.isGamePaused = true;
     this.keyboard.lockAndReset();
@@ -462,18 +621,20 @@ class World {
     AudioManager.playLayer("piano_theme", "music_layer");
 
     setTimeout(() => {
-      this.flashAlpha = 1.0;
+      this.flashAlpha = 1.0; // Trigger the bright flash
       this.level.backgroundObjectsRear = this.level.backgroundObjectsRearEndgame;
       this.level.backgroundObjectsFront = this.level.backgroundObjectsFrontEndgame;
       AudioManager.playSFX("transformation_woosh");
     }, 1000);
 
+    // Make the character automatically walk to the right into the new environment
     setTimeout(() => {
       this.shadowCharacter.cameraOffset = 600;
       this.keyboard.keyLeft = true;
       this.bossTriggered = false;
     }, 2000);
 
+    // Show the final score/end screen
     setTimeout(() => {
       if (typeof uiManager !== "undefined") {
         uiManager.showEndScreen();

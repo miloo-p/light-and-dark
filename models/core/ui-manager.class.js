@@ -1,21 +1,56 @@
+/**
+ * Global manager responsible for handling all DOM manipulations, UI overlays,
+ * and menu transitions. Bridges the gap between the HTML document and the game logic.
+ * @class
+ */
 class UIManager {
+  /**
+   * Tracks the global fullscreen state of the application.
+   * @static
+   * @type {boolean}
+   */
   static isFullscreen = false;
+
+  /**
+   * Initializes the UI Manager, binds essential DOM elements to the instance,
+   * and sets up event listeners for native browser API changes (like fullscreen).
+   */
   constructor() {
+    /** @type {HTMLElement|null} Reference to the start screen container. */
     this.startScreen = document.getElementById("start-screen");
+
+    /** @type {HTMLElement|null} Reference to the victory/end screen container. */
     this.endScreen = document.getElementById("end-screen");
-    this.gameOverScreen = document.getElementById("game-over-screen"); // NEU
+
+    /** @type {HTMLElement|null} Reference to the game over (death) screen container. */
+    this.gameOverScreen = document.getElementById("game-over-screen");
+
+    /** @type {HTMLElement|null} Reference to the tutorial/controls information box. */
     this.controlsBox = document.getElementById("controls-box");
+
+    /** @type {HTMLElement|null} Reference to the story/narrative text box. */
     this.narrativeBox = document.querySelector("#start-screen .content-box");
 
+    /** @type {number|null} Internal reference to timeout functions for UI transitions. */
     this.endButtonTimeout = null;
+
+    // Ensure the UI matches the initial audio state
     UIManager.updateMuteButtonState();
 
+    // Listen for native ESC key or browser-level fullscreen exits to update UI buttons accordingly
     document.addEventListener("fullscreenchange", () => {
       UIManager.updateFullscreenButtonState();
     });
   }
 
-  // --- Hilfsmethoden zum Aufräumen ---
+  // ==========================================
+  // SCREEN TRANSITIONS & OVERLAYS
+  // ==========================================
+
+  /**
+   * Helper method to forcefully hide all full-screen UI overlays.
+   * Ensures a clean slate before displaying a new screen.
+   */
   hideAllOverlayScreens() {
     if (this.startScreen) this.startScreen.classList.add("d_none");
     if (this.endScreen) this.endScreen.classList.add("d_none");
@@ -23,12 +58,17 @@ class UIManager {
     if (this.endButtonTimeout) clearTimeout(this.endButtonTimeout);
   }
 
-  // --- Screen Controls ---
+  /**
+   * Displays the main menu/start screen and hides all other overlays.
+   */
   showStartScreen() {
     this.hideAllOverlayScreens();
     if (this.startScreen) this.startScreen.classList.remove("d_none");
   }
 
+  /**
+   * Displays the Game Over screen and hides the in-game heads-up display (HUD).
+   */
   showGameOver() {
     this.hideAllOverlayScreens();
     if (this.gameOverScreen) {
@@ -37,6 +77,9 @@ class UIManager {
     }
   }
 
+  /**
+   * Displays the victory/end screen and hides the in-game heads-up display (HUD).
+   */
   showEndScreen() {
     this.hideAllOverlayScreens();
     if (this.endScreen) {
@@ -45,13 +88,24 @@ class UIManager {
     }
   }
 
-  // --- Game Flow ---
+  // ==========================================
+  // GAME FLOW CONTROLS
+  // ==========================================
+
+  /**
+   * Triggers the game initialization sequence.
+   * Hides menus, reveals the HUD, and calls the global `initStartGame` routine.
+   */
   startGame() {
     this.hideAllOverlayScreens();
     document.getElementById("in-game-hud").classList.remove("d_none");
     initStartGame();
   }
 
+  /**
+   * Aborts the current game and returns to the main menu.
+   * Safely halts all running game intervals to prevent background logic execution.
+   */
   backToMenu() {
     this.showStartScreen();
     if (typeof MovableObject !== "undefined") {
@@ -59,6 +113,10 @@ class UIManager {
     }
   }
 
+  /**
+   * Toggles the visibility between the narrative text box and the controls manual
+   * on the start screen. Updates the button text dynamically.
+   */
   toggleControls() {
     if (this.controlsBox && this.narrativeBox) {
       const isHidden = this.controlsBox.classList.contains("d_none");
@@ -73,8 +131,15 @@ class UIManager {
     }
   }
 
-  // --- Fullscreen Toggle ---
+  // ==========================================
+  // FULLSCREEN API
+  // ==========================================
 
+  /**
+   * Requests or exits browser fullscreen mode for the main game container.
+   * Removes focus from the clicked button immediately to prevent spacebar-double-triggering.
+   * @static
+   */
   static toggleFullscreen() {
     let container = document.getElementById("game-container");
 
@@ -87,9 +152,14 @@ class UIManager {
         document.exitFullscreen();
       }
     }
+    // Remove focus so hitting 'Space' to jump doesn't trigger the button again
     document.getElementById("fs-btn").blur();
   }
 
+  /**
+   * Updates the icon and alt-text of the fullscreen button to match the current browser state.
+   * @static
+   */
   static updateFullscreenButtonState() {
     const fsIcon = document.getElementById("fs-icon");
     if (fsIcon) {
@@ -98,13 +168,27 @@ class UIManager {
       fsIcon.alt = isFS ? "Vollbild beenden" : "Vollbild starten";
     }
   }
-  // --- Audio UI ---
+
+  // ==========================================
+  // AUDIO UI
+  // ==========================================
+
+  /**
+   * Toggles the global audio mute state via the AudioManager and updates the UI button.
+   * Removes focus from the clicked button immediately.
+   * @static
+   * @see AudioManager
+   */
   static toggleMute() {
     AudioManager.toggleMute();
     UIManager.updateMuteButtonState();
     document.getElementById("mute-btn").blur();
   }
 
+  /**
+   * Updates the icon and alt-text of the mute button based on the AudioManager's state.
+   * @static
+   */
   static updateMuteButtonState() {
     const muteIcon = document.getElementById("mute-icon");
     if (muteIcon) {

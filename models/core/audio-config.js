@@ -1,4 +1,20 @@
+/**
+ * @typedef {Object} AudioConfig
+ * @property {string} id - Unique identifier used to access and play the sound via the AudioManager.
+ * @property {string} path - The relative file path to the audio resource (ogg, wav, or mp3).
+ * @property {boolean} loop - Indicates if the audio should restart automatically upon reaching the end.
+ * @property {number} defaultVolume - The initial volume level for this specific asset, ranging from 0.0 to 1.0.
+ */
+
+/**
+ * Central registry for all audio resources in the game.
+ * Organized into categories: background ambience, character effects, and enemy sounds.
+ * This array serves as the "source of truth" for the AudioManager's initialization.
+ * @constant
+ * @type {AudioConfig[]}
+ */
 const AUDIO_ASSETS = [
+  // --- BACKGROUND & AMBIENCE ---
   {
     id: "horror_ambience",
     path: "audio/background/dead-forest/horror_ambience.ogg",
@@ -36,6 +52,7 @@ const AUDIO_ASSETS = [
     defaultVolume: 0.1,
   },
 
+  // --- CHARACTER ACTIONS ---
   { id: "melee_swoosh", path: "audio/character/melee/melee_swoosh.ogg", loop: false, defaultVolume: 0.5 },
   { id: "spell_shoot", path: "audio/character/spell/spell_shoot.wav", loop: false, defaultVolume: 0.2 },
   {
@@ -51,6 +68,7 @@ const AUDIO_ASSETS = [
     defaultVolume: 0.05,
   },
 
+  // --- ENEMY SOUNDS (BOSS) ---
   {
     id: "boss_serpent_spell",
     path: "audio/enemies/boss/attack/boss_serpent_spell.ogg",
@@ -82,6 +100,7 @@ const AUDIO_ASSETS = [
     defaultVolume: 0.3,
   },
 
+  // --- ENEMY SOUNDS (GENERIC) ---
   {
     id: "boss_walk_giant",
     path: "audio/enemies/boss/walking/boss_walk_giant.ogg",
