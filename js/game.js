@@ -81,10 +81,7 @@ const IMAGE_ASSETS = [
 ];
 
 function startPreload() {
-  const btn = document.getElementById("btn-init");
   const loader = document.getElementById("loading-container");
-
-  if (btn) btn.classList.add("d_none");
   if (loader) loader.classList.remove("d_none");
 
   let loadedCount = 0;

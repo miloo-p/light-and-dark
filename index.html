@@ -46,21 +46,35 @@
 
     <title>Light & Shadow</title>
   </head>
-  <body>
+  <body onload="startPreload()">
     <main class="game-shell">
+      <div id="rotate-hint" class="utc_flex-dir-col utc_flex-ai-center utc_flex-jc-center">
+        <img src="./img/ui/turn-device.svg" alt="Bitte Gerät drehen" class="rotate-icon-graphic" />
+      </div>
       <div id="game-container" class="game-container">
         <div id="init-screen" class="overlay-screen init-screen-bg">
           <div class="menu-panel utc_flex-dir-col utc_flex-ai-center utc_flex-gap-md">
             <img src="./img/game-logo.png" alt="Light & Shadow Logo" class="game-logo" />
 
-            <button id="btn-init" class="btn" onclick="startPreload()">Spiel initialisieren</button>
-
-            <div id="loading-container" class="loading-container utc_flex-dir-col utc_flex-gap-sm d_none">
+            <div id="loading-container" class="loading-container utc_flex-dir-col utc_flex-gap-sm">
               <span id="loading-text" class="text-xs text-center">Lade Assets (0%)...</span>
               <div class="loading-bar-bg">
                 <div id="loading-bar-fill" class="loading-bar-fill"></div>
               </div>
             </div>
+          </div>
+        </div>
+
+        <div id="mobile-controls" class="mobile-controls-overlay utc_flex-dir-row utc_flex-jc-sbetween">
+          <div class="control-group utc_flex-dir-row utc_flex-gap-sm">
+            <button id="btn-left" class="btn-touch">◄</button>
+            <button id="btn-right" class="btn-touch">►</button>
+          </div>
+
+          <div class="control-group utc_flex-dir-row utc_flex-gap-sm">
+            <button id="btn-pulse" class="btn-touch">Q</button>
+            <button id="btn-blade" class="btn-touch">E</button>
+            <button id="btn-jump" class="btn-touch">▲</button>
           </div>
         </div>
 

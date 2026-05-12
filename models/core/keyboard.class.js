@@ -9,6 +9,7 @@ class Keyboard {
 
   constructor() {
     this.bindKeyPressEvents();
+    this.bindTouchEvents();
   }
 
   bindKeyPressEvents() {
@@ -60,6 +61,60 @@ class Keyboard {
     });
   }
 
+  bindTouchEvents() {
+    this.bindTouchStartEvents();
+    this.bindTouchEndEvents();
+  }
+
+  bindTouchStartEvents() {
+    window.addEventListener("touchstart", (event) => {
+      if (this.keyLocked) return;
+
+      let id = event.target.id;
+
+      if (id == "btn-left") {
+        this.keyLeft = true;
+      }
+      if (id == "btn-right") {
+        this.keyRight = true;
+      }
+      if (id == "btn-jump") {
+        this.keyJump = true;
+      }
+      if (id == "btn-pulse") {
+        this.keySpell = true;
+      }
+      if (id == "btn-blade") {
+        this.keyAttack = true;
+      }
+    });
+  }
+
+  bindTouchEndEvents() {
+    window.addEventListener("touchend", (event) => {
+      if (this.keyLocked) return;
+
+      let id = event.target.id;
+
+      if (id == "btn-left") {
+        this.keyLeft = false;
+      }
+      if (id == "btn-right") {
+        this.keyRight = false;
+      }
+      if (id == "btn-jump") {
+        this.keyJump = false;
+      }
+      if (id == "btn-pulse") {
+        this.keySpell = false;
+      }
+      if (id == "btn-blade") {
+        this.keyAttack = false;
+      }
+    });
+  }
+
+  // --- RESET ---
   lockAndReset() {
     this.keyLocked = true;
     this.keyLeft = false;
