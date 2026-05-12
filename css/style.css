@@ -213,6 +213,7 @@ body::before {
 }
 
 canvas {
+  display: block;
   background-color: #090909;
   image-rendering: pixelated;
 }
@@ -250,7 +251,7 @@ canvas {
 }
 
 .btn {
-  padding: 0.7rem 1rem;
+  padding: 0.6rem 1rem;
   border: 1px solid var(--ui-panel-border);
   border-radius: 999px;
   background: rgba(15, 15, 15, 0.88);
@@ -310,9 +311,10 @@ canvas {
   transition: width 0.1s ease-out;
 }
 
-/* //----- UI Panels & Menus (Die einheitliche Basis) -----// */
+/* //----- UI Panels & Menus -----// */
 
 .overlay-screen {
+  display: block;
   position: absolute;
   top: 0;
   left: 0;
@@ -421,5 +423,29 @@ canvas {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* //----- Media Querys -----// */
+
+@media only screen and (max-width: 720px) {
+  canvas,
+  .game-container,
+  .overlay-screen,
+  .init-screen-bg {
+    width: 100%;
+  }
+
+  .menu-panel {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-height: 405px) {
+  canvas,
+  .game-container,
+  .overlay-screen,
+  .init-screen-bg {
+    height: 100dvh;
   }
 }
