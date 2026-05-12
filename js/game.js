@@ -4,68 +4,46 @@ let world;
 let keyboard = new Keyboard();
 let uiManager = new UIManager();
 
-function initStartGame() {
-  resetGame();
-  initLevel();
-
-  canvas = document.getElementById("game-canvas");
-  world = new World(canvas, keyboard);
-
-  world.isGamePaused = false;
-
-  AudioManager.initAudioManager();
-  AudioManager.playLayer("horror_ambience", "ambience_layer");
-  AudioManager.playLayer("winter_ruins", "music_layer");
-}
-
-function resetGame() {
-  keyboard.unlockAndReset();
-  MovableObject.stopAllIntervals();
-}
+const PreloadState = {
+  loadedCount: 0,
+  totalAssets: 0,
+};
 
 const IMAGE_ASSETS = [
-  // --- UI & Menüs ---
   "./img/homepage_background.jpg",
   "./img/game-logo.png",
   "./img/ui/sound.svg",
   "./img/ui/sound-mute.svg",
 
-  // --- Shadow Character ---
   ...ShadowCharacter.imagesIdle,
   ...ShadowCharacter.imagesWalk,
   ...ShadowCharacter.imagesJump,
   ...ShadowCharacter.imagesHurt,
   ...ShadowCharacter.imagesDead,
 
-  // --- Projektile & Attacken ---
   "img/characters/shadow/projectile/shadow_projectile.png",
   ...MeleeSlashObject.imagesSlash,
   ...EnemyBossProjectileObject.imagesFly,
   ...EnemyPlantProjectileObject.imagesFly,
 
-  // --- Endboss ---
   ...EnemyEndboss.imagesIdle,
   ...EnemyEndboss.imagesWalk,
   ...EnemyEndboss.imagesDead,
   ...EnemyEndboss.imagesHurt,
   ...EnemyEndboss.imagesShoot,
 
-  // --- Gegner: Plant ---
   ...EnemyPlant.imagesAttack,
   ...EnemyPlant.imagesHurt,
   ...EnemyPlant.imagesDead,
 
-  // --- Gegner: Stomp ---
   ...EnemyStomp.imagesIdle,
   ...EnemyStomp.imagesWalk,
   ...EnemyStomp.imagesAttack,
 
-  // --- Statusbars ---
   ...BossStatusBar.imagesBossStatus,
   ...EnergyBar.imagesEnergy,
   ...StatusBar.imagesStatus,
 
-  // --- Backgrounds ---
   "img/background/dead/bg_d_1.png",
   "img/background/dead/bg_d_2.png",
   "img/background/dead/bg_d_3.png",
@@ -80,48 +58,63 @@ const IMAGE_ASSETS = [
   "img/background/vibrant/bg_v_6.png",
 ];
 
+function initStartGame() {
+  resetGame();
+  initLevel();
+  setupWorld();
+  startBackgroundAudio();
+}
+
+function resetGame() {
+  keyboard.unlockAndReset();
+  MovableObject.stopAllIntervals();
+}
+
+function setupWorld() {
+  canvas = document.getElementById("game-canvas");
+  world = new World(canvas, keyboard);
+  world.isGamePaused = false;
+}
+
+function startBackgroundAudio() {
+  AudioManager.initAudioManager();
+  AudioManager.playLayer("horror_ambience", "ambience_layer");
+  AudioManager.playLayer("winter_ruins", "music_layer");
+}
+
 function startPreload() {
-  const loader = document.getElementById("loading-container");
-  if (loader) loader.classList.remove("d_none");
+  showLoadingUI();
 
-  let loadedCount = 0;
-  const totalAssets = IMAGE_ASSETS.length + AUDIO_ASSETS.length;
+  PreloadState.totalAssets = IMAGE_ASSETS.length + AUDIO_ASSETS.length;
+  PreloadState.loadedCount = 0;
 
-  if (totalAssets === 0) {
+  if (PreloadState.totalAssets === 0) {
     finishPreload();
     return;
   }
 
-  function updateProgress() {
-    loadedCount++;
-    const percent = Math.round((loadedCount / totalAssets) * 100);
+  loadAllImages();
+  loadAllAudio();
+}
 
-    const fillBar = document.getElementById("loading-bar-fill");
-    const textObj = document.getElementById("loading-text");
-
-    if (fillBar) fillBar.style.width = percent + "%";
-    if (textObj) textObj.innerText = `Lade Assets (${percent}%)...`;
-
-    if (loadedCount >= totalAssets) {
-      setTimeout(finishPreload, 400);
-    }
-  }
-
+function loadAllImages() {
   IMAGE_ASSETS.forEach((src) => {
     const img = new Image();
-    img.onload = updateProgress;
-    img.onerror = updateProgress;
+    img.onload = onAssetLoaded;
+    img.onerror = onAssetLoaded;
     img.src = src;
 
     if (typeof DrawableObject !== "undefined") {
       DrawableObject.imageCache[src] = img;
     }
   });
+}
 
+function loadAllAudio() {
   AUDIO_ASSETS.forEach((config) => {
     const audioObj = new Audio();
-    audioObj.addEventListener("canplaythrough", updateProgress, { once: true });
-    audioObj.addEventListener("error", updateProgress, { once: true });
+    audioObj.addEventListener("canplaythrough", onAssetLoaded, { once: true });
+    audioObj.addEventListener("error", onAssetLoaded, { once: true });
 
     audioObj.src = config.path;
     audioObj.loop = config.loop;
@@ -134,11 +127,35 @@ function startPreload() {
   });
 }
 
+function onAssetLoaded() {
+  PreloadState.loadedCount++;
+
+  const percent = Math.round((PreloadState.loadedCount / PreloadState.totalAssets) * 100);
+  updateLoadingUI(percent);
+
+  if (PreloadState.loadedCount >= PreloadState.totalAssets) {
+    setTimeout(finishPreload, 400);
+  }
+}
+
+function showLoadingUI() {
+  const loader = document.getElementById("loading-container");
+  if (loader) loader.classList.remove("d_none");
+}
+
+function updateLoadingUI(percent) {
+  const fillBar = document.getElementById("loading-bar-fill");
+  const textObj = document.getElementById("loading-text");
+
+  if (fillBar) fillBar.style.width = `${percent}%`;
+  if (textObj) textObj.innerText = `Lade Assets (${percent}%)...`;
+}
+
 function finishPreload() {
   const initScreen = document.getElementById("init-screen");
-  if (initScreen) initScreen.classList.add("d_none");
-
   const startScreen = document.getElementById("start-screen");
+
+  if (initScreen) initScreen.classList.add("d_none");
   if (startScreen) startScreen.classList.remove("d_none");
 
   if (typeof AudioManager !== "undefined") {

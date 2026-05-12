@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <link rel="shortcut icon" href="./img/ui/favicon.ico" type="image/x-icon" />
+
     <link rel="stylesheet" href="./css/reset.css" />
     <link rel="stylesheet" href="./css/fonts.css" />
     <link rel="stylesheet" href="./css/style.css" />
@@ -54,7 +56,7 @@
       <div id="game-container" class="game-container">
         <div id="init-screen" class="overlay-screen init-screen-bg">
           <div class="menu-panel utc_flex-dir-col utc_flex-ai-center utc_flex-gap-md">
-            <img src="./img/game-logo.png" alt="Light & Shadow Logo" class="game-logo" />
+            <img src="./img/ui/light-entity.gif" alt="Das letzte Echo" class="light-entitiy-gif" />
 
             <div id="loading-container" class="loading-container utc_flex-dir-col utc_flex-gap-sm">
               <span id="loading-text" class="text-xs text-center">Lade Assets (0%)...</span>
@@ -101,12 +103,13 @@
           <div class="menu-panel utc_flex-dir-col utc_flex-ai-center utc_flex-gap-md">
             <div class="utc_flex-dir-row utc_flex-jc-center utc_flex-ai-start utc_flex-gap-md">
               <div class="content-box">
-                <h1 class="headline-sm text-center">Das letzte Echo</h1>
+                <h1 class="headline-sm">Das letzte Echo spricht zu dir:</h1>
                 <p class="text-sm">
                   "Hörst du mich im Dunkeln? Ich bin der letzte Funke des alten Lichts...<br /><br />
                   Sammle die verstreute Energie, bezwinge seine Schergen und durchbrich die Dunkelheit.
                   Befreie mich... bevor ich für immer erlösche."
                 </p>
+                <img src="./img/ui/light-character.png" alt="" class="light-entitiy-static" />
               </div>
 
               <div id="controls-box" class="content-box controls-box d_none">
@@ -144,11 +147,12 @@
         <div id="game-over-screen" class="overlay-screen d_none">
           <div class="menu-panel utc_flex-dir-col utc_flex-ai-center utc_flex-gap-md">
             <div class="content-box">
-              <h2 class="headline-sm text-center" style="color: var(--clr-accent)">Verschlungen...</h2>
-              <p class="text-sm text-center">
-                Das Licht ist erloschen. Die Dunkelheit hat dich eingeholt, Wächter. Lass das letzte Echo
-                nicht verstummen!
+              <h2 class="headline-sm" style="color: var(--clr-accent)">Es ist ... vorbei.</h2>
+              <p class="text-sm">
+                "Das Licht ist erloschen. Die Dunkelheit hat dich eingeholt, Wächter. Lass das letzte Echo
+                nicht verstummen!"
               </p>
+              <img src="./img/ui/light-character.png" alt="" class="light-entitiy-static" />
             </div>
             <div class="utc_flex-dir-row utc_flex-gap-sm menu-buttons">
               <button class="btn" onclick="uiManager.startGame()">Nochmal versuchen</button>
@@ -160,10 +164,11 @@
         <div id="end-screen" class="overlay-screen d_none">
           <div class="menu-panel utc_flex-dir-col utc_flex-ai-center utc_flex-gap-md">
             <div class="content-box">
-              <h2 class="headline-sm text-center">Das Licht ist befreit...</h2>
+              <h2 class="headline-sm">Das Licht ist befreit...</h2>
               <p class="text-sm text-center">
-                Die Dunkelheit weicht. Dein Dienst ist getan, Wächter. Die Welt erstrahlt in neuem Glanz.
+                "Die Dunkelheit weicht. Dein Dienst ist getan, Wächter. Die Welt erstrahlt in neuem Glanz."
               </p>
+              <img src="./img/ui/light-character.png" alt="" class="light-entitiy-static" />
             </div>
             <div class="utc_flex-dir-row utc_flex-gap-sm menu-buttons">
               <button class="btn" onclick="uiManager.startGame()">Neues Spiel</button>

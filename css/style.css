@@ -220,6 +220,14 @@ canvas {
 
 /* //----- Components (Buttons, HUD, Preloader) -----// */
 
+.light-entitiy-gif {
+  display: block;
+  width: 200px;
+  max-width: 100%;
+  pointer-events: none;
+  image-rendering: crisp-edges;
+}
+
 .game-logo {
   display: block;
   width: 300px;
@@ -340,11 +348,12 @@ canvas {
 }
 
 .content-box {
+  position: relative;
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid var(--ui-panel-border);
   border-radius: var(--ui-radius-sm);
   padding: var(--spacing-md);
-  max-width: 450px;
+  max-width: 900px;
 }
 
 .controls-box {
@@ -381,6 +390,17 @@ canvas {
   text-align: center;
   box-shadow: 0 2px 0 #000;
   margin-right: 4px;
+}
+
+.light-entitiy-static {
+  position: absolute;
+
+  left: -20px;
+  display: block;
+  width: 100px;
+  max-width: 100%;
+  pointer-events: none;
+  image-rendering: crisp-edges;
 }
 
 /* //----- Typography -----// */
