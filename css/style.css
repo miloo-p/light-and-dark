@@ -426,6 +426,38 @@ canvas {
   }
 }
 
+/* //----- Fullscreen -----// */
+
+#game-container:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#game-container:fullscreen canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+#game-container:fullscreen .overlay-screen {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+#game-container:fullscreen .hud-overlay {
+  top: 15px;
+  right: 15px;
+  width: auto;
+  height: auto;
+}
+
 /* //----- Media Querys -----// */
 
 @media only screen and (max-width: 720px) {

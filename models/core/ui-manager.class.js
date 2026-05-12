@@ -1,4 +1,5 @@
 class UIManager {
+  static isFullscreen = false;
   constructor() {
     this.startScreen = document.getElementById("start-screen");
     this.endScreen = document.getElementById("end-screen");
@@ -8,6 +9,10 @@ class UIManager {
 
     this.endButtonTimeout = null;
     UIManager.updateMuteButtonState();
+
+    document.addEventListener("fullscreenchange", () => {
+      UIManager.updateFullscreenButtonState();
+    });
   }
 
   // --- Hilfsmethoden zum Aufräumen ---
@@ -68,6 +73,31 @@ class UIManager {
     }
   }
 
+  // --- Fullscreen Toggle ---
+
+  static toggleFullscreen() {
+    let container = document.getElementById("game-container");
+
+    if (!document.fullscreenElement) {
+      if (container.requestFullscreen) {
+        container.requestFullscreen();
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+    document.getElementById("fs-btn").blur();
+  }
+
+  static updateFullscreenButtonState() {
+    const fsIcon = document.getElementById("fs-icon");
+    if (fsIcon) {
+      const isFS = !!document.fullscreenElement;
+      fsIcon.src = isFS ? "./img/ui/collapse-screen.svg" : "./img/ui/expand-screen.svg";
+      fsIcon.alt = isFS ? "Vollbild beenden" : "Vollbild starten";
+    }
+  }
   // --- Audio UI ---
   static toggleMute() {
     AudioManager.toggleMute();
