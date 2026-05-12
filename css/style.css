@@ -432,10 +432,7 @@ canvas {
   canvas,
   .game-container,
   .overlay-screen,
-  .init-screen-bg {
-    width: 100%;
-  }
-
+  .init-screen-bg,
   .menu-panel {
     width: 100%;
   }
