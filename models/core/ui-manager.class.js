@@ -72,6 +72,7 @@ class UIManager {
   static toggleMute() {
     AudioManager.toggleMute();
     UIManager.updateMuteButtonState();
+    document.getElementById("mute-btn").blur();
   }
 
   static updateMuteButtonState() {
