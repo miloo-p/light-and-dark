@@ -77,13 +77,17 @@ class EnemyPlant extends MovableObject {
 
   /**
    * Main behavior loop for the plant, running at roughly 2.5 FPS (400ms).
-   * Evaluates the current state (dead, hurt, or attacking) and triggers the shoot action
-   * on a specific frame of the attack animation.
+   * Evaluates the current state (dead, hurt, or attacking) and triggers the shoot action.
+   * Uses proximity detection to only animate and shoot when the player is nearby.
    */
   animate() {
     this.setStoppableInterval(() => {
-      // Ensure the global world context exists before executing logic
-      if (typeof world === "undefined" || !world) return;
+      if (typeof world === "undefined" || !world || !world.shadowCharacter) return;
+      let distanceToPlayer = Math.abs(this.x - world.shadowCharacter.x);
+
+      if (distanceToPlayer > 600 && !this.isDead() && !this.isHurt()) {
+        return;
+      }
 
       if (this.isDead()) {
         this.displayAnimation(EnemyPlant.imagesDead);
@@ -91,10 +95,8 @@ class EnemyPlant extends MovableObject {
       } else if (this.isHurt()) {
         this.displayAnimation(EnemyPlant.imagesHurt);
       } else {
-        // Calculate the current frame index relative to the attack animation array
         let i = this.currentImage % EnemyPlant.imagesAttack.length;
 
-        // Trigger the projectile spawn exactly when the plant visually shoots (frame 3)
         if (i === 3) {
           this.shoot();
         }

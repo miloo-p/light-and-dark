@@ -612,38 +612,57 @@ class World {
 
   /**
    * Orchestrates the cinematic sequence triggered upon defeating the end boss.
-   * Pauses gameplay, swaps backgrounds, locks player input, and transitions to the end screen.
+   * Acts as a timeline manager, calling specific events at specific times.
    */
   executeLevelEndCut() {
+    this.startCutsceneLockdown();
+
+    setTimeout(() => this.triggerWorldTransformation(), 1000);
+    setTimeout(() => this.startAutomatedWalk(), 2000);
+    setTimeout(() => this.showFinalScreen(), 10000);
+  }
+
+  /**
+   * Step 1: Pauses gameplay, locks input, hides mobile controls, and switches to the end theme.
+   */
+  startCutsceneLockdown() {
     this.isGamePaused = true;
     this.keyboard.lockAndReset();
 
-    // --- NEU: Blende die mobilen Controls aus ---
     if (typeof uiManager !== "undefined") {
       uiManager.hideMobileControls();
     }
+
     AudioManager.stopLayer("music_layer");
     AudioManager.playLayer("piano_theme", "music_layer");
+  }
 
-    setTimeout(() => {
-      this.flashAlpha = 1.0; // Trigger the bright flash
-      this.level.backgroundObjectsRear = this.level.backgroundObjectsRearEndgame;
-      this.level.backgroundObjectsFront = this.level.backgroundObjectsFrontEndgame;
-      AudioManager.playSFX("transformation_woosh");
-    }, 1000);
+  /**
+   * Step 2: Triggers the bright flash, swaps the background layers, and plays the transition sound.
+   */
+  triggerWorldTransformation() {
+    this.flashAlpha = 1.0;
+    this.level.backgroundObjectsRear = this.level.backgroundObjectsRearEndgame;
+    this.level.backgroundObjectsFront = this.level.backgroundObjectsFrontEndgame;
 
-    // Make the character automatically walk to the right into the new environment
-    setTimeout(() => {
-      this.shadowCharacter.cameraOffset = 600;
-      this.keyboard.keyLeft = true;
-      this.bossTriggered = false;
-    }, 2000);
+    AudioManager.playSFX("transformation_woosh");
+  }
 
-    // Show the final score/end screen
-    setTimeout(() => {
-      if (typeof uiManager !== "undefined") {
-        uiManager.showEndScreen();
-      }
-    }, 10000);
+  /**
+   * Step 3: Forces the character to automatically walk into the new environment.
+   */
+  startAutomatedWalk() {
+    this.shadowCharacter.cameraOffset = 600;
+    this.bossTriggered = false;
+    this.keyboard.keyLeft = true;
+  }
+
+  /**
+   * Step 4: Brings up the final end screen.
+   */
+  showFinalScreen() {
+    if (typeof uiManager !== "undefined") {
+      uiManager.showEndScreen();
+    }
   }
 }

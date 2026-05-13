@@ -138,6 +138,6 @@ function initLevel() {
     ],
 
     // 9. enemyPlant: Stationary shooting enemy
-    [new EnemyPlant(600)],
+    [new EnemyPlant(600), new EnemyPlant(1200), new EnemyPlant(1800)],
   );
 }
