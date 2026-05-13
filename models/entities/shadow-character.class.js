@@ -1,27 +1,16 @@
 /**
  * The main playable character in the game.
- * Handles player input, character-specific animations, audio, and game-over logic.
  * @class
  * @extends MovableObject
  */
 class ShadowCharacter extends MovableObject {
-  /**
-   * Horizontal movement speed of the character.
-   * @type {number}
-   */
+  /** @type {number} */
   speed = 3;
 
-  /**
-   * Array storing active particles emitted by the character.
-   * @type {Particle[]}
-   */
+  /** @type {Particle[]} */
   particles = [];
 
-  /**
-   * Custom bounding box for accurate collision detection.
-   * Insets the visual sprite boundaries to match the character's physical shape.
-   * @type {{top: number, bottom: number, left: number, right: number}}
-   */
+  /** @type {{top: number, bottom: number, left: number, right: number}} */
   hitboxOffset = {
     top: 20,
     bottom: 5,
@@ -29,37 +18,22 @@ class ShadowCharacter extends MovableObject {
     right: 40,
   };
 
-  /**
-   * Current health points of the character.
-   * @type {number}
-   */
+  /** @type {number} */
   healthPoints = 100;
 
-  /**
-   * Current shadow energy points, used for special attacks (e.g., projectiles).
-   * @type {number}
-   */
+  /** @type {number} */
   energyPoints = 40;
 
-  /**
-   * Counter for the total amount of coins collected by the player.
-   * @type {number}
-   */
+  /** @type {number} */
   collectedCoins = 0;
 
-  /**
-   * Flag to prevent overlapping or redundant playback of the walking audio layers.
-   * @type {boolean}
-   */
+  /** @type {boolean} */
   isWalkingSoundPlaying = false;
 
-  /**
-   * Flag to ensure the game-over transition sequence is only triggered once upon death.
-   * @type {boolean}
-   */
+  /** @type {boolean} */
   gameOverProcessed = false;
 
-  /** @static @type {string[]} Array of image paths for the idle animation. */
+  /** @type {string[]} */
   static imagesIdle = [
     `img/characters/shadow/01_idle/i1-1.png`,
     `img/characters/shadow/01_idle/i1-2.png`,
@@ -76,7 +50,7 @@ class ShadowCharacter extends MovableObject {
     `img/characters/shadow/01_idle/i1-13.png`,
   ];
 
-  /** @static @type {string[]} Array of image paths for the walking animation. */
+  /** @type {string[]} */
   static imagesWalk = [
     `img/characters/shadow/02_walk/w1-1.png`,
     `img/characters/shadow/02_walk/w1-2.png`,
@@ -93,7 +67,7 @@ class ShadowCharacter extends MovableObject {
     `img/characters/shadow/02_walk/w1-13.png`,
   ];
 
-  /** @static @type {string[]} Array of image paths for the jumping/falling animation. */
+  /** @type {string[]} */
   static imagesJump = [
     `img/characters/shadow/03_jump/j1-1.png`,
     `img/characters/shadow/03_jump/j1-2.png`,
@@ -109,7 +83,7 @@ class ShadowCharacter extends MovableObject {
     `img/characters/shadow/03_jump/j1-12.png`,
   ];
 
-  /** @static @type {string[]} Array of image paths for the taking damage (hurt) animation. */
+  /** @type {string[]} */
   static imagesHurt = [
     `img/characters/shadow/04_hurt/h1-1.png`,
     `img/characters/shadow/04_hurt/h1-2.png`,
@@ -118,7 +92,7 @@ class ShadowCharacter extends MovableObject {
     `img/characters/shadow/04_hurt/h1-5.png`,
   ];
 
-  /** @static @type {string[]} Array of image paths for the death sequence animation. */
+  /** @type {string[]} */
   static imagesDead = [
     `img/characters/shadow/05_dead/d1-1.png`,
     `img/characters/shadow/05_dead/d1-2.png`,
@@ -135,10 +109,7 @@ class ShadowCharacter extends MovableObject {
     `img/characters/shadow/05_dead/d1-13.png`,
   ];
 
-  /**
-   * Initializes the ShadowCharacter, setting its initial position, physics properties,
-   * and starting its core intervals (camera, gravity, animation).
-   */
+  /** Initializes the ShadowCharacter with its properties and physics. */
   constructor() {
     super();
     this.loadImage(ShadowCharacter.imagesIdle[0]);
@@ -147,8 +118,6 @@ class ShadowCharacter extends MovableObject {
     this.y = 240;
     this.width = 138;
     this.height = 150;
-
-    // Gives jumps a heavier, snappier feel
     this.fastFallEnabled = true;
 
     this.cameraBehavior();
@@ -157,20 +126,16 @@ class ShadowCharacter extends MovableObject {
   }
 
   /**
-   * Renders the character and its associated particles onto the canvas.
+   * Renders the character and its associated particles.
    * @override
-   * @param {CanvasRenderingContext2D} ctx - The 2D rendering context of the main canvas.
+   * @param {CanvasRenderingContext2D} ctx
    */
   draw(ctx) {
     this.handleParticles(ctx);
     super.draw(ctx);
   }
 
-  /**
-   * Core state machine and animation loop running at ~8 FPS.
-   * Evaluates the character's current state (dead, hurt, jumping, walking, idle)
-   * and plays the corresponding animations and sounds.
-   */
+  /** Core state machine and animation loop running at ~8 FPS. */
   animate() {
     this.setStoppableInterval(() => {
       if (!this.world || !this.world.keyboard) return;
@@ -195,26 +160,18 @@ class ShadowCharacter extends MovableObject {
         }
       }
 
-      // Handle jump input
       if (this.world.keyboard.keyJump && !this.isAboveGround() && !this.isDead()) {
         this.jump();
       }
     }, 1000 / 8);
   }
 
-  /**
-   * Initiates a jump by applying an upward vertical velocity.
-   */
+  /** Initiates a jump by applying vertical velocity. */
   jump() {
     this.speedY = 15;
   }
 
-  /**
-   * Handles the death sequence logic.
-   * Sets the internal lock to prevent multiple triggers and delays the UI transition
-   * to let the death animation finish.
-   * @fires UIManager#showGameOver
-   */
+  /** Handles the death sequence and UI transition. */
   triggerGameOver() {
     if (!this.gameOverProcessed) {
       this.gameOverProcessed = true;
@@ -227,10 +184,7 @@ class ShadowCharacter extends MovableObject {
     }
   }
 
-  /**
-   * Starts playing the atmospheric walking sound layers if they are not already active.
-   * @see AudioManager
-   */
+  /** Starts playing the walking sound layers. */
   playWalkingSound() {
     if (!this.isWalkingSoundPlaying) {
       AudioManager.playLayer("walking_forest", "player_walk_layer");
@@ -239,10 +193,7 @@ class ShadowCharacter extends MovableObject {
     }
   }
 
-  /**
-   * Stops the walking sound layers.
-   * @see AudioManager
-   */
+  /** Stops the walking sound layers. */
   stopWalkingSound() {
     if (this.isWalkingSoundPlaying) {
       AudioManager.stopLayer("player_walk_layer");

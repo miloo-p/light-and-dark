@@ -4,18 +4,10 @@
  * @extends MovableObject
  */
 class EnemyPlant extends MovableObject {
-  /**
-   * The movement speed of the plant.
-   * Note: While defined here, the plant is currently designed as a stationary enemy,
-   * so this value may not actively alter its X-position in the current implementation.
-   * @type {number}
-   */
+  /** @type {number} */
   speed = 0.15 + Math.random() * 0.25;
 
-  /**
-   * Custom bounding box for collision detection.
-   * @type {{top: number, bottom: number, left: number, right: number}}
-   */
+  /** @type {{top: number, bottom: number, left: number, right: number}} */
   hitboxOffset = {
     top: 15,
     bottom: 0,
@@ -23,20 +15,13 @@ class EnemyPlant extends MovableObject {
     right: 30,
   };
 
-  /**
-   * Initial health points of the plant enemy.
-   * @type {number}
-   */
+  /** @type {number} */
   healthPoints = 20;
 
-  /**
-   * Flag indicating whether the death sound effects have already been played.
-   * Prevents the sounds from looping indefinitely while the death animation plays.
-   * @type {boolean}
-   */
+  /** @type {boolean} */
   hasPlayedDeathSound = false;
 
-  /** @static @type {string[]} Array of image paths for the attacking/shooting animation sequence. */
+  /** @type {string[]} */
   static imagesAttack = [
     `img/enemies/enemy_plant/shoot/1_s.png`,
     `img/enemies/enemy_plant/shoot/2_s.png`,
@@ -45,7 +30,7 @@ class EnemyPlant extends MovableObject {
     `img/enemies/enemy_plant/shoot/5_s.png`,
   ];
 
-  /** @static @type {string[]} Array of image paths for the taking damage (hurt) animation sequence. */
+  /** @type {string[]} */
   static imagesHurt = [
     `img/enemies/enemy_plant/hit/1_h.png`,
     `img/enemies/enemy_plant/hit/2_h.png`,
@@ -53,7 +38,7 @@ class EnemyPlant extends MovableObject {
     `img/enemies/enemy_plant/hit/4_h.png`,
   ];
 
-  /** @static @type {string[]} Array of image paths for the death animation sequence. */
+  /** @type {string[]} */
   static imagesDead = [
     `img/enemies/enemy_plant/dies/4_d.png`,
     `img/enemies/enemy_plant/dies/5_d.png`,
@@ -75,11 +60,7 @@ class EnemyPlant extends MovableObject {
     this.animate();
   }
 
-  /**
-   * Main behavior loop for the plant, running at roughly 2.5 FPS (400ms).
-   * Evaluates the current state (dead, hurt, or attacking) and triggers the shoot action.
-   * Uses proximity detection to only animate and shoot when the player is nearby.
-   */
+  /** Main behavior loop handling animations and shooting based on player proximity. */
   animate() {
     this.setStoppableInterval(() => {
       if (typeof world === "undefined" || !world || !world.shadowCharacter) return;
@@ -106,19 +87,14 @@ class EnemyPlant extends MovableObject {
     }, 400);
   }
 
-  /**
-   * Spawns a projectile directed towards the player.
-   * Registers the new projectile in the global `world.enemyProjectiles` array and plays a sound effect.
-   */
+  /** Spawns a projectile directed towards the player. */
   shoot() {
     let bossProjectile = new EnemyPlantProjectileObject(this.x - 20, this.y + 30);
     world.enemyProjectiles.push(bossProjectile);
     AudioManager.playSFX("plant_attack");
   }
 
-  /**
-   * Checks if the plant is dead and ensures death sounds are only played once.
-   */
+  /** Checks if the plant is dead and ensures death sounds are only played once. */
   checkIsDead() {
     if (this.isDead() && !this.hasPlayedDeathSound) {
       AudioManager.playSFX("plant_dies");

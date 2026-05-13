@@ -1,68 +1,36 @@
 /**
  * Acts as a data container for a specific game level.
- * Holds all instantiated entities, collectables, and background layers required to render and play the level.
  * @class
  */
 class Level {
-  /**
-   * Array containing all basic Stomp enemies in the level.
-   * @type {EnemyStomp[]}
-   */
+  /** @type {EnemyStomp[]} */
   enemyStomps;
 
-  /**
-   * Array of background objects rendered behind the interactive game elements (e.g., sky, distant mountains).
-   * @type {BackgroundObject[]}
-   */
+  /** @type {BackgroundObject[]} */
   backgroundObjectsRear;
 
-  /**
-   * Array of background objects rendered in front of the interactive game elements (e.g., foreground mist, trees).
-   * @type {BackgroundObject[]}
-   */
+  /** @type {BackgroundObject[]} */
   backgroundObjectsFront;
 
-  /**
-   * Array of replacement background objects (rear) loaded during the cinematic boss defeat transition.
-   * @type {BackgroundObject[]}
-   */
+  /** @type {BackgroundObject[]} */
   backgroundObjectsRearEndgame;
 
-  /**
-   * Array of replacement background objects (front) loaded during the cinematic boss defeat transition.
-   * @type {BackgroundObject[]}
-   */
+  /** @type {BackgroundObject[]} */
   backgroundObjectsFrontEndgame;
 
-  /**
-   * Array containing the end boss. (Usually contains exactly one instance, but kept as an array for consistency).
-   * @type {EnemyEndboss[]}
-   */
+  /** @type {EnemyEndboss[]} */
   enemyEndboss;
 
-  /**
-   * Array of all collectable coins placed in the level.
-   * @type {Coin[]}
-   */
+  /** @type {Coin[]} */
   coins;
 
-  /**
-   * Array of all collectable shadow energy items placed in the level.
-   * @type {ShadowEnergy[]}
-   */
+  /** @type {ShadowEnergy[]} */
   shadowEnergy;
 
-  /**
-   * Array containing all stationary Plant enemies in the level.
-   * @type {EnemyPlant[]}
-   */
+  /** @type {EnemyPlant[]} */
   enemyPlant;
 
-  /**
-   * The absolute right horizontal boundary of the level.
-   * The camera and player movement are constrained by this value.
-   * @type {number}
-   */
+  /** @type {number} */
   level_end_x = 2700;
 
   /**

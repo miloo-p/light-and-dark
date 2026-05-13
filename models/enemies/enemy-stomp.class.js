@@ -1,46 +1,25 @@
 /**
  * Represents a basic, ground-based enemy (the "Stomp").
- * It moves continuously to the left and handles its own walking and death audio.
  * @class
  * @extends MovableObject
  */
 class EnemyStomp extends MovableObject {
-  /**
-   * The horizontal movement speed.
-   * Randomized slightly so multiple instances don't walk in perfect synchronization.
-   * @type {number}
-   */
+  /** @type {number} */
   speed = 0.15 + Math.random() * 0.25;
 
-  /**
-   * Health points of the enemy. Set to 20, usually meaning it dies in one hit.
-   * @type {number}
-   */
+  /** @type {number} */
   healthPoints = 20;
 
-  /**
-   * Flag to track if the walking audio loop is currently active.
-   * @type {boolean}
-   */
+  /** @type {boolean} */
   isWalkingSoundPlaying = false;
 
-  /**
-   * A unique identifier for this specific instance's audio layer.
-   * Prevents multiple Stomp enemies from interfering with each other's audio channels.
-   * @type {string}
-   */
+  /** @type {string} */
   walkLayerId = `stomp_walk_${Math.random()}`;
 
-  /**
-   * Flag to ensure the death sound effects are only triggered exactly once.
-   * @type {boolean}
-   */
+  /** @type {boolean} */
   hasPlayedDeathSound = false;
 
-  /**
-   * Custom bounding box to tighten the collision area around the visual sprite.
-   * @type {{top: number, bottom: number, left: number, right: number}}
-   */
+  /** @type {{top: number, bottom: number, left: number, right: number}} */
   hitboxOffset = {
     top: 0,
     bottom: 0,
@@ -48,7 +27,7 @@ class EnemyStomp extends MovableObject {
     right: 20,
   };
 
-  /** @static @type {string[]} Array of image paths for the idle animation. */
+  /** @type {string[]} */
   static imagesIdle = [
     `img/enemies/enemy_stomp/idle/1_i.png`,
     `img/enemies/enemy_stomp/idle/2_i.png`,
@@ -59,7 +38,7 @@ class EnemyStomp extends MovableObject {
     `img/enemies/enemy_stomp/idle/7_i.png`,
   ];
 
-  /** @static @type {string[]} Array of image paths for the walking animation. */
+  /** @type {string[]} */
   static imagesWalk = [
     `img/enemies/enemy_stomp/walking/1_w.png`,
     `img/enemies/enemy_stomp/walking/2_w.png`,
@@ -68,7 +47,7 @@ class EnemyStomp extends MovableObject {
     `img/enemies/enemy_stomp/walking/5_w.png`,
   ];
 
-  /** @static @type {string[]} Array of image paths for the attack animation. */
+  /** @type {string[]} */
   static imagesAttack = [
     `img/enemies/enemy_stomp/attack/1_a.png`,
     `img/enemies/enemy_stomp/attack/2_a.png`,
@@ -77,12 +56,12 @@ class EnemyStomp extends MovableObject {
     `img/enemies/enemy_stomp/attack/5_a.png`,
   ];
 
-  /** @static @type {string[]} Array of image paths for the death animation. */
+  /** @type {string[]} */
   static imagesDead = [`img/enemies/enemy_stomp/death/6_d.png`, `img/enemies/enemy_stomp/death/7_d.png`];
 
   /**
-   * Initializes the enemy, sets its spawn position, and starts its behavior loops.
-   * @param {number} x - The base x-coordinate for spawning. A random offset is added to this.
+   * Initializes the enemy and sets its spawn position.
+   * @param {number} x - The base x-coordinate for spawning.
    */
   constructor(x) {
     super();
@@ -98,10 +77,7 @@ class EnemyStomp extends MovableObject {
     this.moveLeft(); // Inherited from MovableObject
   }
 
-  /**
-   * The main animation loop running at roughly 4 FPS (250ms).
-   * Switches between walking and death animations based on health status.
-   */
+  /** The main animation loop. Switches between walking and death animations. */
   animate() {
     this.setStoppableInterval(() => {
       if (this.isDead()) {
@@ -113,10 +89,7 @@ class EnemyStomp extends MovableObject {
     }, 250);
   }
 
-  /**
-   * Starts playing the walking sound on this instance's unique audio layer.
-   * @see AudioManager
-   */
+  /** Starts playing the walking sound on this instance's unique audio layer. */
   playWalkingSound() {
     if (!this.isWalkingSoundPlaying) {
       AudioManager.playLayer("stomp_walking", this.walkLayerId);
@@ -124,10 +97,7 @@ class EnemyStomp extends MovableObject {
     }
   }
 
-  /**
-   * Stops the walking sound on this instance's unique audio layer.
-   * @see AudioManager
-   */
+  /** Stops the walking sound on this instance's unique audio layer. */
   stopWalkingSound() {
     if (this.isWalkingSoundPlaying) {
       AudioManager.stopLayer(this.walkLayerId);
@@ -135,10 +105,7 @@ class EnemyStomp extends MovableObject {
     }
   }
 
-  /**
-   * Evaluates if the enemy has just died.
-   * If so, it halts the walking sound and triggers the death SFX exactly once.
-   */
+  /** Evaluates if the enemy has just died and triggers death sounds exactly once. */
   checkStompIsDead() {
     if (this.isDead() && !this.hasPlayedDeathSound) {
       this.stopWalkingSound();

@@ -1,40 +1,26 @@
 /**
- * Represents a collectable shadow energy bottle placed within the level.
- * When collected by the player, it restores shadow energy used for casting spells.
+ * Represents a collectable shadow energy bottle.
  * @class
  * @extends MovableObject
  */
 class ShadowEnergy extends MovableObject {
-  /**
-   * The height of the energy bottle in pixels.
-   * @type {number}
-   */
+  /** @type {number} */
   height = 60;
 
-  /**
-   * The width of the energy bottle in pixels.
-   * @type {number}
-   */
+  /** @type {number} */
   width = 60;
 
-  /**
-   * Array storing active magical particles emitted by this item.
-   * @type {Particle[]}
-   */
+  /** @type {Particle[]} */
   particles = [];
 
-  /**
-   * Array of image paths representing different visual variations of the energy bottle.
-   * @type {string[]}
-   */
+  /** @type {string[]} */
   images = [
     "img/shadow-energy/1_energy_bottle_on_ground.png",
     "img/shadow-energy/2_energy_bottle_on_ground.png",
   ];
 
   /**
-   * Initializes a new shadow energy collectable at the specified coordinates.
-   * Randomly selects one of the visual variations to make the environment look more organic.
+   * Initializes a new shadow energy collectable with a random visual variation.
    * @param {number} x - The base horizontal coordinate for placement.
    * @param {number} y - The base vertical coordinate.
    */
@@ -51,9 +37,9 @@ class ShadowEnergy extends MovableObject {
   }
 
   /**
-   * Renders the item and its magical glowing particles onto the canvas.
+   * Renders the item and its glowing particles.
    * @override
-   * @param {CanvasRenderingContext2D} ctx - The 2D rendering context of the main canvas.
+   * @param {CanvasRenderingContext2D} ctx - The 2D rendering context.
    */
   draw(ctx) {
     this.handleParticles(ctx);

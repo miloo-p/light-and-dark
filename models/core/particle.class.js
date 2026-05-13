@@ -1,55 +1,31 @@
 /**
  * Represents a single visual particle used for atmospheric or magical effects.
- * Particles slowly drift upwards, expand in size, and fade out over time using a glowing blend mode.
  * @class
  */
 class Particle {
-  /**
-   * Current horizontal position of the particle on the canvas.
-   * @type {number}
-   */
+  /** @type {number} */
   x;
 
-  /**
-   * Current vertical position of the particle on the canvas.
-   * @type {number}
-   */
+  /** @type {number} */
   y;
 
-  /**
-   * The radius of the particle. Grows continuously over its lifetime.
-   * @type {number}
-   */
+  /** @type {number} */
   size;
 
-  /**
-   * The remaining life of the particle.
-   * Acts as an opacity multiplier. Starts at 1.5 to keep it fully opaque briefly before fading.
-   * @type {number}
-   */
+  /** @type {number} */
   life = 1.5;
 
-  /**
-   * The rate at which the particle's life decreases per frame.
-   * @type {number}
-   */
+  /** @type {number} */
   decay;
 
-  /**
-   * Horizontal velocity.
-   * @type {number}
-   */
+  /** @type {number} */
   vx;
 
-  /**
-   * Vertical velocity. Typically negative to make the particle float upwards.
-   * @type {number}
-   */
+  /** @type {number} */
   vy;
 
   /**
-   * Initializes a new particle with randomized offsets, sizes, and velocities
-   * to create an organic, non-uniform particle cloud.
+   * Initializes a new particle with randomized offsets, sizes, and velocities.
    * @param {number} startX - The base horizontal spawn coordinate.
    * @param {number} startY - The base vertical spawn coordinate.
    */
@@ -73,7 +49,6 @@ class Particle {
 
   /**
    * Updates the particle's physical state for the current frame.
-   * Applies velocity, decreases life (opacity), and slightly expands the particle.
    */
   update() {
     this.x += this.vx;
@@ -84,8 +59,7 @@ class Particle {
 
   /**
    * Renders the particle onto the canvas.
-   * Uses canvas shadows and composite operations to create a magical glowing effect.
-   * @param {CanvasRenderingContext2D} ctx - The 2D rendering context of the main canvas.
+   * @param {CanvasRenderingContext2D} ctx - The 2D rendering context.
    */
   draw(ctx) {
     ctx.save();
