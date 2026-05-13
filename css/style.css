@@ -350,12 +350,12 @@ canvas {
   background: var(--ui-panel-bg);
   border: 1px solid var(--ui-panel-border);
   border-radius: var(--ui-radius-lg);
-  padding: var(--spacing-md);
+  padding: var(--spacing-sm);
   padding-bottom: var(--spacing-sm);
   box-shadow: var(--ui-shadow-soft);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  max-width: 90%;
+  max-width: 95%;
   animation: fadeIn 0.3s ease-out;
 }
 
@@ -413,7 +413,7 @@ canvas {
 .light-entitiy-static {
   position: absolute;
 
-  left: -20px;
+  left: 0px;
   display: block;
   width: 100px;
   max-width: 100%;
@@ -545,6 +545,12 @@ canvas {
   touch-action: none;
 
   -webkit-tap-highlight-color: transparent;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .btn-touch:active {
@@ -604,6 +610,9 @@ canvas {
   .init-screen-bg,
   .menu-panel {
     width: 100%;
+  }
+  .game-logo {
+    display: none;
   }
 }
 

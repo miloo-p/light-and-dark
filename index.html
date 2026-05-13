@@ -56,7 +56,7 @@
       </div>
       <div id="game-container" class="game-container">
         <div id="init-screen" class="overlay-screen init-screen-bg">
-          <div class="menu-panel utc_flex-dir-col utc_flex-ai-center utc_flex-gap-md">
+          <div class="menu-panel utc_flex-dir-col utc_flex-ai-center utc_flex-gap-sm">
             <img src="./img/ui/light-entity.gif" alt="Das letzte Echo" class="light-entitiy-gif" />
 
             <div id="loading-container" class="loading-container utc_flex-dir-col utc_flex-gap-sm">
@@ -101,8 +101,8 @@
         </div>
 
         <div id="start-screen" class="overlay-screen d_none">
-          <div class="menu-panel utc_flex-dir-col utc_flex-ai-center utc_flex-gap-md">
-            <div class="utc_flex-dir-row utc_flex-jc-center utc_flex-ai-start utc_flex-gap-md">
+          <div class="menu-panel utc_flex-dir-col utc_flex-ai-center utc_flex-gap-sm">
+            <div class="utc_flex-dir-row utc_flex-jc-center utc_flex-ai-start utc_flex-gap-sm">
               <div class="content-box">
                 <h1 class="headline-sm">Das letzte Echo spricht zu dir:</h1>
                 <p class="text-sm">
@@ -136,14 +136,14 @@
               </div>
             </div>
 
-            <div class="utc_flex-dir-col utc_flex-gap-md menu-buttons">
+            <div class="utc_flex-dir-col utc_flex-gap-sm menu-buttons">
               <div class="utc_flex-dir-row utc_flex-gap-sm utc_flex-jc-center">
                 <button id="btn-start-game" class="btn" onclick="uiManager.startGame()">Start Game</button>
                 <button id="btn-show-controls" class="btn" onclick="uiManager.toggleControls()">
                   Steuerung
                 </button>
               </div>
-              <div class="utc_flex-dir-row utc_flex-gap-md menu-buttons utc_flex-jc-end">
+              <div id="legal-links" class="utc_flex-dir-row utc_flex-gap-sm menu-buttons utc_flex-jc-end">
                 <button id="btn-imprint" class="btn btn-link text-center" onclick="uiManager.showImprint()">
                   Impressum
                 </button>
@@ -156,7 +156,7 @@
         </div>
 
         <div id="game-over-screen" class="overlay-screen d_none">
-          <div class="menu-panel utc_flex-dir-col utc_flex-ai-center utc_flex-gap-md">
+          <div class="menu-panel utc_flex-dir-col utc_flex-ai-center utc_flex-gap-sm">
             <div class="content-box">
               <h2 class="headline-sm" style="color: var(--clr-accent)">Es ist ... vorbei.</h2>
               <p class="text-sm">
@@ -165,27 +165,23 @@
               </p>
               <img src="./img/ui/light-character.png" alt="" class="light-entitiy-static" />
             </div>
-            <div class="utc_flex-dir-col utc_flex-gap-md menu-buttons">
+            <div class="utc_flex-dir-col utc_flex-gap-sm menu-buttons">
               <div class="utc_flex-dir-row utc_flex-gap-sm utc_flex-jc-center">
-                <button id="btn-start-game" class="btn" onclick="uiManager.startGame()">Start Game</button>
-                <button id="btn-show-controls" class="btn" onclick="uiManager.toggleControls()">
-                  Steuerung
+                <button id="btn-start-game" class="btn" onclick="uiManager.startGame()">
+                  Nochmal versuchen
                 </button>
+                <button id="btn-show-controls" class="btn" onclick="uiManager.backToMenu()">Hauptmenü</button>
               </div>
-              <div class="utc_flex-dir-row utc_flex-gap-md menu-buttons utc_flex-jc-end">
-                <button id="btn-imprint" class="btn btn-link text-center" onclick="uiManager.showImprint()">
-                  Impressum
-                </button>
-                <button id="btn-credits" class="btn btn-link text-center" onclick="uiManager.showCredits()">
-                  Credits
-                </button>
+              <div class="utc_flex-dir-row utc_flex-gap-sm menu-buttons utc_flex-jc-end">
+                <button class="btn btn-link text-center" onclick="uiManager.showImprint()">Impressum</button>
+                <button class="btn btn-link text-center" onclick="uiManager.showCredits()">Credits</button>
               </div>
             </div>
           </div>
         </div>
 
         <div id="end-screen" class="overlay-screen d_none">
-          <div class="menu-panel utc_flex-dir-col utc_flex-ai-center utc_flex-gap-md">
+          <div class="menu-panel utc_flex-dir-col utc_flex-ai-center utc_flex-gap-sm">
             <div class="content-box">
               <h2 class="headline-sm">Das Licht ist befreit...</h2>
               <p class="text-sm text-center">
@@ -193,26 +189,21 @@
               </p>
               <img src="./img/ui/light-character.png" alt="" class="light-entitiy-static" />
             </div>
-            <div class="utc_flex-dir-col utc_flex-gap-md menu-buttons">
+            <div class="utc_flex-dir-col utc_flex-gap-sm menu-buttons">
               <div class="utc_flex-dir-row utc_flex-gap-sm utc_flex-jc-center">
-                <button id="btn-start-game" class="btn" onclick="uiManager.startGame()">Start Game</button>
-                <button id="btn-show-controls" class="btn" onclick="uiManager.toggleControls()">
-                  Steuerung
-                </button>
+                <button id="btn-start-game" class="btn" onclick="uiManager.startGame()">Neues Spiel</button>
+                <button id="btn-show-controls" class="btn" onclick="uiManager.backToMenu()">Hauptmenü</button>
               </div>
-              <div class="utc_flex-dir-row utc_flex-gap-md menu-buttons utc_flex-jc-end">
-                <button id="btn-imprint" class="btn btn-link text-center" onclick="uiManager.showImprint()">
-                  Impressum
-                </button>
-                <button id="btn-credits" class="btn btn-link text-center" onclick="uiManager.showCredits()">
-                  Credits
-                </button>
+              <div class="utc_flex-dir-row utc_flex-gap-sm menu-buttons utc_flex-jc-end">
+                <button class="btn btn-link text-center" onclick="uiManager.showImprint()">Impressum</button>
+                <button class="btn btn-link text-center" onclick="uiManager.showCredits()">Credits</button>
               </div>
             </div>
           </div>
         </div>
+
         <div id="imprint-screen" class="overlay-screen d_none">
-          <div class="menu-panel utc_flex-dir-col utc_flex-ai-center utc_flex-gap-md">
+          <div class="menu-panel utc_flex-dir-col utc_flex-ai-center utc_flex-gap-sm">
             <div class="content-box">
               <h2 class="headline-sm">Impressum</h2>
               <p class="text-sm scroll-content">
@@ -239,7 +230,7 @@
         </div>
 
         <div id="credits-screen" class="overlay-screen d_none">
-          <div class="menu-panel utc_flex-dir-col utc_flex-ai-center utc_flex-gap-md">
+          <div class="menu-panel utc_flex-dir-col utc_flex-ai-center utc_flex-gap-sm">
             <div class="content-box">
               <h2 class="headline-sm">Audio Credits</h2>
 

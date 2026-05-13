@@ -176,6 +176,12 @@ class UIManager {
       if (btn) {
         btn.innerText = isHidden ? "Zurück" : "Steuerung";
       }
+
+      // Blende die Impressum/Credits Links ein oder aus
+      const legalLinks = document.getElementById("legal-links");
+      if (legalLinks) {
+        legalLinks.classList.toggle("d_none");
+      }
     }
   }
 

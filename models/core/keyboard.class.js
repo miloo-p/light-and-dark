@@ -99,6 +99,27 @@ class Keyboard {
   bindTouchEvents() {
     this.bindTouchStartEvents();
     this.bindTouchEndEvents();
+    this.preventContextMenu(); // <--- NEU HINZUGEFÜGT
+  }
+
+  /**
+   * Verhindert das Aufploppen des Kontextmenüs (Rechtsklick/Long-Press) auf den Mobile-Buttons.
+   */
+  preventContextMenu() {
+    window.addEventListener("contextmenu", (event) => {
+      let id = event.target.id;
+
+      // Wenn der Finger lange auf einem unserer Buttons liegt, blockieren wir das Menü
+      if (
+        id == "btn-left" ||
+        id == "btn-right" ||
+        id == "btn-jump" ||
+        id == "btn-pulse" ||
+        id == "btn-blade"
+      ) {
+        event.preventDefault();
+      }
+    });
   }
 
   /**
