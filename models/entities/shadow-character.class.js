@@ -5,7 +5,7 @@
  */
 class ShadowCharacter extends MovableObject {
   /** @type {number} */
-  speed = 3;
+  speed = 4;
 
   /** @type {Particle[]} */
   particles = [];
