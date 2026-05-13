@@ -617,6 +617,11 @@ class World {
   executeLevelEndCut() {
     this.isGamePaused = true;
     this.keyboard.lockAndReset();
+
+    // --- NEU: Blende die mobilen Controls aus ---
+    if (typeof uiManager !== "undefined") {
+      uiManager.hideMobileControls();
+    }
     AudioManager.stopLayer("music_layer");
     AudioManager.playLayer("piano_theme", "music_layer");
 

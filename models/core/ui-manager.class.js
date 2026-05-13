@@ -25,6 +25,12 @@ class UIManager {
     /** @type {HTMLElement|null} Reference to the game over (death) screen container. */
     this.gameOverScreen = document.getElementById("game-over-screen");
 
+    /** @type {HTMLElement|null} Reference to the imprint screen container. */
+    this.imprintScreen = document.getElementById("imprint-screen");
+
+    /** @type {HTMLElement|null} Reference to the credits screen container. */
+    this.creditsScreen = document.getElementById("credits-screen");
+
     /** @type {HTMLElement|null} Reference to the tutorial/controls information box. */
     this.controlsBox = document.getElementById("controls-box");
 
@@ -55,6 +61,9 @@ class UIManager {
     if (this.startScreen) this.startScreen.classList.add("d_none");
     if (this.endScreen) this.endScreen.classList.add("d_none");
     if (this.gameOverScreen) this.gameOverScreen.classList.add("d_none");
+    if (this.imprintScreen) this.imprintScreen.classList.add("d_none");
+    if (this.creditsScreen) this.creditsScreen.classList.add("d_none");
+
     if (this.endButtonTimeout) clearTimeout(this.endButtonTimeout);
   }
 
@@ -64,6 +73,22 @@ class UIManager {
   showStartScreen() {
     this.hideAllOverlayScreens();
     if (this.startScreen) this.startScreen.classList.remove("d_none");
+  }
+
+  /**
+   * Displays the Imprint (Impressum) screen and hides all other overlays.
+   */
+  showImprint() {
+    this.hideAllOverlayScreens();
+    if (this.imprintScreen) this.imprintScreen.classList.remove("d_none");
+  }
+
+  /**
+   * Displays the Credits screen and hides all other overlays.
+   */
+  showCredits() {
+    this.hideAllOverlayScreens();
+    if (this.creditsScreen) this.creditsScreen.classList.remove("d_none");
   }
 
   /**
@@ -88,6 +113,27 @@ class UIManager {
     }
   }
 
+  /**
+   * Hides the mobile touch controls. Used during cutscenes or menu screens.
+   */
+  hideMobileControls() {
+    const controls = document.getElementById("mobile-controls");
+    if (controls) {
+      // Wichtig: Wir nutzen display: none !important, um Media Queries zu überschreiben
+      controls.style.setProperty("display", "none", "important");
+    }
+  }
+
+  /**
+   * Resets the mobile touch controls to let CSS Media Queries handle their visibility again.
+   */
+  resetMobileControls() {
+    const controls = document.getElementById("mobile-controls");
+    if (controls) {
+      controls.style.removeProperty("display");
+    }
+  }
+
   // ==========================================
   // GAME FLOW CONTROLS
   // ==========================================
@@ -98,6 +144,7 @@ class UIManager {
    */
   startGame() {
     this.hideAllOverlayScreens();
+    this.resetMobileControls();
     document.getElementById("in-game-hud").classList.remove("d_none");
     initStartGame();
   }
@@ -108,6 +155,7 @@ class UIManager {
    */
   backToMenu() {
     this.showStartScreen();
+    this.resetMobileControls();
     if (typeof MovableObject !== "undefined") {
       MovableObject.stopAllIntervals();
     }
@@ -152,7 +200,6 @@ class UIManager {
         document.exitFullscreen();
       }
     }
-    // Remove focus so hitting 'Space' to jump doesn't trigger the button again
     document.getElementById("fs-btn").blur();
   }
 

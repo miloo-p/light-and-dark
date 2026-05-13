@@ -232,8 +232,8 @@ canvas {
   display: block;
   width: 300px;
   max-width: 100%;
-  pointer-events: none;
-  image-rendering: crisp-edges;
+
+  margin: 0 auto;
 }
 
 .hud-overlay {
@@ -295,6 +295,23 @@ canvas {
   width: 200px;
 }
 
+.btn-link {
+  font-size: var(--fs-sm);
+  background: none;
+  border: none;
+  color: inherit;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.btn-link:hover {
+  color: var(--clr-accent);
+}
+
 .init-screen-bg {
   z-index: 200;
   background-color: var(--clr-bg-main);
@@ -339,12 +356,17 @@ canvas {
   background: var(--ui-panel-bg);
   border: 1px solid var(--ui-panel-border);
   border-radius: var(--ui-radius-lg);
-  padding: var(--spacing-lg);
+  padding: var(--spacing-md);
+  padding-bottom: var(--spacing-sm);
   box-shadow: var(--ui-shadow-soft);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   max-width: 90%;
   animation: fadeIn 0.3s ease-out;
+}
+
+.menu-buttons {
+  min-width: 90%;
 }
 
 .content-box {
@@ -354,6 +376,8 @@ canvas {
   border-radius: var(--ui-radius-sm);
   padding: var(--spacing-md);
   max-width: 900px;
+  width: 100%;
+  min-width: min(100%, 450px);
 }
 
 .controls-box {
@@ -401,6 +425,19 @@ canvas {
   max-width: 100%;
   pointer-events: none;
   image-rendering: crisp-edges;
+}
+
+.bottom-navigation-wrapper {
+  margin: 0 auto;
+}
+
+.scroll-content {
+  max-height: 150px;
+  overflow-y: auto;
+  padding-right: 10px;
+  margin-top: 0.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--clr-accent) rgba(255, 255, 255, 0.1);
 }
 
 /* //----- Typography -----// */
@@ -486,15 +523,14 @@ canvas {
   left: 15px;
   right: 15px;
   z-index: 50;
-  pointer-events: none; /* Container selbst blockiert keine Klicks */
+  pointer-events: none;
 
-  /* Verhindert, dass der Text im Button auf Handys markiert wird */
   user-select: none;
   -webkit-user-select: none;
 }
 
 .control-group {
-  pointer-events: auto; /* Buttons wieder anklickbar machen */
+  pointer-events: auto;
 }
 
 .btn-touch {
@@ -552,11 +588,18 @@ canvas {
     display: flex !important;
     align-self: center;
   }
+
+  .game-logo {
+    display: none;
+  }
 }
 
 @media (hover: none) and (orientation: landscape) {
   .mobile-controls-overlay {
     display: flex !important;
+  }
+  .game-logo {
+    display: none;
   }
 }
 

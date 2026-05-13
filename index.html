@@ -46,10 +46,11 @@
 
     <script src="./js/game.js" defer></script>
 
-    <title>Light & Shadow</title>
+    <title>Light & Shadow - the last echo</title>
   </head>
   <body onload="startPreload()">
     <main class="game-shell">
+      <img src="./img/game-logo.png" alt="Light & Shadow - the last echo Game Logo" class="game-logo" />
       <div id="rotate-hint" class="utc_flex-dir-col utc_flex-ai-center utc_flex-jc-center">
         <img src="./img/ui/turn-device.svg" alt="Bitte Gerät drehen" class="rotate-icon-graphic" />
       </div>
@@ -135,11 +136,21 @@
               </div>
             </div>
 
-            <div class="utc_flex-dir-row utc_flex-gap-sm menu-buttons">
-              <button id="btn-start-game" class="btn" onclick="uiManager.startGame()">Start Game</button>
-              <button id="btn-show-controls" class="btn" onclick="uiManager.toggleControls()">
-                Steuerung
-              </button>
+            <div class="utc_flex-dir-col utc_flex-gap-md menu-buttons">
+              <div class="utc_flex-dir-row utc_flex-gap-sm utc_flex-jc-center">
+                <button id="btn-start-game" class="btn" onclick="uiManager.startGame()">Start Game</button>
+                <button id="btn-show-controls" class="btn" onclick="uiManager.toggleControls()">
+                  Steuerung
+                </button>
+              </div>
+              <div class="utc_flex-dir-row utc_flex-gap-md menu-buttons utc_flex-jc-end">
+                <button id="btn-imprint" class="btn btn-link text-center" onclick="uiManager.showImprint()">
+                  Impressum
+                </button>
+                <button id="btn-credits" class="btn btn-link text-center" onclick="uiManager.showCredits()">
+                  Credits
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -154,9 +165,21 @@
               </p>
               <img src="./img/ui/light-character.png" alt="" class="light-entitiy-static" />
             </div>
-            <div class="utc_flex-dir-row utc_flex-gap-sm menu-buttons">
-              <button class="btn" onclick="uiManager.startGame()">Nochmal versuchen</button>
-              <button class="btn" onclick="uiManager.backToMenu()">Hauptmenü</button>
+            <div class="utc_flex-dir-col utc_flex-gap-md menu-buttons">
+              <div class="utc_flex-dir-row utc_flex-gap-sm utc_flex-jc-center">
+                <button id="btn-start-game" class="btn" onclick="uiManager.startGame()">Start Game</button>
+                <button id="btn-show-controls" class="btn" onclick="uiManager.toggleControls()">
+                  Steuerung
+                </button>
+              </div>
+              <div class="utc_flex-dir-row utc_flex-gap-md menu-buttons utc_flex-jc-end">
+                <button id="btn-imprint" class="btn btn-link text-center" onclick="uiManager.showImprint()">
+                  Impressum
+                </button>
+                <button id="btn-credits" class="btn btn-link text-center" onclick="uiManager.showCredits()">
+                  Credits
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -170,9 +193,149 @@
               </p>
               <img src="./img/ui/light-character.png" alt="" class="light-entitiy-static" />
             </div>
-            <div class="utc_flex-dir-row utc_flex-gap-sm menu-buttons">
-              <button class="btn" onclick="uiManager.startGame()">Neues Spiel</button>
-              <button class="btn" onclick="uiManager.backToMenu()">Hauptmenü</button>
+            <div class="utc_flex-dir-col utc_flex-gap-md menu-buttons">
+              <div class="utc_flex-dir-row utc_flex-gap-sm utc_flex-jc-center">
+                <button id="btn-start-game" class="btn" onclick="uiManager.startGame()">Start Game</button>
+                <button id="btn-show-controls" class="btn" onclick="uiManager.toggleControls()">
+                  Steuerung
+                </button>
+              </div>
+              <div class="utc_flex-dir-row utc_flex-gap-md menu-buttons utc_flex-jc-end">
+                <button id="btn-imprint" class="btn btn-link text-center" onclick="uiManager.showImprint()">
+                  Impressum
+                </button>
+                <button id="btn-credits" class="btn btn-link text-center" onclick="uiManager.showCredits()">
+                  Credits
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="imprint-screen" class="overlay-screen d_none">
+          <div class="menu-panel utc_flex-dir-col utc_flex-ai-center utc_flex-gap-md">
+            <div class="content-box">
+              <h2 class="headline-sm">Impressum</h2>
+              <p class="text-sm scroll-content">
+                <strong>Angaben gemäß § 5 TMG:</strong><br /><br />
+                Timo Böning<br />
+                Lambertusstraße 53<br />
+                50374 Erftstadt<br /><br />
+
+                <strong>Kontakt:</strong><br />
+                E-Mail: hi@bearinmind.de<br />
+                Telefon: +49 (0) 179 9311 948<br /><br />
+
+                <strong>Haftungsausschluss:</strong><br />
+                Die Inhalte dieses Spiels wurden mit größter Sorgfalt erstellt. Für die Richtigkeit,
+                Vollständigkeit und Aktualität der Inhalte kann ich jedoch keine Gewähr übernehmen. Dieses
+                Projekt dient rein privaten, nicht-kommerziellen Portfolio-Zwecken.
+              </p>
+            </div>
+
+            <div class="utc_flex-dir-row utc_flex-jc-center menu-buttons">
+              <button class="btn" onclick="uiManager.showStartScreen()">Zurück zum Menü</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="credits-screen" class="overlay-screen d_none">
+          <div class="menu-panel utc_flex-dir-col utc_flex-ai-center utc_flex-gap-md">
+            <div class="content-box">
+              <h2 class="headline-sm">Audio Credits</h2>
+
+              <div class="scroll-content">
+                <p class="text-xs" style="margin-bottom: 1rem">
+                  Assets downloaded from
+                  <a href="https://freesound.org/" target="_blank" class="text-link">Freesound.org</a>. Huge
+                  thanks to the creators!
+                </p>
+
+                <h3 class="credits-category">Background & Ambience</h3>
+                <ul class="compact-credit-list">
+                  <li>
+                    <strong>horror_ambience.ogg</strong> by Marb7e
+                    <a href="https://freesound.org/s/674392/" target="_blank">[Link]</a>
+                  </li>
+                  <li><strong>winter_ruins.ogg</strong> by FarBeyond Studio (CC-BY 4.0)</li>
+                  <li><strong>fight_the_devil.ogg</strong> by FarBeyond Studio (CC-BY 4.0)</li>
+                  <li>
+                    <strong>morning_in_the_forest.ogg</strong> by viramiller
+                    <a href="https://freesound.org/s/425705/" target="_blank">[Link]</a>
+                  </li>
+                  <li>
+                    <strong>piano_theme.ogg</strong> by djgriffin
+                    <a href="https://freesound.org/s/730277/" target="_blank">[Link]</a>
+                  </li>
+                </ul>
+
+                <h3 class="credits-category">FX & Character</h3>
+                <ul class="compact-credit-list">
+                  <li>
+                    <strong>transformation_woosh.wav</strong> by moogy73
+                    <a href="https://freesound.org/s/425705/" target="_blank">[Link]</a>
+                  </li>
+                  <li>
+                    <strong>melee_swoosh.ogg</strong> by soundcollectah
+                    <a href="https://freesound.org/s/157790/" target="_blank">[Link]</a>
+                  </li>
+                  <li>
+                    <strong>spell_shoot.wav</strong> by bertsz
+                    <a href="https://freesound.org/s/524305/" target="_blank">[Link]</a>
+                  </li>
+                  <li>
+                    <strong>walking_forest.ogg</strong> by deadrobotmusic
+                    <a href="https://freesound.org/s/687059/" target="_blank">[Link]</a>
+                  </li>
+                  <li>
+                    <strong>whispering_spells.ogg</strong> by newlocknew
+                    <a href="https://freesound.org/s/763000/" target="_blank">[Link]</a>
+                  </li>
+                </ul>
+
+                <h3 class="credits-category">Enemies</h3>
+                <ul class="compact-credit-list">
+                  <li>
+                    <strong>boss_serpent_spell.ogg</strong> by lukabea
+                    <a href="https://freesound.org/s/660486/" target="_blank">[Link]</a>
+                  </li>
+                  <li>
+                    <strong>boss_scream.ogg</strong> by gpag1
+                    <a href="https://freesound.org/s/391552/" target="_blank">[Link]</a>
+                  </li>
+                  <li>
+                    <strong>boss_walk_giant.ogg</strong> by newlocknew
+                    <a href="https://freesound.org/s/677414/" target="_blank">[Link]</a>
+                  </li>
+                  <li>
+                    <strong>plant_attack.wav</strong> by richerlandtv
+                    <a href="https://freesound.org/s/700722/" target="_blank">[Link]</a>
+                  </li>
+                  <li>
+                    <strong>stomp_dead_crate.wav</strong> by kevinkace
+                    <a href="https://freesound.org/s/66780/" target="_blank">[Link]</a>
+                  </li>
+                  <li>
+                    <strong>stomp_dead_pain.wav</strong> by tonsil5
+                    <a href="https://freesound.org/s/555426/" target="_blank">[Link]</a>
+                  </li>
+                  <li>
+                    <strong>stomp_walking.wav</strong> by vhbc
+                    <a href="https://freesound.org/s/633193/" target="_blank">[Link]</a>
+                  </li>
+                  <li>
+                    <strong>plant_dies.wav</strong> by sirplus
+                    <a href="https://freesound.org/s/622335/" target="_blank">[Link]</a>
+                  </li>
+                  <li>
+                    <strong>plant_dies-2.wav</strong> by nebulousflynn
+                    <a href="https://freesound.org/s/221554/" target="_blank">[Link]</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="utc_flex-dir-row utc_flex-jc-center menu-buttons">
+              <button class="btn" onclick="uiManager.showStartScreen()">Zurück zum Menü</button>
             </div>
           </div>
         </div>
