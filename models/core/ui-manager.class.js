@@ -74,21 +74,23 @@ class UIManager {
     if (this.creditsScreen) this.creditsScreen.classList.remove("d_none");
   }
 
-  /** Displays the Game Over screen and hides the HUD. */
+  /** Displays the Game Over screen and hides the in-game HUD (health bars etc.). */
   showGameOver() {
     this.hideAllOverlayScreens();
     if (this.gameOverScreen) {
       this.gameOverScreen.classList.remove("d_none");
-      document.getElementById("in-game-hud").classList.add("d_none");
+      const hud = document.getElementById("in-game-hud");
+      if (hud) hud.classList.add("d_none");
     }
   }
 
-  /** Displays the victory/end screen and hides the HUD. */
+  /** Displays the victory/end screen and hides the in-game HUD. */
   showEndScreen() {
     this.hideAllOverlayScreens();
     if (this.endScreen) {
       this.endScreen.classList.remove("d_none");
-      document.getElementById("in-game-hud").classList.add("d_none");
+      const hud = document.getElementById("in-game-hud");
+      if (hud) hud.classList.add("d_none");
     }
   }
 
@@ -112,11 +114,14 @@ class UIManager {
   // GAME FLOW CONTROLS
   // ==========================================
 
-  /** Triggers game initialization and reveals the HUD. */
+  /** Triggers game initialization and reveals the in-game HUD. */
   startGame() {
     this.hideAllOverlayScreens();
     this.resetMobileControls();
-    document.getElementById("in-game-hud").classList.remove("d_none");
+
+    const hud = document.getElementById("in-game-hud");
+    if (hud) hud.classList.remove("d_none");
+
     initStartGame();
   }
 
@@ -125,13 +130,14 @@ class UIManager {
     this.showStartScreen();
     this.resetMobileControls();
 
+    // 1. Alle MovableObjects aufräumen
     if (typeof MovableObject !== "undefined") {
       MovableObject.stopAllIntervals();
     }
 
-    // ACHTUNG: Hier ist der Bugfix gegen das Hacken/Memory Leak!
+    // 2. Den Master-Stecker der World ziehen (Memory Leak Fix!)
     if (typeof world !== "undefined" && world !== null) {
-      world.stop();
+      world.clearWorld();
     }
   }
 

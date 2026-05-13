@@ -90,11 +90,21 @@ function initStartGame() {
 
 /**
  * Cleans up the current game state.
- * Unlocks the keyboard and stops all running intervals to prevent memory leaks or logic overlaps.
+ * Unlocks the keyboard, stops all running intervals, and clears the old world
+ * to prevent memory leaks or logic overlaps.
  */
 function resetGame() {
   keyboard.unlockAndReset();
-  MovableObject.stopAllIntervals();
+
+  // 1. Gegner & Projektile stoppen
+  if (typeof MovableObject !== "undefined") {
+    MovableObject.stopAllIntervals();
+  }
+
+  // 2. WICHTIG: Die Endlosschleifen der alten Welt killen!
+  if (typeof world !== "undefined" && world !== null) {
+    world.clearWorld();
+  }
 }
 
 /**
@@ -110,9 +120,11 @@ function setupWorld() {
  * Initializes the global AudioManager and begins playing the default ambient and music layers.
  */
 function startBackgroundAudio() {
-  AudioManager.initAudioManager();
-  AudioManager.playLayer("horror_ambience", "ambience_layer");
-  AudioManager.playLayer("winter_ruins", "music_layer");
+  if (typeof AudioManager !== "undefined") {
+    AudioManager.initAudioManager();
+    AudioManager.playLayer("horror_ambience", "ambience_layer");
+    AudioManager.playLayer("winter_ruins", "music_layer");
+  }
 }
 
 /**
@@ -122,7 +134,8 @@ function startBackgroundAudio() {
 function startPreload() {
   showLoadingUI();
 
-  PreloadState.totalAssets = IMAGE_ASSETS.length + AUDIO_ASSETS.length;
+  let audioLength = typeof AUDIO_ASSETS !== "undefined" ? AUDIO_ASSETS.length : 0;
+  PreloadState.totalAssets = IMAGE_ASSETS.length + audioLength;
   PreloadState.loadedCount = 0;
 
   if (PreloadState.totalAssets === 0) {
@@ -156,6 +169,8 @@ function loadAllImages() {
  * Configures the Audio objects and stores them in the AudioManager registry.
  */
 function loadAllAudio() {
+  if (typeof AUDIO_ASSETS === "undefined") return;
+
   AUDIO_ASSETS.forEach((config) => {
     const audioObj = new Audio();
     audioObj.addEventListener("canplaythrough", onAssetLoaded, { once: true });

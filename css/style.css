@@ -3,7 +3,7 @@
   --ff-headline: "Roboto Local", "Segoe UI", sans-serif;
   --ff-base: "Roboto Local", "Segoe UI", sans-serif;
 
-  --fs-sm: 0.875rem;
+  --fs-sm: 1rem;
   --fs-base: 1.2rem;
   --fs-md: 1.5rem;
   --fs-lg: 2rem;
@@ -234,7 +234,7 @@ canvas {
   position: absolute;
   top: 15px;
   right: 15px;
-  z-index: 50;
+  z-index: 9999;
   pointer-events: none;
 }
 
@@ -438,9 +438,9 @@ canvas {
 
 .headline-sm {
   font-family: var(--ff-headline);
-  font-size: var(--fs-md);
+  font-size: var(--fs-base);
   color: var(--clr-accent);
-  margin-bottom: var(--spacing-xs);
+  margin-block: var(--spacing-xs);
   text-shadow: 0 0 8px var(--clr-glow-intense);
 }
 
