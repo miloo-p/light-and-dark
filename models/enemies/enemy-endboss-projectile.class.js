@@ -59,7 +59,7 @@ class EnemyBossProjectileObject extends MovableObject {
      * @type {number}
      */
     this.moveInterval = this.setStoppableInterval(() => {
-      this.x -= 6;
+      this.x -= 5;
     }, 1000 / 60);
   }
 

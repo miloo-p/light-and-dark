@@ -83,11 +83,6 @@
   display: none !important;
 }
 
-.no-scroll {
-  overflow: hidden;
-  margin-right: 15px;
-}
-
 .text-center {
   text-align: center;
 }
@@ -209,7 +204,6 @@ body::before {
   width: 720px;
   height: 405px;
   margin: 0 auto;
-  overflow: hidden;
 }
 
 canvas {

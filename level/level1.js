@@ -20,15 +20,10 @@ function initLevel() {
     [
       new EnemyStomp(500),
       new EnemyStomp(500),
-      new EnemyStomp(500),
-      new EnemyStomp(1000),
       new EnemyStomp(1000),
       new EnemyStomp(1000),
       new EnemyStomp(1500),
       new EnemyStomp(1500),
-      new EnemyStomp(1500),
-      new EnemyStomp(2100),
-      new EnemyStomp(2100),
       new EnemyStomp(2100),
     ],
 
@@ -138,6 +133,6 @@ function initLevel() {
     ],
 
     // 9. enemyPlant: Stationary shooting enemy
-    [new EnemyPlant(600), new EnemyPlant(1200), new EnemyPlant(1800)],
+    [new EnemyPlant(600), new EnemyPlant(1800)],
   );
 }

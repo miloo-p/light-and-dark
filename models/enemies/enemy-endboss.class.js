@@ -206,7 +206,7 @@ class EnemyEndboss extends MovableObject {
         this.hasFiredProjectile = false; // Reset the safety lock
         this.currentImage = 0; // Ensure animation starts from frame 1
       }
-    }, 2000);
+    }, 3000);
   }
 
   /**
